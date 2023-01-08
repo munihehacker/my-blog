@@ -1,5 +1,5 @@
 ---
-title: "记录搭建Hugo 博客"
+title: "记录搭建Hugo 博客，使用stack主题快速启动部署"
 description: 
 date: 2023-01-07T20:33:43+08:00
 image: stack.png

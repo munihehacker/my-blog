@@ -13,6 +13,14 @@ name = "GitHub"
 url = "https://github.com/koala9527"
 
 [social.params]
-icon = "brand-github"
+icon = "github-icon"
+
+[[social]]
+identifier = "juejin"
+name = "Juejin"
+url = "https://juejin.cn/user/2893570335056494"
+
+[social.params]
+icon = "brand-juejin"
 
 
