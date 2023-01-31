@@ -54,7 +54,7 @@ Package name (<vendor>/<name>) :
   > library: 这是默认类型，它会简单地将文件复制到 vendor 目录。
 project: 这表示当前包是一个项目，而不是一个库。
 metapackage: 当一个空的包，包含依赖并且需要触发依赖的安装，这将不会对系统写入额外的文件。因此这种安装类型并不需要一个 dist 或 source。
-composer-plugin: 一个安装类型为 composer-plugin 的包，它有一个自定义安装类型，可以为其它包提供一个 installler。详细请查看 自定义安装类型。
+composer-plugin: 一个安装类型为 composer-plugin 的包，它有一个自定义安装类型，可以为其它包提供一个 installler。
 >
   这里就是填的默认类型
 
@@ -163,6 +163,7 @@ $Test = new Test();
 $Test->index();
 ```
 使用PHP 命令运行这个index.php 文件：
+
 ![](run.png)
 
 测试成功！
