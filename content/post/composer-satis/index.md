@@ -12,7 +12,7 @@ tags: ["PHP", "Composer", "Git"]
 categories: ["杂技浅尝"]
 ---
 
-composer相当于PHP 包管理器
+composer相当于PHP 包管理器,在日常工作中有很多可以服用的代码都可以使用composer 来制作私有composer包来进行分发，同统一管理，特别是在公司内部一些新项目初始化需要使用一些公共的方法就不需要重复复制了，可以减少很多心智负担，使用composer命令就能下载项目的依赖包。
 
 # 前提
 安装composer    
@@ -51,19 +51,19 @@ Package name (<vendor>/<name>) :
 
   提示填写项目类型
 
-  > library: 这是默认类型，它会简单的将文件复制到 vendor 目录。
+  > library: 这是默认类型，它会简单地将文件复制到 vendor 目录。
 project: 这表示当前包是一个项目，而不是一个库。
 metapackage: 当一个空的包，包含依赖并且需要触发依赖的安装，这将不会对系统写入额外的文件。因此这种安装类型并不需要一个 dist 或 source。
 composer-plugin: 一个安装类型为 composer-plugin 的包，它有一个自定义安装类型，可以为其它包提供一个 installler。详细请查看 自定义安装类型。
 >
-这里就是填的默认类型
+  这里就是填的默认类型
 
 * 6.License[]:
 提示填写开源许可证
 参考下图：
 ![](License.png)
 
-填写一个最宽松的`MIT`许可
+  填写一个最宽松的`MIT`许可
 
 * 7.Would you like to define your dependencies (require) interactively [yes]？
 
@@ -75,7 +75,7 @@ composer-plugin: 一个安装类型为 composer-plugin 的包，它有一个自�
 
 * 9.Enter the version constraint to require (or leave blank to use the latest version)：
 
-  需要哪个版本？注意最好是精确输入自己电脑环境一样的PHP版本，我这里是7.4.30，不然会出现一下报错：
+  需要哪个版本？注意最好是精确输入自己电脑环境一样的PHP版本，我这里是7.4.30，不然会出现以下报错：
 ![](composer-init-error.png)
 
 * 10.重复询问7和8的问题，直接回车跳过
@@ -88,7 +88,7 @@ composer-plugin: 一个安装类型为 composer-plugin 的包，它有一个自�
 
 * 11.Do you confirm generation[yes]?
  
- 确认生成 yes
+   确认生成 yes
 
 * 12. Would you like to install dependencies now [yes]?
 
@@ -131,7 +131,7 @@ composer-plugin: 一个安装类型为 composer-plugin 的包，它有一个自�
     }
 }
 ```
-然后在项目更目录新建src 目录，在src目录下Test.php文件，文件内容为：
+然后在项目根目录新建src 目录，在src目录下Test.php文件，文件内容为：
 ```
 <?php
 
@@ -176,7 +176,7 @@ $Test->index();
 
 ![](name-tree.png) 
 
-依次执行一下Git命令就上传成功了
+依次执行以下Git命令就上传成功了
 
 ```
 git init
@@ -189,7 +189,7 @@ git push -u origin main
 
 # 搭建satis仓库
 
-satis是Composer 官方提供的建立私有源的工具，比较简单，原理就是把Git仓库里的composer 包拉取下来制作成静态文件，然后需要自己通过类型Nginx部署，型成一个简单的UI界面，进行composer包的分发下载的服务
+satis是Composer 官方提供的建立私有源的工具，比较简单，原理就是把Git仓库里的composer 包拉取下来制作成静态文件，然后需要自己通过Nginx镜像容器部署形成一个简单的UI界面，进行composer包的分发下载的服务
 
 这里只做一个最简单的尝试，没有权限验证的配置
 
@@ -208,7 +208,7 @@ satis是Composer 官方提供的建立私有源的工具，比较简单，原理
 ```
 注意：
 
-1. json配置文件中name字段必须是在composer包创建时的vendor/package的内容，否侧无法初始化
+1. json配置文件中name字段必须是在composer包创建时的vendor/package的内容，否则无法初始化
 
 2. homepage 是satis仓库的访问域名地址，也就是自己私有源的地址
 
