@@ -245,7 +245,7 @@ docker run -itd --name=nginx_satis -p 8881:80 -v /home/satis/build/output:/usr/s
 
 # 测试
 
-拿一个不重要的项目测试，项目根目录下composer.json文件添加私有源配置：
+拿一个不重要的Hyperf项目测试，项目根目录下composer.json文件添加私有源配置：
 ```
 "repositories": [
     {
