@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: true
 draft: false
+tags: ["frp"]
+categories: ["杂技浅尝"]
 ---
 
 记录一次frp客户端安装
