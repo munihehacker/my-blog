@@ -2,7 +2,7 @@
 title: "记录一次frp客户端安装"
 description: 
 date: 2023-02-01T21:02:54+08:00
-image: 
+image: title.png
 math: 
 license: 
 hidden: false
