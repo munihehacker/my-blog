@@ -1,5 +1,5 @@
 ---
-title: "记录一次使用docker 安装Alist插件 使用webdav挂载网盘到Windows"
+title: "记录一次使用docker 安装Alist插件 挂载本地储存和网盘"
 description: 
 date: 2023-02-02T21:20:24+08:00
 image: img_14.png
@@ -90,6 +90,8 @@ docker run -d --restart=always -v /sharedfolders/N1/alist/config:/opt/alist/data
 输入密码后还可以展示说明：
 
 ![img_11.png](img_11.png)
+
+后面我会把这这个alist通过内网穿透使它能够在公网访问，然后使用webdav挂载网盘到Windows，把网盘当作系统硬盘来尝试使用
 
 
 
