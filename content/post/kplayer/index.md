@@ -63,8 +63,8 @@ docker pull bytelang/kplayer:latest
 
 `服务器地址` 拼接上 `串流密钥`   就是推流的地址：
 `rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_******_******&key=**************&schedule=rtmp&pflag=1`
-## config.json配置文件内容：
-把上面获取的推流地址替换到下面的config.json配置文件中：
+## config.json配置文件内容
+在宿主机/home/***/kplayer/config.json内容如下（把上面获取的推流地址替换到下面的配置文件中） ：
 ```
 {
     "version": "2.0.0",
@@ -99,7 +99,7 @@ docker pull bytelang/kplayer:latest
 
 ## 启动运行
 
-使用docker 运行容器就可以了：
+使用docker 运行容器 加上上面的文件目录映射就可以了：
 ```shell
 docker run  -td --name=kplayer -v /home/***/mp4:/video -v  /home/***/kplayer/config.json:/kplayer/config.json -v /home/***/kplayer/cache:/kplayer/cache  --restart=always  bytelang/kplayer:latest  
 ```
