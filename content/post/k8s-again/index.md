@@ -17,6 +17,8 @@ categories: ["运维"]
 最近看到随身wifi棒子特别的火，又有人搭建利用随身wifi的Docker Swarm集群，自己有想动手弄一个，又在咸鱼淘了四个处理器为RK3568的机器，处理器配置比树莓派配置要好，但是只有4G内存，主要是才90元一个，买了12V DC电源。不到400。
 ![img.png](img.png)
 
+如果对kubernetes基本概念不熟悉，请务必找到之前文章去熟悉一下，之前的文章的细节描述非常仔细清楚~
+
 系统是自带的Armbian:
 ```shell
 root@panther-x2-main:~# uname -a
@@ -33,7 +35,7 @@ Redhat是商业公司维护的发行版本，Debian是社区组织维护的发�
 ### 更改机器主机名称（hostname）
 因为系统刷机后系统的名称完全一样，需要修改名称才能分辨他们
 
-一台Master节点 ，3台Work， 需要把四台机器的分为改为：
+一台Master节点 ，3台Work节点， 需要把四台机器的分为改为：
 ```shell
 panther-x2-main
 panther-x2-1
@@ -59,7 +61,7 @@ root@panther-x2-3:~# cat /etc/hostname
 panther-x2-3
 ```
 ### 设置静态IP
-静态IP的作用就是让机器在内网环境下有一个固定的IP，不能让它每次重启有一个不一样的IP,那样机器之间就无法正常沟通了。
+静态IP的作用就是让机器在内网环境下有一个固定的IP，不能让它每次重启有一个不一样的IP，那样机器之间就无法正常沟通了。
 
 ![img_2.png](img_2.png)
 每一台机器都需要执行一样的命令：
@@ -84,14 +86,18 @@ vim  /etc/default/armbian-zram-config
 vim /etc/cron.d/armbian-truncate-logs
 ```
 注释掉第三行
+
 ![img_4.png](img_4.png)
+
 然后注释掉最后一行：
 ```shell
 vim /etc/cron.daily/armbian-ram-logging
 
 ```
 ![img_3.png](img_3.png)
+
 然后重启，验证swap是否被关闭：
+
 ![img_6.png](img_6.png)
 
 ### 关闭SElinux
@@ -107,6 +113,7 @@ IPv4 转发通常允许将网络流量从一个网络接口传输到另一个网
 /etc/sysctl.conf
 ```
 默认关闭了：
+
 ![img_7.png](img_7.png)
 
 ### 安装一些软件
@@ -125,7 +132,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 
 ### 配置docker
 这个非常重要，Kubernetes官方指出在1.24之后删除了dockershim组件，我现在在要安装最新版的kubernetes1.27,默认的运行时是contained，而目前Docker 安装的默认运行时是docker-runc，所以需要切换Docker 的运行时。
-问了一下chatgpt 如何切换docker运行时
+偷了懒问了一下chatgpt 如何切换docker运行时，实测很准确
+
 ![img_8.png](img_8.png)
 
 最近因为某些原因Docker好多镜像拉取不下来，需要手动添加一下镜像源，需要如下修改：
@@ -172,18 +180,17 @@ curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --de
 ```shell
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
-安装 kubelet、kubeadm 和 kubectl，之前使用树莓派安装的是1.20版本的，社区已经不支持和维护了，k8s版本迭代的还是很快的，目前是四个月一个小版本，一个月支持版本一个补丁，还是很快的，有很大的学习压力呀，有关联到了各种的组件的支持
+安装 kubelet、kubeadm 和 kubectl，之前使用树莓派安装的是1.20版本的，社区已经不支持和维护了，k8s版本迭代的还是很快的，目前是四个月一个小版本，一个月支持版本一个补丁，还是很快的，有很大的学习压力呀，还有关联到了各种的组件的支持
 目前最新的版本是1.27，现在来根据官方文档安装：
 
 ```shell
-
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
 ```
 ### 前置设置
 
-根据文档/etc/containerd/config.toml 更改驱动
+根据文档/etc/containerd/config.toml 更改驱动  
 containerd config default > /etc/containerd/config.toml
 
 ![img_10.png](img_10.png)
@@ -207,7 +214,7 @@ kubeadm init phase preflight
 ```
 
 ### 前置拉取镜像改名字：
-由于某些原因直接拉去k8s所需要的镜像是拉取不下来的，只能参照官方的离线安装方案，先把同步到国内源的镜像拉取下来再改tag名称，最好做一个shell脚本，每天机器都需要执行一下拉取镜像，改tag名称：
+由于某些原因直接拉去k8s所需要的镜像是拉取不下来的，只能参照官方的离线安装方案，先把同步到国内源的镜像拉取下来再改tag名称，最好做一个shell脚本，每台机器都需要执行一下拉取镜像，改tag名称：
 脚本内容：
 ```shell
 root@panther-x2-main:~# cat pull_k8s_docker.sh 
@@ -390,7 +397,7 @@ kubectl logs --namespace kube-system calico-node-2kdks
 
 需要指定命令空间，最后才是pod 名称
 
-通过查看日志就知道是哪里出错了，我一开始是因为Docker 运行时的问题卡了很久一就是一步步地查看日志去搜索解决地。
+通过查看日志就知道是哪里出错了，我一开始是因为Docker 切换运行时的问题卡了很久,然后就是一步步地查看日志去搜索解决的。
 
 再如果是哪个pod一直卡住了，用`kubectl create -f ***.yaml`命令都删不掉需要执行手动强制删除pod命令：
 ```shell
@@ -456,7 +463,7 @@ spec:
     k8s-app: kubernetes-dashboard
 
 ```
-新建资源：
+新建service资源：
 ```shell
  kubectl apply -f dashbord-service.yaml 
 ```
