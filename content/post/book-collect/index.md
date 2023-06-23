@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: true
 draft: false
+tags: ["读书"]
+categories: ["读书"]
 ---
 
 # 《蛤蟆先生去看心理医生》
