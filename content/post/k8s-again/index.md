@@ -325,16 +325,16 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
 
 Then you can join any number of worker nodes by running the following on each as root:
 
-kubeadm join 192.168.2.191:6443 --token fnxxr7.lgu8fvkl1rc0gukc \
-	--discovery-token-ca-cert-hash sha256:17a1ad0ad3da3cd3d558c7ba9029cd0043c5a4fa53c2bfe60938edcea59255b6 
+kubeadm join 192.168.2.191:6443 --token fnxxr7.lgu8fvkl1******* \
+	--discovery-token-ca-cert-hash sha256:17a1ad0ad3da3cd3d558c7ba9029cd0043c5a4fa53c2********************* 
 
 ```
 
 安装成功。已经提示需要再在Work节点使用 ```kubeadm join``` 就行了
 
 ```shell
-kubeadm join 192.168.2.191:6443 --token fnxxr7.lgu8fvkl1rc0gukc \
-	--discovery-token-ca-cert-hash sha256:17a1ad0ad3da3cd3d558c7ba9029cd0043c5a4fa53c2bfe60938edcea59255b6 
+kubeadm join 192.168.2.191:6443 --token fnxxr7.lgu8fvkl1******* \
+	--discovery-token-ca-cert-hash sha256:17a1ad0ad3da3cd3d558c7ba9029cd0043c5a4fa53c2********************* 
 ```
 ### 安装Pod 网络附加组件
 查看node 状态执行之前需要根据上面的提示让当前用户有管理k8s的权限：
