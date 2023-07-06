@@ -343,20 +343,20 @@ say('北京申奥成功了！')  // say: 北京申奥成功了！.
 ## 函数
 函数非常重要，在TypeScript 有多种写法：
 ```typescript
-// 写法一：函数声明
+// 函数声明，最基础用法
 function add1(sum1: number, sum2: number): number {
     return sum1 + sum2
 }
 
-// 写法二：函数表达式
+// 函数表达式，新手觉得难以理解的方法
 const add2 = function (sum1: number, sum2: number): number {
     return sum1 + sum2
 }
 
-// 写法三：箭头函数
+// 箭头函数，新手觉得更难以理解的方法
 const add3 = (sum1: number, sum2: number): number => sum1 + sum2
 
-// 写法四：对象上的方法
+// 对象里的方法
 const obj = {
     add4(sum1: number, sum2: number): number {
         return sum1 + sum2
