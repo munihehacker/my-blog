@@ -368,5 +368,104 @@ const obj = {
 
 函数直接使用`return `返回,没有任何内容函数指定的返回值可以用`void`  
 
-### 异步函数
+### 可选参数
+入参的时候是可选的：
+```typescript
 
+function add5(sum1: number, sum2: number, isAdd?: boolean): number {
+  return isAdd ? x + y : x - y
+}
+```
+
+### 异步函数
+异步函数这里有个非常重要的概念
+异步函数的返回值需要用到Promise<T> 类型来定义它的返回值：
+```typescript
+
+function queryData(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('Hello World')
+    }, 3000)
+  })
+}
+
+queryData().then((data) => console.log(data))
+// resolve指定返回的类型，如果没有resolve那么就要指定 Promise<void>
+```
+
+### 函数本身的类型
+上面的匿名函数就没有类型，也就是箭头函数：
+```typescript
+const add = (num1: number, num2: number): number => x + y
+// 左边只指定了add这个变量但是没有类型，原因是因为函数体会自动推导
+```
+### 任意值
+TypeScript 也叫AnyScript，有很多不会写强类型语言的新手喜欢使用any 来表示函数的返回值或者入参，开发中应尽量避免使用
+
+any 是一切类型的父类型，也是一切类型的子类型
+```typescript
+function say(msg: any) {
+    console.log(String(msg))
+}
+
+```
+遇到其他问题我们扩展讲讲，展示就只展示一个简单的例子
+
+### 例外情况
+很多npm 包都符合TypeScript 类型，但是有些个别的没有符合，把npm 包放在.ts文件运行就会报错，需要找到TypeScript 支持的特定的npm 包才可以。
+
+### tsconfig.json
+安装：
+```shell
+npm install -g typescript
+```
+初始化项目：
+```typescript
+tsc --init
+```
+```shell
+Created a new tsconfig.json with:
+                                                                               TS
+  target: es2016
+  module: commonjs
+  strict: true
+  esModuleInterop: true
+  skipLibCheck: true
+  forceConsistentCasingInFileNames: true
+
+
+You can learn more at https://aka.ms/tsconfig.json
+
+```
+目录接口：
+```shell
+hello-node
+│ # 构建产物
+├─dist
+│ # 依赖文件夹
+├─node_modules
+│ # 源码文件夹
+├─src
+│ # 锁定安装依赖的版本号
+├─package-lock.json
+│ # 项目清单
+├─package.json
+│ # TypeScript 配置
+└─tsconfig.json
+```
+tsconfig.json：
+```json
+{
+    "compilerOptions": {
+        "target": "es6",
+            "module": "es6",
+            "outDir": "./dist"
+    }
+}
+
+```
+完整选项和功能参考官网：[tsconfig - typescriptlang](https://www.typescriptlang.org/tsconfig)
+但是现在项目初始化都是使用vue-cli来新建，需要参考其他文档
+
+完结待续。。。
