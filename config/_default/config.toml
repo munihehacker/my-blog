@@ -14,11 +14,3 @@ hasCJKLanguage = false
 
 # Change it to your Disqus shortname before using
 disqusShortname = "koala9527"
-
-[comments]
-enabled = true
-provider = "utterances"
-
-[comments.utterances]
-repo = "koala9527/my-hugo-blog"
-issueTerm = "pathname"
