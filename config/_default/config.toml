@@ -20,5 +20,5 @@ enabled = true
 provider = "utterances"
 
 [comments.utterances]
-repo = "koala9527/hugo-blog-comments"
+repo = "koala9527/my-hugo-blog"
 issueTerm = "pathname"
