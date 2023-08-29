@@ -26,17 +26,8 @@ draft: true
 Vue的工程化，单一职责，高内聚，低耦合的特点
 
 ## 语法总结
+首选创建一个官方推荐的脚手架：
 
-```
-# 全局安装脚手架
-npm install -g create-preset
-```
-
-```
-
-# 使用 `vue3-ts-vite` 模板创建一个名为 `hello-vue3` 的项目
-preset init hello-vue3 --template vue3-ts-vite
-```
 
 使用 Vite 创建项目(主流)
 
@@ -44,3 +35,26 @@ preset init hello-vue3 --template vue3-ts-vite
 npm create vite
 ```
 
+```shell
+PS D:\CodeProject\VueProject> npm create vite
+Need to install the following packages:
+  create-vite@4.4.1
+Ok to proceed? (y) y
+√ Project name: ... vite-project
+√ Select a framework: » Vue
+√ Select a variant: » JavaScript
+
+
+```
+设置项目名称：vite-project，vue类型项目，使用JavaScript 然后 cd 到vite-project, 安装依赖：
+```typescript
+npm install
+```
+启动项目：
+```shell
+npm run dev
+```
+![img_1.png](img_1.png)
+
+访问http://127.0.0.1:5173/：
+![img.png](img.png)
