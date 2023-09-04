@@ -18,7 +18,7 @@ ChatGPT 是目前最火热的生成式人工智能工具，由OpenAI公司研发
 # 必要条件
 * 拥有一个可以访问ChatGPT 官网的网络环境，ChatGPT 官网地址：https://openai.com/
 * 购买一个ChatGPT的Key，推荐一个购买地址（2块钱左右5刀余额，不想买自己要用想办法用其他国家的手机号注册）：https://faka.aisvip.top/
-* 一台可以使用Docker的机器，最好有个域名，可以公网访问更加
+* 一台可以使用Docker的机器，最好有个域名，可以公网访问更佳~
 
 
 # 镜像站推荐：
