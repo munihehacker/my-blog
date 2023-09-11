@@ -236,3 +236,26 @@ selectedOption.value.set('option2');
 ，不能直接赋值空数组而是使数组长度设置为0。
 
 ## toRef & toRefs
+
+toRef 创建一个Ref对象，转换Reactive对象的某个关键字段为Ref变量  
+toRefs 创建一个新的对象，把它的每一个字段都是Reactive对象各字段的Ref变量  
+
+toRef 简单用法：
+```typescript
+const ages = reactive(['17','18','19'])
+const a = toRef(ages,3)
+console.log(a.value)
+```
+
+toRefs 简单用法：
+```typescript
+const names = reactive(['tom','andy','bob'])
+const name = toRefs(names)
+```
+
+注意使用toRefs 转换后 使用解构赋值不会失去响应性，但是直接解构Reactive不会具有响应性
+ES6解构示例：
+```typescript
+const {name1,name2,name3} = toRefs(names)
+name1.value('mili')
+```
