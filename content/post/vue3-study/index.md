@@ -76,7 +76,7 @@ Composition API 是Vue.js .30 新的编写组件的方式，旧的就是Option A
 
 分别叫 组合式 API 和 选项式 API，组合就听着比较得复杂
 
-## setup
+### setup
 
 组合式API 就必须使用setup 这个方法，当 Vue 组件创建时，setup 函数将作为组件的入口被调用。在 setup 函数中可以定义和返回在组件模板中需要的所有数据和方法。
 
@@ -173,7 +173,7 @@ export default defineComponent({
 Vue3.js 所有的组合式API 每个生命走起函数都必须先导入才可以使用，并且所有的生命周期函数都需要放在setup中，后面会慢慢看到
 Vue3.js的组件编程风格非常多官方还是推荐 `defineComponent` 这样定义一个组件 
 
-## ref
+### ref
 其中`ref`是组合式API 中的一部分，`const selectedOption = ref('option1');`其中的 `selectedOption` 是一个可变的响应式的引用变量，这个组件被其他地方使用的时候，会让这个变量关联给其他地方使用达到响应式双向绑定的目的
 
 `ref` 是一个响应式的API,可以用来定义所有类型的数据，包括Node节点和组件，上面个例子中使用ref创建了额一个响应式的数据对象，返回了一个可以最该数据变化的引用，在后面提供一种方式来修改`selectedOption`的值，也就是通过下面方式改变：
@@ -192,7 +192,7 @@ selectedOption.value.set('option2');
 
 最后注意使用`ref`声明的变量都会变成对象，任何Ref对象的值必须通过xxx.value 才能正确获取。
 
-## reactive
+### reactive
 这个　API 与ref非常相似，区别是reactive 只能绑定对象，数组，使用这个API好处就是对其绑定的数据进行操作非常人性化，可以直接操作
 
 例子：
@@ -235,7 +235,7 @@ selectedOption.value.set('option2');
 注意使用这个API对数组操作重置的时候，不要强行改变数据的响应性
 ，不能直接赋值空数组而是使数组长度设置为0。
 
-## toRef & toRefs
+### toRef & toRefs
 
 toRef 创建一个Ref对象，转换Reactive对象的某个关键字段为Ref变量  
 toRefs 创建一个新的对象，把它的每一个字段都是Reactive对象各字段的Ref变量  
@@ -258,4 +258,346 @@ ES6解构示例：
 ```typescript
 const {name1,name2,name3} = toRefs(names)
 name1.value('mili')
+```
+### watch
+示例:
+```typescript
+<template>
+    <div>
+        <p>Count: {{ count }}</p>
+<button @click="increment">Increment</button>
+    </div>
+    </template>
+
+    <script>
+import { ref, watch } from 'vue';
+
+export default {
+    setup() {
+        const count = ref(0);
+
+        // 使用watch函数来观察count的变化
+        watch(count, (newValue, oldValue) => {
+            console.log('Count changed:', newValue, oldValue);
+        });
+
+        const increment = () => {
+            count.value++;
+        };
+
+        return {
+            count,
+            increment
+        };
+    }
+};
+</script>
+
+```
+使用`watch`监听一个用`ref`定义的一个响应式变量
+
+### watchEffect
+
+watchEffect不需要显式地指定要观察的变量,用于自动追踪在回调函数中使用的所有响应式数据，并在任何一个数据发生变化时触发回调函数，示例：
+```typescript
+<template>
+  <div>
+    <p>Count: {{ count }}</p>
+    <button @click="increment">Increment</button>
+  </div>
+</template>
+
+<script>
+import { ref, watchEffect } from 'vue';
+
+export default {
+  setup() {
+    const count = ref(0);
+
+    // 使用watchEffect函数来观察响应式数据的变化
+    watchEffect(() => {
+      console.log('Count changed:', count.value);
+    });
+
+    const increment = () => {
+      count.value++;
+    };
+
+    return {
+      count,
+      increment
+    };
+  }
+};
+</script>
+
+```
+简化了watch的操作，但是监听不了响应式的变量变化前后的值
+
+### computed
+`computed`用于创建一个计算属性的API，它的值基于其他响应式数据计算出来的。
+
+示例：
+```typescript
+
+<template>
+  <div>
+    <p>First Name: {{ firstName }}</p>
+    <p>Last Name: {{ lastName }}</p>
+    <p>Full Name: {{ fullName }}</p>
+  </div>
+</template>
+
+<script>
+import { ref, computed } from 'vue';
+
+export default {
+  setup() {
+    const firstName = ref('John');
+    const lastName = ref('Doe');
+
+    // 使用computed函数创建计算属性fullName
+    const fullName = computed(() => {
+      return firstName.value + ' ' + lastName.value;
+    });
+
+    return {
+      firstName,
+      lastName,
+      fullName
+    };
+  }
+};
+</script>
+
+```
+
+这个计算属性也可以通过调用特定的函数方法来计算，使用这个API主要是为了更好的性能，避免重复计算，这个API 会有缓存的设计。
+
+## 指令
+VUE中非常常见的一些语法糖，用于简化原生HTML的写法
+### 内置指令
+* v-model：用于在表单元素和组件之间创建双向数据绑定。它可以简化表单元素的值和Vue实例中的数据之间的同步。
+
+* v-if：根据表达式的值来条件性地渲染元素。如果表达式的值为真，则元素会被渲染；如果为假，则元素会被移除。
+
+* v-show：根据表达式的值来切换元素的显示和隐藏。如果表达式的值为真，则元素会显示；如果为假，则元素会隐藏，但仍然占据DOM空间。
+
+* v-for：用于循环渲染列表中的元素。它可以遍历数组或对象，并为每个元素生成对应的DOM节点或组件实例。
+
+* v-bind（简写为:）：用于动态地绑定属性或组件的属性。可以将表达式的值绑定到元素的属性或组件的属性上。
+
+* v-on（简写为@）：用于监听DOM事件或组件自定义事件，并在事件触发时执行相应的方法。
+
+* v-text：用于将表达式的值作为元素的文本内容进行渲染。
+
+* v-html：用于将表达式的值作为HTML内容进行渲染。
+如果熟悉VUE3 就会很简单上手啦
+### 钩子函数
+生命周期钩子函数，在官网的选项式API介绍中有12个钩子函数，这里介绍一下比较常见的几个钩子函数：
+* beforeCreate：当指令第一次绑定到元素并却在挂载父组件之前调用，无法访问组件的数据，方法和DOM元素
+
+* created：在组件实例被创建后立即调用。在这个钩子函数中，组件实例已经创建完成，可以访问到组件的数据、方法和DOM元素。
+
+* beforeMount：在组件挂载到DOM之前调用。在这个钩子函数中，组件的模板已经编译完成，但尚未插入到DOM中。
+
+* mounted：在组件挂载到DOM后调用。在这个钩子函数中，组件已经被插入到DOM中，可以访问到组件的DOM元素。
+
+* beforeUpdate：在组件更新之前调用。在这个钩子函数中，组件的数据发生变化，但DOM尚未更新。
+
+* updated：在组件更新之后调用。在这个钩子函数中，组件的数据已经更新，DOM也已经更新完成。
+
+* beforeUnmount：在组件卸载之前调用。在这个钩子函数中，组件尚未从DOM中移除。
+
+* unmounted：在组件卸载之后调用。在这个钩子函数中，组件已经从DOM中移除。
+
+```javascript
+import { onMounted } from 'vue';
+
+export default {
+    setup() {
+        onMounted(() => {
+            // 在组件挂载到 DOM 后执行的逻辑
+            console.log('组件已挂载到 DOM');
+        });
+    }
+};
+
+```
+
+
+### 插槽
+插槽（slot）就是在使用子组件的时候，在<template />中使用类似html标签，在子组件里传入任意模板代码以及HTML代码  
+使用示例：
+```html
+<!-- ParentComponent.vue -->
+<template>
+    <div>
+        <h1>父组件</h1>
+        <slot></slot>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'ParentComponent',
+    };
+</script>
+
+```
+```html
+<!-- App.vue -->
+<template>
+    <div>
+        <ParentComponent>
+            <h2>子组件插槽内容</h2>
+            <p>这是子组件插槽的默认内容</p>
+        </ParentComponent>
+    </div>
+</template>
+
+<script>
+    import { defineComponent } from 'vue';
+    import ParentComponent from './ParentComponent.vue';
+
+    export default defineComponent({
+        name: 'App',
+        components: {
+            ParentComponent,
+        },
+    });
+</script>
+
+```
+以上的代码是一个叫匿名插槽的使用方法，还有叫`具名插槽`的使用方法   
+具名插槽：
+```html
+<!-- ParentComponent.vue -->
+<template>
+    <div>
+        <h1>父组件</h1>
+        <slot name="content"></slot>
+    </div>
+</template>
+
+<script>
+    import { defineComponent } from 'vue';
+
+    export default defineComponent({
+        name: 'ParentComponent',
+    });
+</script>
+
+
+```
+```html
+<!-- App.vue -->
+<template>
+    <div>
+        <ParentComponent>
+            <template v-slot:content>
+                <p>子组件的插槽内容</p>
+            </template>
+        </ParentComponent>
+    </div>
+</template>
+
+<script>
+    import { defineComponent } from 'vue';
+    import ParentComponent from './ParentComponent.vue';
+
+    export default defineComponent({
+        name: 'App',
+        components: {
+            ParentComponent,
+        },
+    });
+</script>
+```
+
+当父组件没有传入插槽内容时，会使用默认的内容来显示，默认插槽和具名插槽都支持这个功能
+
+## CSS处理
+
+
+### 动态绑定
+使用变量来绑定class名称，使用`:class`来动态修改元素的class，示例：
+```html
+<template>
+    <div :class="{ active: isActive, 'text-bold': isBold }">
+        Dynamic Class Example
+    </div>
+</template>
+
+<script>
+    import { ref } from 'vue';
+
+    export default {
+        setup() {
+            const isActive = ref(true);
+            const isBold = ref(false);
+
+            return {
+                isActive,
+                isBold,
+            };
+        },
+    };
+</script>
+
+
+```
+也可以传入一个数组绑定多个class：
+```html
+<template>
+    <div :class="[isActive ? 'active' : '', isBold ? 'text-bold' : '']">
+        Dynamic Class Example
+    </div>
+</template>
+
+<script>
+    import { reactive } from 'vue';
+
+    export default {
+        setup() {
+            const state = reactive({
+                isActive: true,
+                isBold: false,
+            });
+
+            return {
+                ...state,
+            };
+        },
+    };
+</script>
+
+```
+
+还可以使用`:style`动态修改内联样式：
+```html
+<template>
+  <div :style="customStyle">
+    Inline Style Example
+  </div>
+</template>
+
+<script>
+import { reactive } from 'vue';
+
+export default {
+  setup() {
+    const customStyle = reactive({
+      color: 'red',
+      fontSize: '20px',
+      backgroundColor: 'lightblue',
+    });
+
+    return {
+      customStyle,
+    };
+  },
+};
+</script>
+
 ```
