@@ -601,3 +601,66 @@ export default {
 </script>
 
 ```
+使用v-bind 动态修改style:
+```html
+html
+<template>
+  <div>
+    <button @click="changeColor">改变颜色</button>
+    <p :style="dynamicStyle">这是一个示例文本</p>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    // 创建响应式的数据
+    const dynamicStyle = ref({
+      color: 'red',
+      fontSize: '16px'
+    });
+
+    // 改变颜色的方法
+    const changeColor = () => {
+      dynamicStyle.value.color = 'blue';
+    };
+
+    return {
+      dynamicStyle,
+      changeColor
+    };
+  }
+};
+</script>
+```
+
+这个是vue3.2.0以后的新功能，此时的CSS响应式属性的更改不会触发模板的重新渲染。
+
+### CSS 作用域
+CSS 作用域是全局的，为了避免污染其他组件，Vue 在style 标签加上关键字`scoped`避免这个问题，编译过后都会带有一个`data-v-xxxx`的属性，是一个随机的Hash值，同一个组件的Hash是相同并且是唯一的
+带有此关键字的元素生成的样式权重是高于全局CSS的
+示例：
+```html
+<template>
+  <div>
+    <p class="global-style">这是全局样式</p>
+    <p class="scoped-style">这是局部样式</p>
+  </div>
+</template>
+
+<style scoped>
+/* 全局样式 */
+.global-style {
+  color: blue;
+}
+
+/* 局部样式 */
+.scoped-style {
+  color: red;
+}
+</style>
+
+```
+
