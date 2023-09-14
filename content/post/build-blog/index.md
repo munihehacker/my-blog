@@ -85,7 +85,7 @@ icon = "brand-github"
 ```toml
 [sidebar]
 emoji = "🍥"
-subtitle = "悟已往者不谏,知来者知可追"
+subtitle = "悟已往之不谏,知来者知可追"
 
 [sidebar.avatar]
 enabled = true
