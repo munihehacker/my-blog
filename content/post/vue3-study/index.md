@@ -665,3 +665,17 @@ CSS 作用域是全局的，为了避免污染其他组件，Vue 在style 标签
 ```
 
 #### Style Module
+Vue3 新推出的方案，通过给DOM元素添加自定义属性的方式避免冲突，比较激进，示例：
+```html
+<template>
+    <p class="classes.msg">hello</p>
+</template>
+
+<style module="classes">
+    .msg {
+        color: #ffffff;
+    }
+</style>
+
+```
+编译以后会成为一个hash值的类型绑定在DOM元素上，
