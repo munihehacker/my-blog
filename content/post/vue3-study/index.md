@@ -1,13 +1,13 @@
 ---
-title: "Vue3 学习笔记"
+title: "Vue3 基础语法 学习笔记"
 description: 
 date: 2023-07-05T14:39:35+08:00
-image: 
+image: title.jpg
 math: 
 license: 
 hidden: false
 comments: true
-draft: true
+draft: false
 ---
 
 ##  参考教程：
@@ -668,14 +668,88 @@ CSS 作用域是全局的，为了避免污染其他组件，Vue 在style 标签
 Vue3 新推出的方案，通过给DOM元素添加自定义属性的方式避免冲突，比较激进，示例：
 ```html
 <template>
-    <p class="classes.msg">hello</p>
+    <p :class="classes.msg">hello</p>
 </template>
 
 <style module="classes">
     .msg {
-        color: #ffffff;
+        color: #00ff00;
     }
 </style>
 
 ```
-编译以后会成为一个hash值的类型绑定在DOM元素上，
+编译以后会成为一个hash值的类型绑定在DOM元素上，会渲染一个绿色的hello   
+使用`style`标签作为一个变量，module 给变量一个名称，绑定到DOM 中渲染。
+
+#### useCssModule
+Vue3的一个全新的API，使用JavaScript操作CSS Module.
+示例：
+```html
+<template>
+    <p :class="$style.msg">
+        <span :class="$style.text">hello</span>
+    </p>
+</template>
+
+<script lang="ts">
+    import {defineComponent, useCssModule} from 'vue'
+    export default defineComponent({
+    setup(){
+        const style = useCssModule()
+        console.log(style)
+    },
+})
+
+</script>
+
+<style module>
+    .msg{
+        color: #00ff00;
+    }
+    .text{
+        font-size: 14px;
+    }
+</style>
+```
+将style标签内容作为一个变量$style,与DOM标签的class 绑定
+
+### CSS 预处理器
+CSS 预处理器是一个扩展CSS 语言的工具，给CSS提供了一些额外的功能和特性，使CSS 更易于编写，组织和维护。常见的有less,sass,Stylus
+Vite 已经内置了对预处理文件的支持，以less 为例：
+```html
+<template>
+    <p :class="$style.msg">
+        <span :class="$style.text">hello</span>
+    </p>
+</template>
+
+<script lang="ts">
+    import {defineComponent, useCssModule} from 'vue'
+    export default defineComponent({
+    setup(){
+        const style = useCssModule()
+        console.log(style)
+    },
+})
+
+</script>
+
+<style lang="less" scoped>
+    @color-black:#333333;
+    @color-red:#ff0000;
+
+    .msg{
+        color: @color-black;
+    }
+    .text{
+        color:@color-red
+    }
+</style>
+```
+在less 预处理其中可以在style 标签中使用定义CSS颜色为一个变量，在其他地方使用，代码复用的思想。  
+style 标签中scoped 的作用表示 该style 标签的作用域只在当前组件的DOM元素中。起到了一定的隔离作用，更符合组件化的规范。
+
+v
+
+
+

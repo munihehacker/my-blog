@@ -468,4 +468,4 @@ tsconfig.json：
 完整选项和功能参考官网：[tsconfig - typescriptlang](https://www.typescriptlang.org/tsconfig)
 但是现在项目初始化都是使用vue-cli来新建，需要参考其他文档
 
-完结待续。。。
+未完待续。。。
