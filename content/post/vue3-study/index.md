@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: true
 draft: false
+tags: ["Vue"]
+categories: ["前端"]
 ---
 
 ##  参考教程：
