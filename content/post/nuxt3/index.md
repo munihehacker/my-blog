@@ -1,5 +1,5 @@
 ---
-title: "Nuxt3 启动 tailwindCSS 启动~"
+title: "Nuxt3 启动 tailwindCSS 启动!!!"
 description: 
 date: 2023-11-03T23:15:12+08:00
 image: title.png
