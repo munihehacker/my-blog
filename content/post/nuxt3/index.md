@@ -4,10 +4,12 @@ description:
 date: 2023-11-03T23:15:12+08:00
 image: title.png
 math: 
-license: 
+license:
 hidden: false
 comments: true
 draft: false
+tags: ["Vue","Nuxt"]
+categories: ["前端"]
 ---
 
 # 前言
