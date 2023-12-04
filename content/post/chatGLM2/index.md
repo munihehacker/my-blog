@@ -1,5 +1,5 @@
 ---
-title: "从搭建环境开始本地部署ChatGLM2 6B大模型"
+title: "从搭建环境开始本地部署chatGLM2-6B大模型"
 description: 
 date: 2023-11-23T22:18:48+08:00
 image: title.png
