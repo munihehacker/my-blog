@@ -8,7 +8,7 @@ license:
 hidden: false
 comments: true
 draft: false
-tags: ["大模型"]
+tags: ["python"]
 categories: ["杂技浅尝"]
 ---
 
