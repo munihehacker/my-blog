@@ -1,5 +1,5 @@
 ---
-title: "从 搭建环境开始 本地部署  ChatGLM2 6B 大模型"
+title: "从搭建环境开始本地部署ChatGLM2 6B大模型"
 description: 
 date: 2023-11-23T22:18:48+08:00
 image: title.png
@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: true
 draft: false
+tags: ["大模型"]
+categories: ["杂技浅尝"]
 ---
 
 # 前言
