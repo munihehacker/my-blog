@@ -7,7 +7,7 @@ math:
 license: 
 hidden: false
 comments: true
-draft: fasle
+draft: false
 tags: ["PHP", "Composer", "Git"]
 categories: ["杂技浅尝"]
 ---
