@@ -2,7 +2,7 @@
 title: "Stable Diffusion UI 从安装 文字图片融合（光影字，错觉图）制作详细教程"
 description: 
 date: 2023-12-09T13:19:05+08:00
-image: 
+image: title.png
 math: 
 license: 
 hidden: false
@@ -43,20 +43,20 @@ bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123
 ```
 效果：
 ![img_3.png](img_3.png)
-现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了：
+现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了：  
 ![img_4.png](img_4.png)
 ![img_5.png](img_5.png)
-此时的webui截图是我安装一些插件的之后截图,接下来需要安装一些插件：
+此时的webui截图是我安装一些插件的之后截图,接下来需要安装一些插件：  
 ![img_6.png](img_6.png)
 
 首先安装一个中文插件
-扩展两种安装方式，第一种就是通过内置插件安装
+扩展两种安装方式，第一种就是通过内置插件安装   
 没安装搜这个
 ![img_9.png](img_9.png)
 安装过后就翻译搜不到了，搜`中文`：
 ![img_10.png](img_10.png)
-点击安装，这里应该也可以可以直接通过网址安装  
-注意要在设置里面设置重启UI才能生效   
+点击安装，这里应该也可以可以直接通过网址安装      
+注意要在设置里面设置重启UI才能生效     
 ![img_11.png](img_11.png)
 
 还需要装一个模型浏览工具 ：C站浏览器插件
@@ -65,14 +65,14 @@ bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123
 第二种是通过网址安装：
 ![img_7.png](img_7.png)
 
-这里我通过这个网址安装了：  
-1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git）  
-对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件  
-2.sd_civitai_extension	（https://github.com/civitai/sd_civitai_extension）  
-C 站的官方扩展，可以自动下载模型，获取模型信息，检查模型更新，自动下载缩略图的能力，  
-3.C站浏览器插件	（https://github.com/BlafKing/sd-civitai-browser-plus.git）  
-C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样的网站，但是C站有很多不可描述的东西，被墙了   
-通过网址安装就用 git 项目地址点击安装就行了
+这里我通过这个网址安装了：    
+1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git）    
+对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件    
+2.sd_civitai_extension	（https://github.com/civitai/sd_civitai_extension）    
+C 站的官方扩展，可以自动下载模型，获取模型信息，检查模型更新，自动下载缩略图的能力  
+3.C站浏览器插件	（https://github.com/BlafKing/sd-civitai-browser-plus.git）   
+C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样的网站，但是C站有很多不可描述的东西，被墙了    
+通过网址安装就用 git 项目地址点击安装就行了   
 ![img_8.png](img_8.png)
 
 注意：所有的插件安装完成都需要在设置里面点击 ”保存设置“ 和 “重启WebUI”
@@ -92,13 +92,13 @@ C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样�
 ![img_15.png](img_15.png)
 
 
-直接完成就能自动进入左上角的`Stable Diffusion 模型(ckpt) `选项
+直接完成就能自动进入左上角的`Stable Diffusion 模型(ckpt) `选项切换就行了  
 ![img_16.png](img_16.png)
 
 #  画图
 这里我使用的是 majicmixRealistic 这个底层模型 生成一个人物
 
-需要提示词prompt提示词，找了一些prompt社区里面的关键词
+需要提示词prompt提示词，找了一些prompt社区里面的关键词   
 正面提示：
 ```typescript
  jk_lure_dress3,8k,(realistic:1.1), (photorealistic:1.1), (masterpiece:1.1), (best quality:1.1), RAW photo, highres, ultra detailed, High detail RAW color photo,professional photograph,masterpiece, best quality,realistic,realskin,1girl,low_key,solo,lighting,long hair ,full body, standing,classroom, beautiful detailed eyes,natural lighting,, (detailed face:1.2),extremely beautiful face,
@@ -136,5 +136,5 @@ Stable Diffusion有很多采样器类型，稍微查了一下资料，是指一�
 # 测试
 除了字，还有网上特别火的图片背景融入的例子自己也测了一下，看看效果：
 ![img_21.png](img_21.png)
-![img_24.png](img_24.png)
+![img_24.png](img_24.png)  
 效果非常好，生成的十张图片可以跳1到3张非常完美的图片出来，有一定几率会出现眼睛，手指有问题的现象，问题不大。
