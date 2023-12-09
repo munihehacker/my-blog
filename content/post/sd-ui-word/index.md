@@ -7,7 +7,9 @@ math:
 license: 
 hidden: false
 comments: true
-draft: true
+draft: false
+tags: ["Stable Diffusion"]
+categories: ["大模型"]
 ---
 # 前言
 最近 在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境也支持跑Stable Diffusion，心血来潮来跑一下试一下。
@@ -16,7 +18,6 @@ draft: true
 
 
 通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，会从怎么安装Stable Diffusion到做一个文字图片融合的示例。
-
 
 
 # 安装
@@ -136,4 +137,4 @@ Stable Diffusion有很多采样器类型，稍微查了一下资料，是指一�
 除了字，还有网上特别火的图片背景融入的例子自己也测了一下，看看效果：
 ![img_21.png](img_21.png)
 ![img_24.png](img_24.png)
-果非常好，生成的十张图片可以跳1到3张非常完美的图片出来，有一定几率会出现眼睛，手指有问题的现象，
+效果非常好，生成的十张图片可以跳1到3张非常完美的图片出来，有一定几率会出现眼睛，手指有问题的现象，问题不大。
