@@ -21,7 +21,7 @@ categories: ["大模型"]
 
 
 # 安装
-这里不会具体详细截图内容，会粗略介绍一下，但是会以新手角度顺便会说一下我遇到的问题
+这里不会具体详细截图内容，会粗略介绍一下，但是会以新手角度顺便会说一下我遇到的问题   
 Stable Diffusion项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui
 根据项目介绍下载安装脚本，执行安装脚本：
 ![img.png](img.png)
@@ -34,8 +34,10 @@ wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/m
 sh webui.sh
 ```
 执行安装脚本过后运行，开始的会报一个错，我是用root 权限执行的，会报错：
-![img_1.png](img_1.png)
+![img_1.png](img_1.png)  
+
 需要把这个webui.sh 执行权限改为非root 用户并以非root 用户运行 ，就是这样：
+
 ![img_2.png](img_2.png)
 此时可以看起来没有问题了，实际上没有开放到内网机器访问，监听的是127.0.0.1 ，需要成0.0.0.0就需要给`webui.sh`加上参数才行，我还有一些其他的需求就是打开web ui的扩展权限和访问权限验证，就是下面这样：
 ```shell
@@ -51,8 +53,7 @@ bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123
 
 首先安装一个中文插件
 扩展两种安装方式，第一种就是通过内置插件安装   
-没安装搜这个
-![img_9.png](img_9.png)
+没安装搜这个`zh`  
 安装过后就翻译搜不到了，搜`中文`：
 ![img_10.png](img_10.png)
 点击安装，这里应该也可以可以直接通过网址安装      
@@ -80,17 +81,14 @@ C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样�
 
 # 下载模型
 使用`C站浏览器插件` 下载模型
-这里推荐两个模型：
+这里推荐一个模型（下了很多模型还没来得及测试）：
 `majicMIX realistic 麦橘写实` 
 
 ![img_14.png](img_14.png)
 
 用于生成逼真的人物肖像底层模型
 
-底层模型是模型生成图像所必需的，是模型的核心部分，可以相当于说基础数据集。
-`万象熔炉 | Anything V5/Ink`
-![img_15.png](img_15.png)
-
+底层模型是模型生成图像所必需的，是模型的核心部分，可以相当于说基础数据集。   
 
 直接完成就能自动进入左上角的`Stable Diffusion 模型(ckpt) `选项切换就行了  
 ![img_16.png](img_16.png)
