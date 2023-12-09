@@ -1,5 +1,5 @@
 ---
-title: "Stable Diffusion UI 从安装 文字图片融合（光影字，错觉图）制作详细教程"
+title: "Stable Diffusion UI 从安装 到实现 文字图片融合（光影字，错觉图）图片制作详细教程"
 description: 
 date: 2023-12-09T13:19:05+08:00
 image: title.png
