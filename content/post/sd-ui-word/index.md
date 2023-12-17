@@ -1,5 +1,5 @@
 ---
-title: "Stable Diffusion UI 从安装 到实现 文字图片融合（光影字，错觉图）图片制作详细教程"
+title: "Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程"
 description: 
 date: 2023-12-09T13:19:05+08:00
 image: title.png
@@ -12,23 +12,25 @@ tags: ["Stable Diffusion"]
 categories: ["大模型"]
 ---
 # 前言
-最近 在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境也支持跑Stable Diffusion，心血来潮来跑一下试一下。
+最近在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境搭好了，也支持跑Stable Diffusion，所以就安装了再尝试一下。
 
-之前在B站上有大佬做了一个Windows电脑能一键运行的Stable Diffusion的安装包，自己也下载下来玩了一下，因为刚接触上手难度比较大，玩了一下放弃了。这两天随着SD XL 发布，看到能毫秒级地文字生成图片，还有cloudflare 有免费的服务提供，太震撼了，所以想动手做一些东西出来。
+原因是之前在B站上有大佬做了一个Windows电脑能一键运行的Stable Diffusion的安装包，自己也下载下来玩了一下，因为刚接触上手难度比较大，玩了一下放弃了。这两天随着SD XL 发布，看到能毫秒级地文字生成图片，还有cloudflare 有免费的服务提供，太震撼了，所以想动手做一些实际的东西出来分享一下。
 
-
-通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，会从怎么安装Stable Diffusion到做一个文字图片融合的示例。
+对于没有接触过的同学通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，接下来我会从怎么安装Stable Diffusion到做一个文字图片融合的示例。
 
 
 # 安装
-这里不会具体详细截图内容，会粗略介绍一下，但是会以新手角度顺便会说一下我遇到的问题   
-Stable Diffusion项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui
+
+首先是Stable Diffusion UI项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui
+
+我自己的环境是Linux环境，通过脚本安装的形式来启动网页工具，大多数人应该是Windows 环境，通过下载安装包的形式启动网页工具，这里不会介绍每个专业关键字的具体解释，但是会以新手角度顺便会说一下我遇到的问题   
+
 根据项目介绍下载安装脚本，执行安装脚本：
 ![img.png](img.png)
 
-会下载一些相关依赖：
+有些依赖软件我已经安装，这里我会根据官方提示下载一些相关依赖：
 ```shell
-sudo apt install wget git python3 python3-venv libgl1 libglib2.0-0
+sudo apt install  libgl1 libglib2.0-0
 
 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 sh webui.sh
@@ -43,6 +45,7 @@ sh webui.sh
 ```shell
 bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123456 
 ```
+还可以增加其他参数达到相应其他的功能，可以去查找官方相关资料。  
 效果：
 ![img_3.png](img_3.png)
 现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了：  
@@ -69,10 +72,13 @@ bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123
 这里我通过这个网址安装了：    
 1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git）    
 对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件    
+
 2.sd_civitai_extension	（https://github.com/civitai/sd_civitai_extension）    
 C 站的官方扩展，可以自动下载模型，获取模型信息，检查模型更新，自动下载缩略图的能力  
+
 3.C站浏览器插件	（https://github.com/BlafKing/sd-civitai-browser-plus.git）   
 C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样的网站，但是C站有很多不可描述的东西，被墙了    
+
 通过网址安装就用 git 项目地址点击安装就行了   
 ![img_8.png](img_8.png)
 
@@ -82,6 +88,7 @@ C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样�
 # 下载模型
 使用`C站浏览器插件` 下载模型
 这里推荐一个模型（下了很多模型还没来得及测试）：
+
 `majicMIX realistic 麦橘写实` 
 
 ![img_14.png](img_14.png)
@@ -91,7 +98,7 @@ C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样�
 底层模型是模型生成图像所必需的，是模型的核心部分，可以相当于说基础数据集。   
 
 直接完成就能自动进入左上角的`Stable Diffusion 模型(ckpt) `选项切换就行了  
-![img_16.png](img_16.png)
+![img_25.png](img_25.png)
 
 #  画图
 这里我使用的是 majicmixRealistic 这个底层模型 生成一个人物
@@ -105,9 +112,9 @@ C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样�
 ```typescript
 white background, simple background, (ng_deepnegative_v1_75t), (badhandv4), (worst quality:2), (low quality:2), (normal quality:2), lowres, watermark, monochrome
 ```
-我这里生成的人物素材是全身的，所以宽度我设置的是512，高度是1024，要尝试好多次就一次行多生成几个，就选择每批次4个。 
+我这里生成的人物素材是全身的，所以宽度我设置的是512，高度是1024，批次数量测试的时候就1个，几秒一个图，调好了话就一次多生成几个图，就选择每批次4-8个。 
 
-随机种子-1 就是完全随机，想要生成的图片一致，把相关参数分享出去让别人生成一样的参数就不能设置成-1。
+随机种子-1 就是完全随机，想要生成的图片一致，把相关参数分享出去让别人生成一样的图片，这个随机种子参数就不能设置成-1。
 
 Stable Diffusion有很多采样器类型，稍微查了一下资料，是指一种指用于生成图像的算法，对图像质量，速度，艺术风格有关，我这里使用DPM++ SDE Karras，
 
@@ -135,4 +142,9 @@ Stable Diffusion有很多采样器类型，稍微查了一下资料，是指一�
 除了字，还有网上特别火的图片背景融入的例子自己也测了一下，看看效果：
 ![img_21.png](img_21.png)
 ![img_24.png](img_24.png)  
-效果非常好，生成的十张图片可以跳1到3张非常完美的图片出来，有一定几率会出现眼睛，手指有问题的现象，问题不大。
+![title.png](title.png)  
+效果还不错，生成的十张图片可以挑选出1到3张非常完美的图片出来，因为有一定几率会出现眼睛，手指有问题的现象，找到有几种解决方案还没来得及尝试。
+
+Stable Diffusion 还有很多内容没有研究，实际上互联网上的真实有用案例教程还是很少的，需要自己去钻研，大模型时代的机遇和挑战已经来了。
+
+接下来会研究其他风格图像生成，lora模型，和API 调用方向~
