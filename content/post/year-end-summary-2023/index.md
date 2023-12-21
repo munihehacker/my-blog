@@ -16,3 +16,5 @@ draft: true
 
 
 2023.1.7起了一个博客 blog.tuwei.space, 用来记录一些技术文章, 以及一些生活感悟.一共17篇文章
+
+2023 大模型元年，OpenAI 领头 第一时间体验到了ChatGPT 
