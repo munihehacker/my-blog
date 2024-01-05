@@ -2,7 +2,7 @@
 title: "Stable Diffusion UI 开机启动 & contronet API接入"
 description: 
 date: 2023-12-17T17:13:36+08:00
-image: img_1.png
+image: img_3.png
 math: 
 license: 
 hidden: false
