@@ -2,7 +2,7 @@
 title: "Stable Diffusion UI 开机启动 & contronet API接入"
 description: 
 date: 2023-12-17T17:13:36+08:00
-image: 2.gif
+image: img_3.png
 math: 
 license: 
 hidden: false
@@ -225,7 +225,7 @@ for filename in glob.glob(file_pattern):
 
 然后测试了几个发现去掉三分之一的帧数观感最好，保留所有的帧每一帧的展示时间多了看不清背景图，保留一般的图每一帧的展示时间少了看不清融入的图 
 效果：
-![1.webp](1.webp)
+![2.gif](2.gif)
 
 # 总结
 
