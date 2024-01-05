@@ -225,5 +225,9 @@ for filename in glob.glob(file_pattern):
 
 然后测试了几个发现去掉三分之一的帧数观感最好，保留所有的帧每一帧的展示时间多了看不清背景图，保留一般的图每一帧的展示时间少了看不清融入的图 
 效果：
+![1.webp](1.webp)
 
+# 总结
 
+其实使用 contolnet 脚本插件 LoopbackWave（ <https://github.com/FizzleDorf/Loopback-Wave-for-A1111-Webui）> 以及Deforum（<https://github.com/deforum-art/sd-webui-deforum）插件> 可以达到比上图更好的更丝滑的视频动态转场效果，但是看起来操作比较复杂，原因是自己作为程序员更希望通过发挥自己的技能来做出一些意思的东西。
+后面也会继续折腾，分享教程\~
