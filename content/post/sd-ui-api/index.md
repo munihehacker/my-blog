@@ -11,7 +11,7 @@ draft: false
 ---
 
 # 前言
-前几天用Stable Diffusion到做一个文字图片融合的示例，今天就使用 Stable Diffusion API 批量操作制作，把视频拆成一帧一帧的图片，把这些图片融入到Stable Diffusion生成的图片里面去。
+前几天用Stable Diffusion到做一个文字图片融合的示例，今天就使用 Stable Diffusion API 批量操作制作，使用文生图API把视频拆成一帧一帧的图片，把这些图片融入到Stable Diffusion生成的图片里面去。
 
 自己的Stable Diffusion 部署在Linux系统上，每次开机都需要手动切用户使用shell脚本，想做一个开机自动启动的脚本
 
@@ -225,6 +225,7 @@ for filename in glob.glob(file_pattern):
 
 然后测试了几个发现去掉三分之一的帧数观感最好，保留所有的帧每一帧的展示时间多了看不清背景图，保留一般的图每一帧的展示时间少了看不清融入的图 
 效果：
+
 ![2.gif](2.gif)
 
 # 总结
