@@ -108,3 +108,5 @@ SELECT content FROM "main"."comment" WHERE "thank_count" > '1' and LENGTH(conten
 大家可以自己来试一下，或者有什么意见给到我呢？
 
 BotID: 7339025335163387942
+
+https://doubao.com/bot/rd0rttVE
