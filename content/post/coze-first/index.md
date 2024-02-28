@@ -105,8 +105,6 @@ SELECT content FROM "main"."comment" WHERE "thank_count" > '1' and LENGTH(conten
 
 尝试过导入到国外版的coze机器人里面，可以通过聊天可以直接问到一些详细具体的语料信息。
 
-大家可以自己来试一下，或者有什么意见给到我呢？
-
-BotID: 7339025335163387942
-
-https://doubao.com/bot/rd0rttVE
+国内外机器人都上线了 大家可以自己来试一下或者有什么意见给到我呢？
+国内版 ：BotID: 7339025335163387942 https://doubao.com/bot/rd0rttVE
+国外版：https://ciciai.com/bot/sygGSrXY
