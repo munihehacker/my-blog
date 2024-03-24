@@ -1,5 +1,5 @@
 ---
-title: "Stable Diffusion UI 开机启动 & contronet API接入"
+title: "Stable Diffusion UI 开机启动 & controlnet API接入"
 description: 
 date: 2023-12-17T17:13:36+08:00
 image: 
@@ -13,11 +13,11 @@ draft: true
 # 前言
 前几天用Stable Diffusion到做一个文字图片融合的示例，今天就使用 Stable Diffusion API 批量操作制作，把视频拆成一帧一帧的图片，把这些图片融入到Stable Diffusion生成的图片里面去。
 
-自己的Stable Diffusion 部署在Linux系统上，每次开机都需要手动切用户使用shell脚本，想做一个开机自动启动的脚本
+自己的Stable Diffusion 部署在Linux系统上，每次开机都需要手动切用户使用shell脚本启动，想做一个开机自动启动的脚本
 
 
 # 开机脚本
-使用linux systemd 服务管理工具，我的系统版本是Ubuntu22.04，需要新建服务管理脚本，文件位置：`/etc/systemd/system/webui.service`,内容如下：
+使用linux systemd 服务管理工具，我的系统版本是Ubuntu22.04，需要新建服务管理脚本，文件位置：`/etc/systemd/system/webui.service`内容如下：
 ```shell
 [Unit]
 Description=Start sd-ui service
@@ -43,18 +43,18 @@ systemctl start webui.service
 ![img.png](img.png)
 
 # 下载controlnet
-上篇只下载了controlnet 扩展，这次需要安装它的模型
-模型地址：https://huggingface.co/lllyasviel/ControlNet-v1-1
-需要使用Git下载移动到相关目录：/`*sd安装目录*`/extensions/sd-webui-controlnet/models
+上篇只下载了controlnet 扩展，这次需要安装它的模型  
+模型地址：https://huggingface.co/lllyasviel/ControlNet-v1-1  
+需要使用Git下载移动到相关目录：/`*sd安装目录*`/extensions/sd-webui-controlnet/models (体积比较大，耐心等待~)  
 ![ControlNet.png](ControlNet.png)
 下载移动完成后效果：
 ![img_1.png](img_1.png)
 ![img_2.png](img_2.png)
 
 # 参考源码
-没有官方文档，自己找了一些案例测试测试了很多，最后是按照这个项目完成了想要的结果
-ControlNet API项目地址：
-https://github.com/Mikubill/sd-webui-controlnet
+没有官方文档，自己找了一些案例测试了很久，最后是按照这个项目完成了想要的结果  
+ControlNet API项目地址： 
+https://github.com/Mikubill/sd-webui-controlnet  
 
 ![codegit.png](codegit.png)
 
@@ -64,10 +64,10 @@ https://github.com/Mikubill/sd-webui-controlnet
 ```typescript
 http://192.168.2.226:7860/docs
 ```
-缺少图片展示API
+![img_4.png](img_4.png)
  
-找到接口：`sdapi/v1/txt2img`  
-所以得到最终的请求接口：`http://192.168.2.226:7860/dapi/v1/txt2img`
+找到接口：`sdapi/v1/txt2img`    
+所以得到最终的请求接口：`http://192.168.2.226:7860/sdapi/v1/txt2img`  
 
 根据上篇文章的图片融合的功能构造的请求参数：
 ```json
@@ -119,8 +119,9 @@ http://192.168.2.226:7860/docs
 ```
 
 # 封装功能Python函数
-
-大概几个逻辑 需要转成代码  需要读取本地的转base64 转入接口，然后请求API 得到图片base64数据存到本地
+大概几个逻辑： 
+提前需要把视频手动拆解成图片。 
+然后代码功能就是把这些图片分别转base64 转入SD接口，然后请求API 得到图片base64数据存到本地
 
 整个Python 脚本：
 ```python
@@ -131,7 +132,8 @@ from PIL import Image, PngImagePlugin
 import glob
 
 url = "http://192.168.2.226:7860/"
-def getbase64(path):
+# 封装的图片转base64,转换完成过给喂给Stable Diffusion
+def getbase64(path): 
     with open(path,'rb') as file:
         image_data = file.read()
     image_data = 'data:image/png;base64,'+base64.b64encode(image_data).decode('utf-8')
@@ -187,7 +189,7 @@ def build_img(name,image_data,save_path):
     response = requests.post(url=f'{url}sdapi/v1/txt2img', json=payload)
 
     r = response.json()
-    res = r['images'][0]
+    res = r['images'][0] # 请求的接口会有两个图片结果，第一个是结果，第二个是contrlnet的输入原图，刚开始这里没搞清楚，走了弯路
 
     image = Image.open(io.BytesIO(base64.b64decode(res.split(",",1)[0])))
 
@@ -217,13 +219,18 @@ for filename in glob.glob(file_pattern):
     count+=1
 
 ```
-在脚本目录下还有相关读取的文件夹，需要把融合的视频拆成一帧的文件夹为`cxk` ,通过融合过后保存的文件夹 需要提前新建:`cxk_build`
+在脚本目录下还有相关读取的文件夹，需要把融合的视频拆成一帧的文件夹为`cxk` ,通过融合过后保存的文件夹 需要提前新建:`cxk_build`  文件夹
 
 # 测试
-最终效果就是生成了很多图片，我这里的视频是59秒，拆成一帧一帧的图片一共生成接近900张图片，使用的工具是ScreenToGIF，使用2070s生成一张15秒-16秒之间，粗略计算大概接近4个小时，非常耗电，哈哈 。
+
+脚本运行完毕可以看到 cxk_build 文件夹生成了很多图片，我这里的视频是59秒，拆成一帧一帧的图片一共生成接近900张图片，使用的工具是ScreenToGIF，使用2070s生成一张15秒-16秒之间，粗略计算大概接近4个小时，非常耗电，哈哈 。  
 ![img_3.png](img_3.png)
 
-然后测试了几个发现去掉三分之一的帧数观感最好，保留所有的帧每一帧的展示时间多了看不清背景图，保留一般的图每一帧的展示时间少了看不清融入的图 
-效果：
+然后测试了几个发现去掉三分之一的帧数观感最好，保留每一帧的图片闪动很快看不清背景图，保留一半的图每一帧的展示时间少了看不清融入的图   
+效果（为了缩小gif缩小体积，画质差了很多）：
+![show4.gif](show4.gif)
 
+# 总结
+其实使用 contolnet 脚本插件 LoopbackWave（ https://github.com/FizzleDorf/Loopback-Wave-for-A1111-Webui） 以及Deforum（https://github.com/deforum-art/sd-webui-deforum）插件 可以达到比上图更好的更丝滑的视频动态转场效果，但是看起来操作比较复杂，原因是自己作为程序员更希望通过发挥自己的技能来做出一些意思的东西。
+后面也会继续折腾，分享教程~
 
