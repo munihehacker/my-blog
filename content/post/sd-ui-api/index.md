@@ -1,23 +1,23 @@
 ---
-title: "Stable Diffusion UI 开机启动 & controlnet API接入"
+title: "Stable Diffusion UI 开机启动 & contronet API接入"
 description: 
 date: 2023-12-17T17:13:36+08:00
-image: 
+image: img_3.png
 math: 
 license: 
 hidden: false
 comments: true
-draft: true
+draft: false
 ---
 
 # 前言
-前几天用Stable Diffusion到做一个文字图片融合的示例，今天就使用 Stable Diffusion API 批量操作制作，把视频拆成一帧一帧的图片，把这些图片融入到Stable Diffusion生成的图片里面去。
+前几天用Stable Diffusion到做一个文字图片融合的示例，今天就使用 Stable Diffusion API 批量操作制作，使用文生图API把视频拆成一帧一帧的图片，把这些图片融入到Stable Diffusion生成的图片里面去。
 
-自己的Stable Diffusion 部署在Linux系统上，每次开机都需要手动切用户使用shell脚本启动，想做一个开机自动启动的脚本
+自己的Stable Diffusion 部署在Linux系统上，每次开机都需要手动切用户使用shell脚本，想做一个开机自动启动的脚本
 
 
 # 开机脚本
-使用linux systemd 服务管理工具，我的系统版本是Ubuntu22.04，需要新建服务管理脚本，文件位置：`/etc/systemd/system/webui.service`内容如下：
+使用linux systemd 服务管理工具，我的系统版本是Ubuntu22.04，需要新建服务管理脚本，文件位置：`/etc/systemd/system/webui.service`,内容如下：
 ```shell
 [Unit]
 Description=Start sd-ui service
@@ -230,7 +230,9 @@ for filename in glob.glob(file_pattern):
 效果（为了缩小gif缩小体积，画质差了很多）：
 ![show4.gif](show4.gif)
 
-# 总结
-其实使用 contolnet 脚本插件 LoopbackWave（ https://github.com/FizzleDorf/Loopback-Wave-for-A1111-Webui） 以及Deforum（https://github.com/deforum-art/sd-webui-deforum）插件 可以达到比上图更好的更丝滑的视频动态转场效果，但是看起来操作比较复杂，原因是自己作为程序员更希望通过发挥自己的技能来做出一些意思的东西。
-后面也会继续折腾，分享教程~
+![2.gif](2.gif)
 
+# 总结
+
+其实使用 contolnet 脚本插件 LoopbackWave（ <https://github.com/FizzleDorf/Loopback-Wave-for-A1111-Webui）> 以及Deforum（<https://github.com/deforum-art/sd-webui-deforum）> 插件可以达到比上图更好的更丝滑的视频动态转场效果，但是看起来操作比较复杂，原因是自己作为程序员更希望通过发挥自己的技能来做出一些意思的东西。
+后面也会继续折腾，分享教程~
