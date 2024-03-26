@@ -2,12 +2,12 @@
 title: "电商利器 OOTDiffusion 服装更换 本地部署，效果非常棒"
 description: 
 date: 2024-03-24T22:06:19+08:00
-image: 
+image: img_4.png
 math: 
 license: 
 hidden: false
 comments: true
-draft: true
+draft: false
 ---
 
 ## 前言
