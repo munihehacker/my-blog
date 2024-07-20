@@ -11,7 +11,7 @@ hugo new post/myfirst.md
 
 新建带资源的Markdown文章
 ```shell
-hugo new post/build/index.md 
+hugo new post/web3-meta-mask/index.md 
 ```
 
 预览展示草稿

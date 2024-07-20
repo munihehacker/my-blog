@@ -221,7 +221,7 @@ sudo apt-get install libfreeimage3 libfreeimage-dev
 ```
 还是继续一样报错，显然没有安装g++编译库，想找到具体问题，结果在NVIDIA论坛找到的解决方案：
 ```shell
-sudo apt-get install g++ freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev
+sudo apt-get install g++ freeglut3-dev web3-meta-mask-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev
 ```
 最后成功了！！！
 ![img_29.png](img_29.png)
