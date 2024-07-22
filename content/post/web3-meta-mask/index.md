@@ -1,5 +1,5 @@
 ---
-title: "web3-meta-mask"
+title: "web3 meta-mask钱包"
 description: 
 date: 2024-07-20T21:47:39+08:00
 image: 
@@ -7,7 +7,7 @@ math:
 license: 
 hidden: false
 comments: true
-draft: true
+draft: false
 ---
 # 前言
 本系列教程会 从新手角度 学习web3，从以太坊合约，了解基本区块链知识
