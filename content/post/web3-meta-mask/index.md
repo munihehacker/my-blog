@@ -2,13 +2,14 @@
 title: "web3 meta-mask钱包"
 description: 
 date: 2024-07-20T21:47:39+08:00
-image: 
+image: img_24.png
 math: 
 license: 
 hidden: false
 comments: true
 draft: false
 ---
+![img_25.png](img_25.png)
 # 前言
 本系列教程会 从新手角度 学习web3，从以太坊合约，了解基本区块链知识
 第一步骤就是使用meta-mask钱包，在测试网测试 新建以太坊钱包

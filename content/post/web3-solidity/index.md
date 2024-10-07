@@ -2,14 +2,14 @@
 title: "Web3 Solidity 代码实现彩票智能合约"
 description: 
 date: 2024-07-20T22:44:42+08:00
-image: 
+image: img_1.png
 math: 
 license: 
 hidden: false
 comments: true
 draft: false
 ---
-
+![img_1.png](img_1.png)
 # 前言
 
 需求是编写第一个智能合约并发布到链上，只能合约就是使用solidity这个语言
