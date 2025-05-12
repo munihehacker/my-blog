@@ -10,17 +10,25 @@
 [[social]]
 identifier = "github"
 name = "GitHub"
-url = "https://github.com/koala9527"
+url = "https://github.com/alihehacker"
 
 [social.params]
 icon = "github-icon"
 
-[[social]]
-identifier = "juejin"
-name = "Juejin"
-url = "https://juejin.cn/user/2893570335056494"
 
+[[social]]
+identifier = "zhihu"
+name = "Zhihu"
+url = "https://www.zhihu.com/people/hacker-25-85-67"
+
+ [social.params]
+icon = "知乎"
+
+[[social]]
+identifier = "bilibili"
+name = "Bilibili"
+url = "https://space.bilibili.com/"
 [social.params]
-icon = "brand-juejin"
+icon = "B站"
 
 

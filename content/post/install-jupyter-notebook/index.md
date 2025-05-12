@@ -8,7 +8,7 @@ license:
 hidden: false
 comments: true
 draft: false
-tags: ["Python"]
+tags: ["Python","学习"]
 categories: ["Python", "杂技浅尝"]
 ---
 

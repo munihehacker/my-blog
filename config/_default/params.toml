@@ -19,11 +19,12 @@ subtitle = "悟已往之不谏,知来者知可追"
 [sidebar.avatar]
 enabled = true
 local = true
-src = "img/avatar.jpg"
+src = "img/avatar.png"
 
 [article]
-math = false
+math = true
 readingTime = true
+tags = true
 
 [article.license]
 enabled = true
@@ -38,6 +39,7 @@ type = "archives"
 
 [widgets.homepage.params]
 limit = 5
+
 
 [[widgets.homepage]]
 type = "categories"
