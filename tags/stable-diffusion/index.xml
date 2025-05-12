@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Stable Diffusion on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/stable-diffusion/</link>
+        <description>Recent content in Stable Diffusion on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Sat, 09 Dec 2023 13:19:05 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/stable-diffusion/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程</title>
+        <link>https://munihehacker/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Sat, 09 Dec 2023 13:19:05 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title.png" alt="Featured image of post Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;最近在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境搭好了，也支持跑Stable Diffusion，所以就安装了再尝试一下。&lt;/p&gt;
+&lt;p&gt;原因是之前在B站上有大佬做了一个Windows电脑能一键运行的Stable Diffusion的安装包，自己也下载下来玩了一下，因为刚接触上手难度比较大，玩了一下放弃了。这两天随着SD XL 发布，看到能毫秒级地文字生成图片，还有cloudflare 有免费的服务提供，太震撼了，所以想动手做一些实际的东西出来分享一下。&lt;/p&gt;
+&lt;p&gt;对于没有接触过的同学通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，接下来我会从怎么安装Stable Diffusion到做一个文字图片融合的示例。&lt;/p&gt;
+&lt;h1 id=&#34;安装&#34;&gt;安装
+&lt;/h1&gt;&lt;p&gt;首先是Stable Diffusion UI项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui&lt;/p&gt;
+&lt;p&gt;我自己的环境是Linux环境，通过脚本安装的形式来启动网页工具，大多数人应该是Windows 环境，通过下载安装包的形式启动网页工具，这里不会介绍每个专业关键字的具体解释，但是会以新手角度顺便会说一下我遇到的问题&lt;/p&gt;
+&lt;p&gt;根据项目介绍下载安装脚本，执行安装脚本：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img.png&#34;
+	width=&#34;2625&#34;
+	height=&#34;1734&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_hu5b4f87b0b97428b7c9ea71b3d1671bd5_173820_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_hu5b4f87b0b97428b7c9ea71b3d1671bd5_173820_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;151&#34;
+		data-flex-basis=&#34;363px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;有些依赖软件我已经安装，这里我会根据官方提示下载一些相关依赖：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install  libgl1 libglib2.0-0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh webui.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行安装脚本过后运行，开始的会报一个错，我是用root 权限执行的，会报错：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_1.png&#34;
+	width=&#34;1050&#34;
+	height=&#34;256&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_1_hu518a69f2d9a552a5c215f4482956ff83_12207_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_1_hu518a69f2d9a552a5c215f4482956ff83_12207_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;410&#34;
+		data-flex-basis=&#34;984px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;需要把这个webui.sh 执行权限改为非root 用户并以非root 用户运行 ，就是这样：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_2.png&#34;
+	width=&#34;2617&#34;
+	height=&#34;1386&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_2_hudd1d88eb54f471bbff3a0b3f67302afc_115388_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_2_hudd1d88eb54f471bbff3a0b3f67302afc_115388_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;188&#34;
+		data-flex-basis=&#34;453px&#34;
+	
+&gt;
+此时可以看起来没有问题了，实际上没有开放到内网机器访问，监听的是127.0.0.1 ，需要成0.0.0.0就需要给&lt;code&gt;webui.sh&lt;/code&gt;加上参数才行，我还有一些其他的需求就是打开web ui的扩展权限和访问权限验证，就是下面这样：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123456 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;还可以增加其他参数达到相应其他的功能，可以去查找官方相关资料。&lt;br&gt;
+效果：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_3.png&#34;
+	width=&#34;2868&#34;
+	height=&#34;1278&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_3_hub497a2262dec27d08ffdbd4d23f994ce_108498_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_3_hub497a2262dec27d08ffdbd4d23f994ce_108498_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;224&#34;
+		data-flex-basis=&#34;538px&#34;
+	
+&gt;
+现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了：&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_4.png&#34;
+	width=&#34;2136&#34;
+	height=&#34;676&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_4_hu708443e6887b94114401a7b689af8149_38506_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_4_hu708443e6887b94114401a7b689af8149_38506_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;315&#34;
+		data-flex-basis=&#34;758px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_5.png&#34;
+	width=&#34;3819&#34;
+	height=&#34;1750&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_5_hu18244ba1abf2d8926f46f30bfcd9e1b8_193510_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_5_hu18244ba1abf2d8926f46f30bfcd9e1b8_193510_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;218&#34;
+		data-flex-basis=&#34;523px&#34;
+	
+&gt;
+此时的webui截图是我安装一些插件的之后截图,接下来需要安装一些插件：&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_6.png&#34;
+	width=&#34;1491&#34;
+	height=&#34;1056&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_6_hu435b373bdd200513a81cfa763a8cd4a7_156994_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_6_hu435b373bdd200513a81cfa763a8cd4a7_156994_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_6.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;338px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;首先安装一个中文插件
+扩展两种安装方式，第一种就是通过内置插件安装&lt;br&gt;
+没安装搜这个&lt;code&gt;zh&lt;/code&gt;&lt;br&gt;
+安装过后就翻译搜不到了，搜&lt;code&gt;中文&lt;/code&gt;：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_10.png&#34;
+	width=&#34;3744&#34;
+	height=&#34;153&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_10_hua94d6e8173e3990e5ce80e58ce7ec680_31816_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_10_hua94d6e8173e3990e5ce80e58ce7ec680_31816_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_10.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;2447&#34;
+		data-flex-basis=&#34;5872px&#34;
+	
+&gt;
+点击安装，这里应该也可以可以直接通过网址安装   &lt;br&gt;
+注意要在设置里面设置重启UI才能生效  &lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_11.png&#34;
+	width=&#34;3744&#34;
+	height=&#34;1846&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_11_hub87d592dca599dd0e7bc42874f49f8e2_288267_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_11_hub87d592dca599dd0e7bc42874f49f8e2_288267_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_11.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;202&#34;
+		data-flex-basis=&#34;486px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;还需要装一个模型浏览工具 ：C站浏览器插件
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_12.png&#34;
+	width=&#34;3756&#34;
+	height=&#34;174&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_12_hu6e9224e340c13ba4f2b5a363443dfb57_51335_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_12_hu6e9224e340c13ba4f2b5a363443dfb57_51335_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_12.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;2158&#34;
+		data-flex-basis=&#34;5180px&#34;
+	
+&gt;
+点击安装就可以
+第二种是通过网址安装：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_7.png&#34;
+	width=&#34;1452&#34;
+	height=&#34;546&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_7_huacfc9e451a107c61e824bf394771ed48_42450_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_7_huacfc9e451a107c61e824bf394771ed48_42450_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_7.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;265&#34;
+		data-flex-basis=&#34;638px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里我通过这个网址安装了： &lt;br&gt;
+1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git） &lt;br&gt;
+对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件&lt;/p&gt;
+&lt;p&gt;2.sd_civitai_extension	（https://github.com/civitai/sd_civitai_extension） &lt;br&gt;
+C 站的官方扩展，可以自动下载模型，获取模型信息，检查模型更新，自动下载缩略图的能力&lt;/p&gt;
+&lt;p&gt;3.C站浏览器插件	（https://github.com/BlafKing/sd-civitai-browser-plus.git）&lt;br&gt;
+C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样的网站，但是C站有很多不可描述的东西，被墙了&lt;/p&gt;
+&lt;p&gt;通过网址安装就用 git 项目地址点击安装就行了&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_8.png&#34;
+	width=&#34;822&#34;
+	height=&#34;453&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_8_hu70130b4eb77d1b04187d7e489a752d3d_33806_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_8_hu70130b4eb77d1b04187d7e489a752d3d_33806_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_8.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;181&#34;
+		data-flex-basis=&#34;435px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;注意：所有的插件安装完成都需要在设置里面点击 ”保存设置“ 和 “重启WebUI”
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_13.png&#34;
+	width=&#34;3799&#34;
+	height=&#34;352&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_13_hu3d5da80299d114395de9a7fcf8e930d6_101430_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_13_hu3d5da80299d114395de9a7fcf8e930d6_101430_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_13.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1079&#34;
+		data-flex-basis=&#34;2590px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;下载模型&#34;&gt;下载模型
+&lt;/h1&gt;&lt;p&gt;使用&lt;code&gt;C站浏览器插件&lt;/code&gt; 下载模型
+这里推荐一个模型（下了很多模型还没来得及测试）：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;majicMIX realistic 麦橘写实&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_14.png&#34;
+	width=&#34;3795&#34;
+	height=&#34;1449&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_14_hu058eeb00bcf9c3fea3e1f22e3fbf8a04_1711308_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_14_hu058eeb00bcf9c3fea3e1f22e3fbf8a04_1711308_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_14.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;261&#34;
+		data-flex-basis=&#34;628px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;用于生成逼真的人物肖像底层模型&lt;/p&gt;
+&lt;p&gt;底层模型是模型生成图像所必需的，是模型的核心部分，可以相当于说基础数据集。&lt;/p&gt;
+&lt;p&gt;直接完成就能自动进入左上角的&lt;code&gt;Stable Diffusion 模型(ckpt) &lt;/code&gt;选项切换就行了&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_25.png&#34;
+	width=&#34;693&#34;
+	height=&#34;138&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_25_hu99b17272be988afcf161b775522ab048_12586_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_25_hu99b17272be988afcf161b775522ab048_12586_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_25.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;502&#34;
+		data-flex-basis=&#34;1205px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;画图&#34;&gt;画图
+&lt;/h1&gt;&lt;p&gt;这里我使用的是 majicmixRealistic 这个底层模型 生成一个人物&lt;/p&gt;
+&lt;p&gt;需要提示词prompt提示词，找了一些prompt社区里面的关键词&lt;br&gt;
+正面提示：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;nx&#34;&gt;jk_lure_dress3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;realistic&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;1.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;photorealistic&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;1.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;masterpiece&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;1.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;best&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;quality&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;1.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;RAW&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;photo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;highres&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ultra&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;detailed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;High&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;detail&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;RAW&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;color&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;photo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;professional&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;photograph&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;masterpiece&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;best&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;quality&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;realistic&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;realskin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;girl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;low_key&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;solo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lighting&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;hair&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;full&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;standing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classroom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;beautiful&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;detailed&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;eyes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;natural&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lighting&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;detailed&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;face&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;1.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;extremely&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;beautiful&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;face&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;负面：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;white&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;background&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;simple&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;background&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;ng_deepnegative_v1_75t&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;badhandv4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;worst&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;quality&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;low&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;quality&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;normal&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;quality&lt;/span&gt;:&lt;span class=&#34;kt&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lowres&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;watermark&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;monochrome&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;我这里生成的人物素材是全身的，所以宽度我设置的是512，高度是1024，批次数量测试的时候就1个，几秒一个图，调好了话就一次多生成几个图，就选择每批次4-8个。&lt;/p&gt;
+&lt;p&gt;随机种子-1 就是完全随机，想要生成的图片一致，把相关参数分享出去让别人生成一样的图片，这个随机种子参数就不能设置成-1。&lt;/p&gt;
+&lt;p&gt;Stable Diffusion有很多采样器类型，稍微查了一下资料，是指一种指用于生成图像的算法，对图像质量，速度，艺术风格有关，我这里使用DPM++ SDE Karras，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_17.png&#34;
+	width=&#34;3840&#34;
+	height=&#34;1926&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_17_hu8bddcd1280befe10115511c2aa4ce922_1280097_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_17_hu8bddcd1280befe10115511c2aa4ce922_1280097_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_17.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;199&#34;
+		data-flex-basis=&#34;478px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;需要选中启用，显存小启用现存优化，然后开启预览，看下设置下面点击爆炸icon 预览是否正确&lt;/p&gt;
+&lt;p&gt;然后最重要的是控制网络这里，需要上传一个图片到控制单元0，注意白底黑字就要选择预处理器第一个&lt;code&gt;反色处理&lt;/code&gt;，黑底白字就可以选择最后一个&lt;code&gt;仅重采样&lt;/code&gt;，然后点击一下预处理器和模型中间 爆炸的图片 查看预览 是否图片有正常的字显示&lt;/p&gt;
+&lt;p&gt;这个图片可以自己在windows 电脑画图中画一个
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_19.png&#34;
+	width=&#34;2394&#34;
+	height=&#34;1435&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_19_huad34066360d721086d7426dab90780cf_262837_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_19_huad34066360d721086d7426dab90780cf_262837_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_19.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;166&#34;
+		data-flex-basis=&#34;400px&#34;
+	
+&gt;
+大概流程新建图片，插入文字，调整字体和大小，裁剪，保存，图片中字体位置 代表了融入图片的大概的位置，尽量居中，控制留白位置来控制在融入图片的位置，我这里是基本占满图片的设计&lt;/p&gt;
+&lt;p&gt;然后设置非常重要的三个参数 ，控制强度，控制介入开始时间和结束时间。这三个参数代表控制网络对图片影响&lt;br&gt;
+控制强度为 1.0 控制网络对生成图像的影响最大 ，字就最明显，控制强度为 0就不会有任何影响，所以这个参数应该在0.5到0.8之间，
+开始时间和结束时间就是在控制强度正常的情况下对于随机图片元素的效果的影响。控制介入时机越晚，控制网络的影响就越晚开始，生成的图像就越随机，控制结束时机越晚，控制网络的影响就越晚结束，生成的图像就越随机，相反就反之。&lt;/p&gt;
+&lt;p&gt;这里大概三个参数分别差不多就在0.7，0.2，0.7这附近，可以根据自己的测试调整&lt;/p&gt;
+&lt;p&gt;这里测试了几个字，字的笔画复杂度 和粗细 和控制网络参数有一定关系，需要自己反复调整：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_20.png&#34;
+	width=&#34;512&#34;
+	height=&#34;1024&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_20_hu0bf1e68c9e91296f69e81bd4c1f4ee97_1179896_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_20_hu0bf1e68c9e91296f69e81bd4c1f4ee97_1179896_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_20.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;50&#34;
+		data-flex-basis=&#34;120px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;测试&#34;&gt;测试
+&lt;/h1&gt;&lt;p&gt;除了字，还有网上特别火的图片背景融入的例子自己也测了一下，看看效果：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_21.png&#34;
+	width=&#34;3274&#34;
+	height=&#34;1719&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_21_hu28a6153bf72489628270e7f035fed66b_1086502_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_21_hu28a6153bf72489628270e7f035fed66b_1086502_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_21.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;457px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_24.png&#34;
+	width=&#34;512&#34;
+	height=&#34;1024&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_24_hu78f77c05c85fcc7171b352f0c17e8f6e_1187747_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_24_hu78f77c05c85fcc7171b352f0c17e8f6e_1187747_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_24.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;50&#34;
+		data-flex-basis=&#34;120px&#34;
+	
+&gt;&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title.png&#34;
+	width=&#34;1024&#34;
+	height=&#34;512&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title_hu5bbd3cf17cecd5bfba798574e4976910_801065_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title_hu5bbd3cf17cecd5bfba798574e4976910_801065_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;title.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;200&#34;
+		data-flex-basis=&#34;480px&#34;
+	
+&gt;&lt;br&gt;
+效果还不错，生成的十张图片可以挑选出1到3张非常完美的图片出来，因为有一定几率会出现眼睛，手指有问题的现象，找到有几种解决方案还没来得及尝试。&lt;/p&gt;
+&lt;p&gt;Stable Diffusion 还有很多内容没有研究，实际上互联网上的真实有用案例教程还是很少的，需要自己去钻研，大模型时代的机遇和挑战已经来了。&lt;/p&gt;
+&lt;p&gt;接下来会研究其他风格图像生成，lora模型，和API 调用方向~&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

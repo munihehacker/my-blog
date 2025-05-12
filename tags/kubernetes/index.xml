@@ -1,0 +1,1042 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Kubernetes on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/kubernetes/</link>
+        <description>Recent content in Kubernetes on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Wed, 21 Jun 2023 11:09:58 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>用ARM盒子 再次搭建一个最新版本的K8s集群</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/</link>
+        <pubDate>Wed, 21 Jun 2023 11:09:58 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/1.27.png" alt="Featured image of post 用ARM盒子 再次搭建一个最新版本的K8s集群" /&gt;&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;两年前买了四台树莓派4B 组了一个K8s 集群，在知乎，掘金发了两篇搭建的教程，一直都有人收藏，网上的教程也很少，今年年初看到树莓派溢价非常多，几乎没有做什么应用搭建在上面，就拿过来组集群写些教程使用了，所以索性咸鱼几乎翻倍都出了。
+最近看到随身wifi棒子特别的火，又有人搭建利用随身wifi的Docker Swarm集群，自己有想动手弄一个，又在咸鱼淘了四个处理器为RK3568的机器，处理器配置比树莓派配置要好，但是只有4G内存，主要是才90元一个，买了12V DC电源。不到400。
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img.png&#34;
+	width=&#34;3472&#34;
+	height=&#34;3516&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_hu15b83bf5d2d823155e26e27ae25ab1e4_13215049_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_hu15b83bf5d2d823155e26e27ae25ab1e4_13215049_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;98&#34;
+		data-flex-basis=&#34;236px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;如果对kubernetes基本概念不熟悉，请务必找到之前文章去熟悉一下，之前的文章的细节描述非常仔细清楚~&lt;/p&gt;
+&lt;p&gt;系统是自带的Armbian:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# uname -a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Linux panther-x2-main 6.1.28-rockchip64 &lt;span class=&#34;c1&#34;&gt;#1 SMP PREEMPT Thu May 11 14:04:52 UTC 2023 aarch64 aarch64 aarch64 GNU/Linux&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Armbian是轻量级的Debian系统，Linux有两大分支系列，一个是Debian 一个是Redhat。每个系列又有不同的更细的分支。
+Redhat是商业公司维护的发行版本，Debian是社区组织维护的发行版本
+一般个人折腾用Debian 社区强大，公司的生产环境用Centos。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_1.png&#34;
+	width=&#34;952&#34;
+	height=&#34;449&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_1_hu53626e8b15ccdf75e1652654ccb860fd_24907_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_1_hu53626e8b15ccdf75e1652654ccb860fd_24907_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;212&#34;
+		data-flex-basis=&#34;508px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;开始&#34;&gt;开始
+&lt;/h2&gt;&lt;h3 id=&#34;更改机器主机名称hostname&#34;&gt;更改机器主机名称（hostname）
+&lt;/h3&gt;&lt;p&gt;因为系统刷机后系统的名称完全一样，需要修改名称才能分辨他们&lt;/p&gt;
+&lt;p&gt;一台Master节点 ，3台Work节点， 需要把四台机器的分为改为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-main
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;每台机器设置分别需要修改&amp;quot;/etc/hostname&amp;quot;文件内容
+用Master节点举一个例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim /etc/hostname
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;改完后的效果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# cat /etc/hostname
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-main
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-1:~# cat /etc/hostname
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-2:~# cat /etc/hostname
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-3:~# cat /etc/hostname
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;panther-x2-3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;设置静态ip&#34;&gt;设置静态IP
+&lt;/h3&gt;&lt;p&gt;静态IP的作用就是让机器在内网环境下有一个固定的IP，不能让它每次重启有一个不一样的IP，那样机器之间就无法正常沟通了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_2.png&#34;
+	width=&#34;1882&#34;
+	height=&#34;829&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_2_hue4ba305397627b2d8139ddc94f49390e_93976_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_2_hue4ba305397627b2d8139ddc94f49390e_93976_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;227&#34;
+		data-flex-basis=&#34;544px&#34;
+	
+&gt;
+每一台机器都需要执行一样的命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cat &amp;gt;&amp;gt; /etc/hosts &lt;span class=&#34;s&#34;&gt;&amp;lt;&amp;lt; EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;192.168.2.191 panther-x2-main
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;192.168.2.192 panther-x2-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;192.168.2.193 panther-x2-2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;192.168.2.194 panther-x2-3
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;关闭swap-内存交换空间&#34;&gt;关闭swap 内存交换空间
+&lt;/h3&gt;&lt;p&gt;关闭它是为了保证Kubernetes集群的稳定性和可靠性，Swap分区是一种虚拟内存技术，当系统内存不足时，会将少用的内存数据交换到硬盘中，以便释放更多的内存空间给正在运行的进程使用。但是，当Swap分区被使用时，它会导致系统的性能下降，因为硬盘速度比内存慢得多。如果Kubernetes节点上的应用程序频繁地使用Swap分区，那么整个集群的性能就会受到影响，因此关闭Swap分区可以避免这种情况的发生&lt;/p&gt;
+&lt;p&gt;每台机器都要执行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim  /etc/default/armbian-zram-config 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_5.png&#34;
+	width=&#34;522&#34;
+	height=&#34;175&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_5_hu84c1a17fb53b98945a9bd308465d92bc_10669_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_5_hu84c1a17fb53b98945a9bd308465d92bc_10669_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;298&#34;
+		data-flex-basis=&#34;715px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim /etc/cron.d/armbian-truncate-logs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注释掉第三行&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_4.png&#34;
+	width=&#34;507&#34;
+	height=&#34;70&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_4_huba29910d048b080eb63bdcfbd5e4863e_3618_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_4_huba29910d048b080eb63bdcfbd5e4863e_3618_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;724&#34;
+		data-flex-basis=&#34;1738px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后注释掉最后一行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim /etc/cron.daily/armbian-ram-logging
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_3.png&#34;
+	width=&#34;487&#34;
+	height=&#34;111&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_3_hud96b3ec071a7b82bab1addd9577eb6d7_4555_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_3_hud96b3ec071a7b82bab1addd9577eb6d7_4555_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;438&#34;
+		data-flex-basis=&#34;1052px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后重启，验证swap是否被关闭：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_6.png&#34;
+	width=&#34;971&#34;
+	height=&#34;123&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_6_hu2cbadfc9317087234066e39692b3f048_7718_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_6_hu2cbadfc9317087234066e39692b3f048_7718_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_6.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;789&#34;
+		data-flex-basis=&#34;1894px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;关闭selinux&#34;&gt;关闭SElinux
+&lt;/h3&gt;&lt;p&gt;根据提示没有安装&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# dpkg -s selinux-policy-default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;dpkg-query: package &lt;span class=&#34;s1&#34;&gt;&amp;#39;selinux-policy-default&amp;#39;&lt;/span&gt; is not installed and no information is available
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Use dpkg --info &lt;span class=&#34;o&#34;&gt;(=&lt;/span&gt; dpkg-deb --info&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; to examine archive files.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;关闭ipv4转发&#34;&gt;关闭IPv4转发
+&lt;/h3&gt;&lt;p&gt;IPv4 转发通常允许将网络流量从一个网络接口传输到另一个网络接口可能会导致安全漏洞。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/etc/sysctl.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;默认关闭了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_7.png&#34;
+	width=&#34;499&#34;
+	height=&#34;573&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_7_hudb578ee901340abb3e9cdcd1c3a6f199_23762_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_7_hudb578ee901340abb3e9cdcd1c3a6f199_23762_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_7.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;87&#34;
+		data-flex-basis=&#34;209px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;安装一些软件&#34;&gt;安装一些软件
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apt-get update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apt-get install apt-transport-https &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;ca-certificates &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;curl &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;gnupg2  &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;software-properties-common
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install docker-ce docker-ce-cli containerd.io
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;配置docker&#34;&gt;配置docker
+&lt;/h3&gt;&lt;p&gt;这个非常重要，Kubernetes官方指出在1.24之后删除了dockershim组件，我现在在要安装最新版的kubernetes1.27,默认的运行时是contained，而目前Docker 安装的默认运行时是docker-runc，所以需要切换Docker 的运行时。
+偷了懒问了一下chatgpt 如何切换docker运行时，实测很准确&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_8.png&#34;
+	width=&#34;1246&#34;
+	height=&#34;776&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_8_huef751047c201086cddd84af8e5993455_22763_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_8_huef751047c201086cddd84af8e5993455_22763_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_8.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;385px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;最近因为某些原因Docker好多镜像拉取不下来，需要手动添加一下镜像源，需要如下修改：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# cat /etc/docker/daemon.json 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;exec-opts&amp;#34;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;native.cgroupdriver=systemd&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;registry-mirrors&amp;#34;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;         &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://docker.m.daocloud.io&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://dockerproxy.com&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://docker.mirrors.ustc.edu.cn&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://docker.nju.edu.cn&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;default-runtime&amp;#34;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;#34;containerd&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;runtimes&amp;#34;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;containerd&amp;#34;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;path&amp;#34;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/bin/containerd&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最后验证一下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# docker info &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -i runtime
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Runtimes: containerd io.containerd.runc.v2 runc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Default Runtime: containerd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;安装最新版kubeletkubeadmkubectl&#34;&gt;安装最新版kubelet，kubeadm，kubectl
+&lt;/h3&gt;&lt;p&gt;每个机器都有需要执行以下命令：
+更新 apt 包索引并安装使用 Kubernetes apt 仓库所需要的包：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install -y apt-transport-https ca-certificates curl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;下载 Google Cloud 公开签名秘钥：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;添加 Kubernetes apt 仓库：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo tee /etc/apt/sources.list.d/kubernetes.list
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装 kubelet、kubeadm 和 kubectl，之前使用树莓派安装的是1.20版本的，社区已经不支持和维护了，k8s版本迭代的还是很快的，目前是四个月一个小版本，一个月支持版本一个补丁，还是很快的，有很大的学习压力呀，还有关联到了各种的组件的支持
+目前最新的版本是1.27，现在来根据官方文档安装：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install -y kubelet kubeadm kubectl
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-mark hold kubelet kubeadm kubectl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;前置设置&#34;&gt;前置设置
+&lt;/h3&gt;&lt;p&gt;根据文档/etc/containerd/config.toml 更改驱动&lt;br&gt;
+containerd config default &amp;gt; /etc/containerd/config.toml&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_10.png&#34;
+	width=&#34;1016&#34;
+	height=&#34;567&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_10_hu3a0e544ebd55b83f9c948107e9a3cfac_40152_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_10_hu3a0e544ebd55b83f9c948107e9a3cfac_40152_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_10.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;430px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;修改：/etc/containerd/config.toml&lt;/p&gt;
+&lt;p&gt;将SystemdCgroup的值修改为true，将sandbox_image的值修改为国内镜像registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.8
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_9.png&#34;
+	width=&#34;1081&#34;
+	height=&#34;804&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_9_hued8834697a64558b236a99fbe9faa5e5_51294_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_9_hued8834697a64558b236a99fbe9faa5e5_51294_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_9.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;134&#34;
+		data-flex-basis=&#34;322px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后重启contained:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;systemctl restart containerd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;还可以做一下前置检查&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubeadm init phase preflight
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;前置拉取镜像改名字&#34;&gt;前置拉取镜像改名字：
+&lt;/h3&gt;&lt;p&gt;由于某些原因直接拉去k8s所需要的镜像是拉取不下来的，只能参照官方的离线安装方案，先把同步到国内源的镜像拉取下来再改tag名称，最好做一个shell脚本，每台机器都需要执行一下拉取镜像，改tag名称：
+脚本内容：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# cat pull_k8s_docker.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;registry.aliyuncs.com/google_containers
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;K8S_VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.27.2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;==========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Pull Kubernetes for x64 v&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; Images from docker.io ......&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;==========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;## 拉取镜像%s/oldWords/newWords//g&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-apiserver:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-controller-manager:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-scheduler:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-proxy:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/pause:3.8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/etcd:3.5.7-0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull coredns/coredns:1.10.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;## 添加Tag&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-apiserver:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt; registry.k8s.io/kube-apiserver:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-scheduler:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt; registry.k8s.io/kube-scheduler:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-controller-manager:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt; registry.k8s.io/kube-controller-manager:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/kube-proxy:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt; registry.k8s.io/kube-proxy:&lt;span class=&#34;nv&#34;&gt;$K8S_VERSION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/pause:3.8 registry.k8s.io/pause:3.8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MY_REGISTRY&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/etcd:3.5.7-0 registry.k8s.io/etcd:3.5.7-0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag coredns/coredns:1.10.1 registry.k8s.io/coredns:v1.10.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;开始安装&#34;&gt;开始安装
+&lt;/h3&gt;&lt;p&gt;在Master 节点执行一下命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo kubeadm init --image-repository&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;registry.aliyuncs.com/google_containers --kubernetes-version&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;v1.27.2 --apiserver-advertise-address&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;192.168.2.191 --pod-network-cidr&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;192.168.0.0/16 --ignore-preflight-errors&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;all
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;69
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;70
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;71
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;72
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;73
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;74
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;75
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# sudo kubeadm init --image-repository&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;registry.aliyuncs.com/google_containers --kubernetes-version&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;v1.27.2 --apiserver-advertise-address&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;192.168.2.191 --pod-network-cidr&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;192.168.0.0/16 --ignore-preflight-errors&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;all
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;init&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Using Kubernetes version: v1.27.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;preflight&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Running pre-flight checks
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;preflight&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Pulling images required &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; setting up a Kubernetes cluster
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;preflight&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; This might take a minute or two, depending on the speed of your internet connection
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;preflight&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; You can also perform this action in beforehand using &lt;span class=&#34;s1&#34;&gt;&amp;#39;kubeadm config images pull&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;W0611 22:16:04.216900    &lt;span class=&#34;m&#34;&gt;4263&lt;/span&gt; images.go:80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; could not find officially supported version of etcd &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; Kubernetes v1.27.2, falling back to the nearest etcd version &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;3.5.7-0&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;W0611 22:16:04.743772    &lt;span class=&#34;m&#34;&gt;4263&lt;/span&gt; checks.go:835&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; detected that the sandbox image &lt;span class=&#34;s2&#34;&gt;&amp;#34;registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.8&amp;#34;&lt;/span&gt; of the container runtime is inconsistent with that used by kubeadm. It is recommended that using &lt;span class=&#34;s2&#34;&gt;&amp;#34;registry.aliyuncs.com/google_containers/pause:3.9&amp;#34;&lt;/span&gt; as the CRI sandbox image.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Using certificateDir folder &lt;span class=&#34;s2&#34;&gt;&amp;#34;/etc/kubernetes/pki&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;ca&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;apiserver&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; apiserver serving cert is signed &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; DNS names &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local panther-x2-main&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; and IPs &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;10.96.0.1 192.168.2.191&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;apiserver-kubelet-client&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;front-proxy-ca&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;front-proxy-client&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;etcd/ca&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;etcd/server&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; etcd/server serving cert is signed &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; DNS names &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;localhost panther-x2-main&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; and IPs &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;192.168.2.191 127.0.0.1 ::1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;etcd/peer&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; etcd/peer serving cert is signed &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; DNS names &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;localhost panther-x2-main&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; and IPs &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;192.168.2.191 127.0.0.1 ::1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;etcd/healthcheck-client&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;apiserver-etcd-client&amp;#34;&lt;/span&gt; certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Generating &lt;span class=&#34;s2&#34;&gt;&amp;#34;sa&amp;#34;&lt;/span&gt; key and public key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubeconfig&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Using kubeconfig folder &lt;span class=&#34;s2&#34;&gt;&amp;#34;/etc/kubernetes&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubeconfig&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Writing &lt;span class=&#34;s2&#34;&gt;&amp;#34;admin.conf&amp;#34;&lt;/span&gt; kubeconfig file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubeconfig&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Writing &lt;span class=&#34;s2&#34;&gt;&amp;#34;kubelet.conf&amp;#34;&lt;/span&gt; kubeconfig file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubeconfig&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Writing &lt;span class=&#34;s2&#34;&gt;&amp;#34;controller-manager.conf&amp;#34;&lt;/span&gt; kubeconfig file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubeconfig&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Writing &lt;span class=&#34;s2&#34;&gt;&amp;#34;scheduler.conf&amp;#34;&lt;/span&gt; kubeconfig file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubelet-start&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Writing kubelet environment file with flags to file &lt;span class=&#34;s2&#34;&gt;&amp;#34;/var/lib/kubelet/kubeadm-flags.env&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubelet-start&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Writing kubelet configuration to file &lt;span class=&#34;s2&#34;&gt;&amp;#34;/var/lib/kubelet/config.yaml&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubelet-start&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Starting the kubelet
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;control-plane&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Using manifest folder &lt;span class=&#34;s2&#34;&gt;&amp;#34;/etc/kubernetes/manifests&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;control-plane&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Creating static Pod manifest &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;kube-apiserver&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;control-plane&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Creating static Pod manifest &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;kube-controller-manager&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;control-plane&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Creating static Pod manifest &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;kube-scheduler&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;etcd&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Creating static Pod manifest &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;local&lt;/span&gt; etcd in &lt;span class=&#34;s2&#34;&gt;&amp;#34;/etc/kubernetes/manifests&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;W0611 22:16:26.878081    &lt;span class=&#34;m&#34;&gt;4263&lt;/span&gt; images.go:80&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; could not find officially supported version of etcd &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; Kubernetes v1.27.2, falling back to the nearest etcd version &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;3.5.7-0&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;wait-control-plane&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Waiting &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; the kubelet to boot up the control plane as static Pods from directory &lt;span class=&#34;s2&#34;&gt;&amp;#34;/etc/kubernetes/manifests&amp;#34;&lt;/span&gt;. This can take up to 4m0s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;apiclient&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; All control plane components are healthy after 21.008446 seconds
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;upload-config&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Storing the configuration used in ConfigMap &lt;span class=&#34;s2&#34;&gt;&amp;#34;kubeadm-config&amp;#34;&lt;/span&gt; in the &lt;span class=&#34;s2&#34;&gt;&amp;#34;kube-system&amp;#34;&lt;/span&gt; Namespace
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubelet&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Creating a ConfigMap &lt;span class=&#34;s2&#34;&gt;&amp;#34;kubelet-config&amp;#34;&lt;/span&gt; in namespace kube-system with the configuration &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; the kubelets in the cluster
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;upload-certs&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Skipping phase. Please see --upload-certs
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;mark-control-plane&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Marking the node panther-x2-main as control-plane by adding the labels: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;mark-control-plane&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Marking the node panther-x2-main as control-plane by adding the taints &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;node-role.kubernetes.io/control-plane:NoSchedule&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;bootstrap-token&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Using token: fnxxr7.lgu8fvkl1rc0gukc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;bootstrap-token&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;bootstrap-token&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Configured RBAC rules to allow Node Bootstrap tokens to get nodes
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;bootstrap-token&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; nodes to get long term certificate credentials
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;bootstrap-token&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;bootstrap-token&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Configured RBAC rules to allow certificate rotation &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; all node client certificates in the cluster
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;bootstrap-token&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Creating the &lt;span class=&#34;s2&#34;&gt;&amp;#34;cluster-info&amp;#34;&lt;/span&gt; ConfigMap in the &lt;span class=&#34;s2&#34;&gt;&amp;#34;kube-public&amp;#34;&lt;/span&gt; namespace
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;kubelet-finalize&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Updating &lt;span class=&#34;s2&#34;&gt;&amp;#34;/etc/kubernetes/kubelet.conf&amp;#34;&lt;/span&gt; to point to a rotatable kubelet client certificate and key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;addons&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Applied essential addon: CoreDNS
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;addons&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Applied essential addon: kube-proxy
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Your Kubernetes control-plane has initialized successfully!
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;To start using your cluster, you need to run the following as a regular user:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  mkdir -p &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;/.kube
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sudo cp -i /etc/kubernetes/admin.conf &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;/.kube/config
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sudo chown &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;id -u&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;:&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;id -g&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;/.kube/config
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Alternatively, &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; you are the root user, you can run:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;KUBECONFIG&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/etc/kubernetes/admin.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;You should now deploy a pod network to the cluster.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Run &lt;span class=&#34;s2&#34;&gt;&amp;#34;kubectl apply -f [podnetwork].yaml&amp;#34;&lt;/span&gt; with one of the options listed at:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Then you can join any number of worker nodes by running the following on each as root:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubeadm join 192.168.2.191:6443 --token fnxxr7.lgu8fvkl1******* &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;	--discovery-token-ca-cert-hash sha256:17a1ad0ad3da3cd3d558c7ba9029cd0043c5a4fa53c2********************* 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装成功。已经提示需要再在Work节点使用 &lt;code&gt;kubeadm join&lt;/code&gt; 就行了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubeadm join 192.168.2.191:6443 --token fnxxr7.lgu8fvkl1******* &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;	--discovery-token-ca-cert-hash sha256:17a1ad0ad3da3cd3d558c7ba9029cd0043c5a4fa53c2********************* 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;安装pod-网络附加组件&#34;&gt;安装Pod 网络附加组件
+&lt;/h3&gt;&lt;p&gt;查看node 状态执行之前需要根据上面的提示让当前用户有管理k8s的权限：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  mkdir -p &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;/.kube
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sudo cp -i /etc/kubernetes/admin.conf &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;/.kube/config
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sudo chown &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;id -u&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;:&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;id -g&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;/.kube/config
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后使用&lt;code&gt;kubectl get nodes&lt;/code&gt; 查看每个node的状态，目前是notready的状态，需要安装网络覆盖组件&lt;/p&gt;
+&lt;p&gt;首先，在您的集群上安装 Operator&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/tigera-operator.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;下载配置 Calico 所需的自定义资源&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/custom-resources.yaml -O
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;创建清单以安装 Calico&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create -f custom-resources.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;稍等一会查看所有pod状态&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~# kubectl get pod -A
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAMESPACE          NAME                                       READY   STATUS    RESTARTS      AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-apiserver   calico-apiserver-76fd8c9559-nfd8b          1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             3m6s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-apiserver   calico-apiserver-76fd8c9559-zbwrq          1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             3m6s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      calico-kube-controllers-6bcdfc4b44-mlp8w   1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      calico-node-7gv5s                          1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      calico-node-ck8vf                          1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      calico-node-scd9k                          1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      calico-node-vzwr9                          1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      calico-typha-5fd468897-gw7gd               1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      calico-typha-5fd468897-n2qkq               1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      csi-node-driver-9ph8d                      2/2     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      csi-node-driver-kj26d                      2/2     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      csi-node-driver-m6945                      2/2     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;calico-system      csi-node-driver-sjxps                      2/2     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             15m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        coredns-7bdc4cb885-5krtc                   1/1     Running   &lt;span class=&#34;m&#34;&gt;7&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        coredns-7bdc4cb885-pbxc4                   1/1     Running   &lt;span class=&#34;m&#34;&gt;7&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        etcd-panther-x2-main                       1/1     Running   &lt;span class=&#34;m&#34;&gt;9&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        kube-apiserver-panther-x2-main             1/1     Running   &lt;span class=&#34;m&#34;&gt;9&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        kube-controller-manager-panther-x2-main    1/1     Running   &lt;span class=&#34;m&#34;&gt;6&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   10h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        kube-proxy-8jgfs                           1/1     Running   &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        kube-proxy-9g4vg                           1/1     Running   &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        kube-proxy-qc84s                           1/1     Running   &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        kube-proxy-zwbqm                           1/1     Running   &lt;span class=&#34;m&#34;&gt;9&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kube-system        kube-scheduler-panther-x2-main             1/1     Running   &lt;span class=&#34;m&#34;&gt;9&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;99m ago&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;   47h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tigera-operator    tigera-operator-58f95869d6-9ldmz           1/1     Running   &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;             16m
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;运到问题解决办法&#34;&gt;运到问题解决办法
+&lt;/h3&gt;&lt;p&gt;查看某个pod 一直失败的状态需要查看日志:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl logs --namespace kube-system calico-node-2kdks
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;需要指定命令空间，最后才是pod 名称&lt;/p&gt;
+&lt;p&gt;通过查看日志就知道是哪里出错了，我一开始是因为Docker 切换运行时的问题卡了很久,然后就是一步步地查看日志去搜索解决的。&lt;/p&gt;
+&lt;p&gt;再如果是哪个pod一直卡住了，用&lt;code&gt;kubectl create -f ***.yaml&lt;/code&gt;命令都删不掉需要执行手动强制删除pod命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl delete pod &amp;lt;podname&amp;gt; -n &amp;lt;namespace&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl delete pod metrics-server-7b4c4d4bfd-c2b7c -n kube-system
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;最后安装kubernetesdashboard&#34;&gt;最后安装kubernetes/dashboard
+&lt;/h3&gt;&lt;p&gt;直接打开官方GitHub 按照命令执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;查看下是否完成了安装：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_11.png&#34;
+	width=&#34;1226&#34;
+	height=&#34;752&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_11_huc643250ebb709029f18145cf13e5d35d_88374_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_11_huc643250ebb709029f18145cf13e5d35d_88374_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_11.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;163&#34;
+		data-flex-basis=&#34;391px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后再根据官方文档使用 Kubernetes 的服务帐户机制创建新用户，授予该用户管理员权限并使用与该用户绑定的不记名令牌登录仪表板&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim admin-user.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: v1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ServiceAccount
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: admin-user
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: kubernetes-dashboard
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim cluster-admin.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: rbac.authorization.k8s.io/v1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ClusterRoleBinding
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: admin-user
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;roleRef:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  apiGroup: rbac.authorization.k8s.io
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  kind: ClusterRole
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: cluster-admin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;subjects:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- kind: ServiceAccount
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: admin-user
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: kubernetes-dashboard
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后再自己新建一个service 资源把dashboard的资源端口暴露出来：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@panther-x2-main:~/dashboard# cat dashbord-service.yaml 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: Service
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: v1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  labels:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    k8s-app: kubernetes-dashboard
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: kubernetes-dashboard
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: kubernetes-dashboard
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  type: NodePort
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ports:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - port: &lt;span class=&#34;m&#34;&gt;443&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      targetPort: &lt;span class=&#34;m&#34;&gt;8443&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      nodePort: &lt;span class=&#34;m&#34;&gt;30002&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  selector:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    k8s-app: kubernetes-dashboard
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;新建service资源：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; kubectl apply -f dashbord-service.yaml 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;依次创建它们：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -f admin-user.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -f cluster-admin.yaml 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;获取不记名令牌:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl -n kubernetes-dashboard create token admin-user
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;得到token:
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_12.png&#34;
+	width=&#34;2315&#34;
+	height=&#34;307&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_12_hu19b56fcdc3df88f1f7bf97adb8d8fe6f_69207_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_12_hu19b56fcdc3df88f1f7bf97adb8d8fe6f_69207_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_12.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;754&#34;
+		data-flex-basis=&#34;1809px&#34;
+	
+&gt;
+然后访问dashboard的内网地址和service 端口，填入刚生成的token记得要加&lt;code&gt;https&lt;/code&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_13.png&#34;
+	width=&#34;1340&#34;
+	height=&#34;866&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_13_hu112c1304c285d9234d174ab18ef1e3dc_160163_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_13_hu112c1304c285d9234d174ab18ef1e3dc_160163_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_13.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;154&#34;
+		data-flex-basis=&#34;371px&#34;
+	
+&gt;
+进来了：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_14.png&#34;
+	width=&#34;2551&#34;
+	height=&#34;1486&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_14_hu0ebc9f5a756f7d2d27519d20a8500f2a_207328_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_14_hu0ebc9f5a756f7d2d27519d20a8500f2a_207328_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_14.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;171&#34;
+		data-flex-basis=&#34;412px&#34;
+	
+&gt;
+可以在这里里面创建新的资源：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_15.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1423&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_15_huc9cbdb3d49b26f8a4bb1dfb08add1ec4_91216_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E7%94%A8arm%E7%9B%92%E5%AD%90-%E5%86%8D%E6%AC%A1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84k8s%E9%9B%86%E7%BE%A4/img_15_huc9cbdb3d49b26f8a4bb1dfb08add1ec4_91216_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_15.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;
+教程到此完结&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

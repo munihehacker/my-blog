@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>小程序 on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</link>
+        <description>Recent content in 小程序 on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 29 Jun 2023 11:43:52 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Uniapp 从零启动到 全局获取Openid的封装</title>
+        <link>https://munihehacker/my-blog.github.io/p/uniapp-%E4%BB%8E%E9%9B%B6%E5%90%AF%E5%8A%A8%E5%88%B0-%E5%85%A8%E5%B1%80%E8%8E%B7%E5%8F%96openid%E7%9A%84%E5%B0%81%E8%A3%85/</link>
+        <pubDate>Thu, 29 Jun 2023 11:43:52 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/uniapp-%E4%BB%8E%E9%9B%B6%E5%90%AF%E5%8A%A8%E5%88%B0-%E5%85%A8%E5%B1%80%E8%8E%B7%E5%8F%96openid%E7%9A%84%E5%B0%81%E8%A3%85/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;最近在研究uniapp，一个可以生成多端的应用的工具，我主要是主要是生成微信小程序和支付宝小程序，自己也是在这方面工作，只不过是后端相关，最近开始研究前端相关的内容，已经上架了两个小程序，写的很拉跨，很多冗余的代码。因为没有参考成熟的项目，需要什么加什么，没有考虑封装共用，每一个页面都有请求接口需要获取用户的openid，js就写得很长。&lt;/p&gt;
+&lt;p&gt;今天尝试一下从0开始新建一个Uniapp项目到获取Openid得全局封装，说明一下没有参考其他教程项目，仅仅是个人的习惯方案。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

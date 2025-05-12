@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 最近在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境搭好了，也支持跑Stable Diffusion，所以就安装了再尝试一下。 原因是之前在B站上有大佬做了一个Windows电脑能一键运行的Stable Diffusion的安装包，自己也下载下来玩了一下，因为刚接触上手难度比较大，玩了一下放弃了。这两天随着SD XL 发布，看到能毫秒级地文字生成图片，还有cloudflare 有免费的服务提供，太震撼了，所以想动手做一些实际的东西出来分享一下。 对于没有接触过的同学通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，接下来我会从怎么安装Stable Diffusion到做一个文字图片融合的示例。 安装 首先是Stable Diffusion UI项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui 我自己的环境是Linux环境，通过脚本安装的形式来启动网页工具，大多数人应该是Windows 环境，通过下载安装包的形式启动网页工具，这里不会介绍每个专业关键字的具体解释，但是会以新手角度顺便会说一下我遇到的问题 根据项目介绍下载安装脚本，执行安装脚本： 有些依赖软件我已经安装，这里我会根据官方提示下载一些相关依赖： 1 2 3 4 sudo apt install libgl1 libglib2.0-0 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh sh webui.sh 执行安装脚本过后运行，开始的会报一个错，我是用root 权限执行的，会报错： 需要把这个webui.sh 执行权限改为非root 用户并以非root 用户运行 ，就是这样： 此时可以看起来没有问题了，实际上没有开放到内网机器访问，监听的是127.0.0.1 ，需要成0.0.0.0就需要给webui.sh加上参数才行，我还有一些其他的需求就是打开web ui的扩展权限和访问权限验证，就是下面这样： 1 bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123456 还可以增加其他参数达到相应其他的功能，可以去查找官方相关资料。 效果： 现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了： 此时的webui截图是我安装一些插件的之后截图,接下来需要安装一些插件： 首先安装一个中文插件 扩展两种安装方式，第一种就是通过内置插件安装 没安装搜这个zh 安装过后就翻译搜不到了，搜中文： 点击安装，这里应该也可以可以直接通过网址安装 注意要在设置里面设置重启UI才能生效 还需要装一个模型浏览工具 ：C站浏览器插件 点击安装就可以 第二种是通过网址安装： 这里我通过这个网址安装了： 1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git） 对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件">
+<title>Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程</title>
+
+<link rel='canonical' href='https://munihehacker/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/'>
+
+<link rel="stylesheet" href="/my-blog.github.io/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程">
+<meta property='og:description' content="前言 最近在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境搭好了，也支持跑Stable Diffusion，所以就安装了再尝试一下。 原因是之前在B站上有大佬做了一个Windows电脑能一键运行的Stable Diffusion的安装包，自己也下载下来玩了一下，因为刚接触上手难度比较大，玩了一下放弃了。这两天随着SD XL 发布，看到能毫秒级地文字生成图片，还有cloudflare 有免费的服务提供，太震撼了，所以想动手做一些实际的东西出来分享一下。 对于没有接触过的同学通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，接下来我会从怎么安装Stable Diffusion到做一个文字图片融合的示例。 安装 首先是Stable Diffusion UI项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui 我自己的环境是Linux环境，通过脚本安装的形式来启动网页工具，大多数人应该是Windows 环境，通过下载安装包的形式启动网页工具，这里不会介绍每个专业关键字的具体解释，但是会以新手角度顺便会说一下我遇到的问题 根据项目介绍下载安装脚本，执行安装脚本： 有些依赖软件我已经安装，这里我会根据官方提示下载一些相关依赖： 1 2 3 4 sudo apt install libgl1 libglib2.0-0 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh sh webui.sh 执行安装脚本过后运行，开始的会报一个错，我是用root 权限执行的，会报错： 需要把这个webui.sh 执行权限改为非root 用户并以非root 用户运行 ，就是这样： 此时可以看起来没有问题了，实际上没有开放到内网机器访问，监听的是127.0.0.1 ，需要成0.0.0.0就需要给webui.sh加上参数才行，我还有一些其他的需求就是打开web ui的扩展权限和访问权限验证，就是下面这样： 1 bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123456 还可以增加其他参数达到相应其他的功能，可以去查找官方相关资料。 效果： 现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了： 此时的webui截图是我安装一些插件的之后截图,接下来需要安装一些插件： 首先安装一个中文插件 扩展两种安装方式，第一种就是通过内置插件安装 没安装搜这个zh 安装过后就翻译搜不到了，搜中文： 点击安装，这里应该也可以可以直接通过网址安装 注意要在设置里面设置重启UI才能生效 还需要装一个模型浏览工具 ：C站浏览器插件 点击安装就可以 第二种是通过网址安装： 这里我通过这个网址安装了： 1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git） 对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件">
+<meta property='og:url' content='https://munihehacker/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/'>
+<meta property='og:site_name' content='我的小站'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Stable Diffusion' /><meta property='article:published_time' content='2023-12-09T13:19:05&#43;08:00'/><meta property='article:modified_time' content='2023-12-09T13:19:05&#43;08:00'/><meta property='og:image' content='https://munihehacker/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title.png' />
+<meta name="twitter:title" content="Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程">
+<meta name="twitter:description" content="前言 最近在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境搭好了，也支持跑Stable Diffusion，所以就安装了再尝试一下。 原因是之前在B站上有大佬做了一个Windows电脑能一键运行的Stable Diffusion的安装包，自己也下载下来玩了一下，因为刚接触上手难度比较大，玩了一下放弃了。这两天随着SD XL 发布，看到能毫秒级地文字生成图片，还有cloudflare 有免费的服务提供，太震撼了，所以想动手做一些实际的东西出来分享一下。 对于没有接触过的同学通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，接下来我会从怎么安装Stable Diffusion到做一个文字图片融合的示例。 安装 首先是Stable Diffusion UI项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui 我自己的环境是Linux环境，通过脚本安装的形式来启动网页工具，大多数人应该是Windows 环境，通过下载安装包的形式启动网页工具，这里不会介绍每个专业关键字的具体解释，但是会以新手角度顺便会说一下我遇到的问题 根据项目介绍下载安装脚本，执行安装脚本： 有些依赖软件我已经安装，这里我会根据官方提示下载一些相关依赖： 1 2 3 4 sudo apt install libgl1 libglib2.0-0 wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh sh webui.sh 执行安装脚本过后运行，开始的会报一个错，我是用root 权限执行的，会报错： 需要把这个webui.sh 执行权限改为非root 用户并以非root 用户运行 ，就是这样： 此时可以看起来没有问题了，实际上没有开放到内网机器访问，监听的是127.0.0.1 ，需要成0.0.0.0就需要给webui.sh加上参数才行，我还有一些其他的需求就是打开web ui的扩展权限和访问权限验证，就是下面这样： 1 bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123456 还可以增加其他参数达到相应其他的功能，可以去查找官方相关资料。 效果： 现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了： 此时的webui截图是我安装一些插件的之后截图,接下来需要安装一些插件： 首先安装一个中文插件 扩展两种安装方式，第一种就是通过内置插件安装 没安装搜这个zh 安装过后就翻译搜不到了，搜中文： 点击安装，这里应该也可以可以直接通过网址安装 注意要在设置里面设置重启UI才能生效 还需要装一个模型浏览工具 ：C站浏览器插件 点击安装就可以 第二种是通过网址安装： 这里我通过这个网址安装了： 1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git） 对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://munihehacker/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/my-blog.github.io/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/my-blog.github.io/img/avatar_huf0f10adf0b1409009c769d5188d1956a_595492_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/my-blog.github.io">我的小站</a></h1>
+            <h2 class="site-description">悟已往之不谏,知来者知可追</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1747041651549" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2804" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M729.329 373.95c-9.795-5.945-19.062-6.785-19.144-6.785l-1.065-0.05c-57.2-3.866-121.165-5.832-190.126-5.832l-13.988 0.005c-68.956 0-132.925 1.96-190.12 5.831l-1.066 0.052c-0.082 0-9.349 0.84-19.144 6.784-15.047 9.129-24.273 25.948-27.417 49.97-10.071 76.913-4.383 173.65 0.19 251.393 2.938 49.966 33.407 62.459 85.048 67.149 10.782 0.988 69.089 5.867 159.508 5.893v-0.005c90.42-0.02 148.726-4.905 159.514-5.888 51.64-4.69 82.11-17.183 85.043-67.15 4.577-77.741 10.26-174.479 0.19-251.391-3.15-24.028-12.376-40.848-27.423-49.977z m-390.99 172.718a23.65 23.65 0 0 1-31.687-10.845 23.68 23.68 0 0 1 10.844-31.687c2.038-1.004 50.693-24.725 110.541-43.065a23.68 23.68 0 1 1 13.88 45.292c-56.294 17.25-103.111 40.074-103.577 40.305z m268.898 35.886c-0.44 2.232-11.269 54.64-50.939 54.64-21.442 0-36.1-14.049-44.984-26.772-8.694 12.708-22.805 26.772-42.655 26.772-35.533 0-50.135-48.266-51.681-53.77a11.366 11.366 0 0 1 21.878-6.17c2.75 9.652 14.13 37.202 29.798 37.202 16.374 0 28.892-23.644 31.985-31.928a11.372 11.372 0 0 1 10.65-7.388h0.06a11.376 11.376 0 0 1 10.63 7.506c0.107 0.286 11.965 31.815 34.314 31.815 20.864 0 28.565-35.952 28.641-36.32a11.346 11.346 0 0 1 13.358-8.94 11.361 11.361 0 0 1 8.945 13.353z m110.116-46.736a23.68 23.68 0 0 1-31.683 10.844c-0.47-0.23-47.472-23.116-103.572-40.31a23.69 23.69 0 0 1-15.708-29.583 23.67 23.67 0 0 1 29.578-15.703c59.848 18.34 108.498 42.061 110.551 43.065a23.68 23.68 0 0 1 10.834 31.687z" p-id="2805"></path><path d="M849.92 51.2H174.08c-67.866 0-122.88 55.014-122.88 122.88v675.84c0 67.87 55.014 122.88 122.88 122.88h675.84c67.87 0 122.88-55.01 122.88-122.88V174.08c0-67.86-55.01-122.88-122.88-122.88z m-36.603 627.45c-2.626 44.58-21.821 78.634-55.516 98.49-25.682 15.134-54.175 19.486-81.137 21.938-32.455 2.95-92.718 6.098-164.664 6.119-71.941-0.02-132.209-3.164-164.664-6.119-26.962-2.452-55.455-6.804-81.132-21.939-33.695-19.855-52.89-53.903-55.51-98.483-4.706-80.133-10.574-179.855 0.194-262.108C221.542 335.165 280.99 311.572 311.5 310.38a2482.642 2482.642 0 0 1 81.423-4.086c-7.536-8.535-19.88-23.322-28.815-38.114-13.737-22.737 8.53-41.687 8.53-41.687s23.68-20.367 44.528 5.213c15.698 19.266 38.38 55.997 48.62 72.954l53.207-0.215c13.26 0 26.332 0.072 39.22 0.215 10.24-16.957 32.92-53.683 48.619-72.954 20.843-25.58 44.528-5.213 44.528-5.213s22.262 18.95 8.525 41.687c-8.934 14.792-21.279 29.579-28.815 38.114 28.36 0.978 55.562 2.34 81.423 4.08 30.515 1.198 89.958 24.791 100.613 106.174 10.778 82.248 4.915 181.97 0.21 262.103z" p-id="2806"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/alihehacker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 640 640"><path d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"/></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.zhihu.com/people/hacker-25-85-67'
+                        target="_blank"
+                        title="Zhihu"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1747041668264" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3961" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M656.90624 724.29056l47.42144-33.72544h52.68992V344.89856h-143.31904v346.7264h35.82976z" fill="#0066FF" p-id="3962"></path><path d="M849.92 51.2H174.08c-67.8656 0-122.88 55.0144-122.88 122.88v675.84c0 67.8656 55.0144 122.88 122.88 122.88h675.84c67.8656 0 122.88-55.0144 122.88-122.88V174.08c0-67.8656-55.0144-122.88-122.88-122.88zM495.66208 803.34848l-101.1712-157.05088 44.26752-31.616 67.45088 98.00704c-0.00512 0 23.17824 37.99552-10.5472 90.65984z m38.99392-276.10112v25.2928H408.19712C357.61152 876.06784 204.8 807.04512 204.8 807.04512c140.16512-109.86496 142.7968-254.50496 142.7968-254.50496H208.49152c0-57.9584 52.16256-56.91392 52.16256-56.91392h93.79328v-151.7568h-50.5856C284.89728 429.2352 204.8 425.02144 204.8 425.02144s32.67072-50.5856 54.79936-137.00096c22.12864-86.42048 89.5744-76.928 89.5744-76.928-20.0192 35.82976-29.50656 76.928-29.50656 76.928H485.12c40.04864 0 37.9392 25.2928 37.9392 25.2928v29.51168H411.35616v152.8064H503.04c33.72544 0 31.616 31.616 31.616 31.616zM819.2 747.49952h-102.22592l-88.51968 55.84896-8.42752-55.84896h-64.29184V288.01536H819.2v459.48416z" fill="#0066FF" p-id="3963"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/my-blog.github.io/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/my-blog.github.io/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>分类</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/my-blog.github.io/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/my-blog.github.io/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+                <img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title_hu5bbd3cf17cecd5bfba798574e4976910_801065_800x0_resize_box_3.png"
+                        srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title_hu5bbd3cf17cecd5bfba798574e4976910_801065_800x0_resize_box_3.png 800w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title_hu5bbd3cf17cecd5bfba798574e4976910_801065_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="400" 
+                        loading="lazy"
+                        alt="Featured image of post Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/my-blog.github.io/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" >
+                大模型
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">Stable Diffusion UI 从安装到实现文字图片融合（光影字，错觉图）图片制作详细教程</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 09, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="前言">前言
+</h1><p>最近在实践大模型本地部署，前几天在本地部署了一个ChatGLM大模型，刚好环境搭好了，也支持跑Stable Diffusion，所以就安装了再尝试一下。</p>
+<p>原因是之前在B站上有大佬做了一个Windows电脑能一键运行的Stable Diffusion的安装包，自己也下载下来玩了一下，因为刚接触上手难度比较大，玩了一下放弃了。这两天随着SD XL 发布，看到能毫秒级地文字生成图片，还有cloudflare 有免费的服务提供，太震撼了，所以想动手做一些实际的东西出来分享一下。</p>
+<p>对于没有接触过的同学通俗地来说Stable Diffusion 是一个开源的图像生产+调整工具，接下来我会从怎么安装Stable Diffusion到做一个文字图片融合的示例。</p>
+<h1 id="安装">安装
+</h1><p>首先是Stable Diffusion UI项目地址：https://github.com/AUTOMATIC1111/stable-diffusion-webui</p>
+<p>我自己的环境是Linux环境，通过脚本安装的形式来启动网页工具，大多数人应该是Windows 环境，通过下载安装包的形式启动网页工具，这里不会介绍每个专业关键字的具体解释，但是会以新手角度顺便会说一下我遇到的问题</p>
+<p>根据项目介绍下载安装脚本，执行安装脚本：
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img.png"
+	width="2625"
+	height="1734"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_hu5b4f87b0b97428b7c9ea71b3d1671bd5_173820_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_hu5b4f87b0b97428b7c9ea71b3d1671bd5_173820_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="151"
+		data-flex-basis="363px"
+	
+></p>
+<p>有些依赖软件我已经安装，这里我会根据官方提示下载一些相关依赖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo apt install  libgl1 libglib2.0-0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
+</span></span><span class="line"><span class="cl">sh webui.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行安装脚本过后运行，开始的会报一个错，我是用root 权限执行的，会报错：
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_1.png"
+	width="1050"
+	height="256"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_1_hu518a69f2d9a552a5c215f4482956ff83_12207_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_1_hu518a69f2d9a552a5c215f4482956ff83_12207_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_1.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="410"
+		data-flex-basis="984px"
+	
+></p>
+<p>需要把这个webui.sh 执行权限改为非root 用户并以非root 用户运行 ，就是这样：</p>
+<p><img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_2.png"
+	width="2617"
+	height="1386"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_2_hudd1d88eb54f471bbff3a0b3f67302afc_115388_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_2_hudd1d88eb54f471bbff3a0b3f67302afc_115388_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_2.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="188"
+		data-flex-basis="453px"
+	
+>
+此时可以看起来没有问题了，实际上没有开放到内网机器访问，监听的是127.0.0.1 ，需要成0.0.0.0就需要给<code>webui.sh</code>加上参数才行，我还有一些其他的需求就是打开web ui的扩展权限和访问权限验证，就是下面这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">bash webui.sh --listen --enable-insecure-extension-access --gradio-auth root:123456 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还可以增加其他参数达到相应其他的功能，可以去查找官方相关资料。<br>
+效果：
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_3.png"
+	width="2868"
+	height="1278"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_3_hub497a2262dec27d08ffdbd4d23f994ce_108498_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_3_hub497a2262dec27d08ffdbd4d23f994ce_108498_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_3.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="224"
+		data-flex-basis="538px"
+	
+>
+现在就可以通过内网机器访问这个机器部署的Stable Diffusion的服务了：<br>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_4.png"
+	width="2136"
+	height="676"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_4_hu708443e6887b94114401a7b689af8149_38506_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_4_hu708443e6887b94114401a7b689af8149_38506_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_4.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="315"
+		data-flex-basis="758px"
+	
+>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_5.png"
+	width="3819"
+	height="1750"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_5_hu18244ba1abf2d8926f46f30bfcd9e1b8_193510_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_5_hu18244ba1abf2d8926f46f30bfcd9e1b8_193510_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_5.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="218"
+		data-flex-basis="523px"
+	
+>
+此时的webui截图是我安装一些插件的之后截图,接下来需要安装一些插件：<br>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_6.png"
+	width="1491"
+	height="1056"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_6_hu435b373bdd200513a81cfa763a8cd4a7_156994_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_6_hu435b373bdd200513a81cfa763a8cd4a7_156994_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_6.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="338px"
+	
+></p>
+<p>首先安装一个中文插件
+扩展两种安装方式，第一种就是通过内置插件安装<br>
+没安装搜这个<code>zh</code><br>
+安装过后就翻译搜不到了，搜<code>中文</code>：
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_10.png"
+	width="3744"
+	height="153"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_10_hua94d6e8173e3990e5ce80e58ce7ec680_31816_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_10_hua94d6e8173e3990e5ce80e58ce7ec680_31816_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_10.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2447"
+		data-flex-basis="5872px"
+	
+>
+点击安装，这里应该也可以可以直接通过网址安装   <br>
+注意要在设置里面设置重启UI才能生效  <br>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_11.png"
+	width="3744"
+	height="1846"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_11_hub87d592dca599dd0e7bc42874f49f8e2_288267_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_11_hub87d592dca599dd0e7bc42874f49f8e2_288267_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_11.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="486px"
+	
+></p>
+<p>还需要装一个模型浏览工具 ：C站浏览器插件
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_12.png"
+	width="3756"
+	height="174"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_12_hu6e9224e340c13ba4f2b5a363443dfb57_51335_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_12_hu6e9224e340c13ba4f2b5a363443dfb57_51335_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_12.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2158"
+		data-flex-basis="5180px"
+	
+>
+点击安装就可以
+第二种是通过网址安装：
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_7.png"
+	width="1452"
+	height="546"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_7_huacfc9e451a107c61e824bf394771ed48_42450_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_7_huacfc9e451a107c61e824bf394771ed48_42450_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_7.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="265"
+		data-flex-basis="638px"
+	
+></p>
+<p>这里我通过这个网址安装了： <br>
+1.控制网络(ControlNet插件)（https://github.com/Mikubill/sd-webui-controlnet.git） <br>
+对图片进行精细化控制，以生成更具创意和控制力的图像 文字图片融合的核心插件</p>
+<p>2.sd_civitai_extension	（https://github.com/civitai/sd_civitai_extension） <br>
+C 站的官方扩展，可以自动下载模型，获取模型信息，检查模型更新，自动下载缩略图的能力</p>
+<p>3.C站浏览器插件	（https://github.com/BlafKing/sd-civitai-browser-plus.git）<br>
+C站就是著名的模型库完整完整网站，跟著名的Hugging Face一样的网站，但是C站有很多不可描述的东西，被墙了</p>
+<p>通过网址安装就用 git 项目地址点击安装就行了<br>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_8.png"
+	width="822"
+	height="453"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_8_hu70130b4eb77d1b04187d7e489a752d3d_33806_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_8_hu70130b4eb77d1b04187d7e489a752d3d_33806_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_8.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="181"
+		data-flex-basis="435px"
+	
+></p>
+<p>注意：所有的插件安装完成都需要在设置里面点击 ”保存设置“ 和 “重启WebUI”
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_13.png"
+	width="3799"
+	height="352"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_13_hu3d5da80299d114395de9a7fcf8e930d6_101430_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_13_hu3d5da80299d114395de9a7fcf8e930d6_101430_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_13.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1079"
+		data-flex-basis="2590px"
+	
+></p>
+<h1 id="下载模型">下载模型
+</h1><p>使用<code>C站浏览器插件</code> 下载模型
+这里推荐一个模型（下了很多模型还没来得及测试）：</p>
+<p><code>majicMIX realistic 麦橘写实</code></p>
+<p><img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_14.png"
+	width="3795"
+	height="1449"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_14_hu058eeb00bcf9c3fea3e1f22e3fbf8a04_1711308_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_14_hu058eeb00bcf9c3fea3e1f22e3fbf8a04_1711308_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_14.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="261"
+		data-flex-basis="628px"
+	
+></p>
+<p>用于生成逼真的人物肖像底层模型</p>
+<p>底层模型是模型生成图像所必需的，是模型的核心部分，可以相当于说基础数据集。</p>
+<p>直接完成就能自动进入左上角的<code>Stable Diffusion 模型(ckpt) </code>选项切换就行了<br>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_25.png"
+	width="693"
+	height="138"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_25_hu99b17272be988afcf161b775522ab048_12586_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_25_hu99b17272be988afcf161b775522ab048_12586_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_25.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="502"
+		data-flex-basis="1205px"
+	
+></p>
+<h1 id="画图">画图
+</h1><p>这里我使用的是 majicmixRealistic 这个底层模型 生成一个人物</p>
+<p>需要提示词prompt提示词，找了一些prompt社区里面的关键词<br>
+正面提示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"> <span class="nx">jk_lure_dress3</span><span class="p">,</span><span class="mi">8</span><span class="nx">k</span><span class="p">,(</span><span class="nx">realistic</span>:<span class="kt">1.1</span><span class="p">),</span> <span class="p">(</span><span class="nx">photorealistic</span>:<span class="kt">1.1</span><span class="p">),</span> <span class="p">(</span><span class="nx">masterpiece</span>:<span class="kt">1.1</span><span class="p">),</span> <span class="p">(</span><span class="nx">best</span> <span class="nx">quality</span>:<span class="kt">1.1</span><span class="p">),</span> <span class="nx">RAW</span> <span class="nx">photo</span><span class="p">,</span> <span class="nx">highres</span><span class="p">,</span> <span class="nx">ultra</span> <span class="nx">detailed</span><span class="p">,</span> <span class="nx">High</span> <span class="nx">detail</span> <span class="nx">RAW</span> <span class="nx">color</span> <span class="nx">photo</span><span class="p">,</span><span class="nx">professional</span> <span class="nx">photograph</span><span class="p">,</span><span class="nx">masterpiece</span><span class="p">,</span> <span class="nx">best</span> <span class="nx">quality</span><span class="p">,</span><span class="nx">realistic</span><span class="p">,</span><span class="nx">realskin</span><span class="p">,</span><span class="mi">1</span><span class="nx">girl</span><span class="p">,</span><span class="nx">low_key</span><span class="p">,</span><span class="nx">solo</span><span class="p">,</span><span class="nx">lighting</span><span class="p">,</span><span class="nx">long</span> <span class="nx">hair</span> <span class="p">,</span><span class="nx">full</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">standing</span><span class="p">,</span><span class="nx">classroom</span><span class="p">,</span> <span class="nx">beautiful</span> <span class="nx">detailed</span> <span class="nx">eyes</span><span class="p">,</span><span class="nx">natural</span> <span class="nx">lighting</span><span class="p">,,</span> <span class="p">(</span><span class="nx">detailed</span> <span class="nx">face</span>:<span class="kt">1.2</span><span class="p">),</span><span class="nx">extremely</span> <span class="nx">beautiful</span> <span class="nx">face</span><span class="p">,</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>负面：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="nx">white</span> <span class="nx">background</span><span class="p">,</span> <span class="nx">simple</span> <span class="nx">background</span><span class="p">,</span> <span class="p">(</span><span class="nx">ng_deepnegative_v1_75t</span><span class="p">),</span> <span class="p">(</span><span class="nx">badhandv4</span><span class="p">),</span> <span class="p">(</span><span class="nx">worst</span> <span class="nx">quality</span>:<span class="kt">2</span><span class="p">),</span> <span class="p">(</span><span class="nx">low</span> <span class="nx">quality</span>:<span class="kt">2</span><span class="p">),</span> <span class="p">(</span><span class="nx">normal</span> <span class="nx">quality</span>:<span class="kt">2</span><span class="p">),</span> <span class="nx">lowres</span><span class="p">,</span> <span class="nx">watermark</span><span class="p">,</span> <span class="nx">monochrome</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我这里生成的人物素材是全身的，所以宽度我设置的是512，高度是1024，批次数量测试的时候就1个，几秒一个图，调好了话就一次多生成几个图，就选择每批次4-8个。</p>
+<p>随机种子-1 就是完全随机，想要生成的图片一致，把相关参数分享出去让别人生成一样的图片，这个随机种子参数就不能设置成-1。</p>
+<p>Stable Diffusion有很多采样器类型，稍微查了一下资料，是指一种指用于生成图像的算法，对图像质量，速度，艺术风格有关，我这里使用DPM++ SDE Karras，</p>
+<p><img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_17.png"
+	width="3840"
+	height="1926"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_17_hu8bddcd1280befe10115511c2aa4ce922_1280097_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_17_hu8bddcd1280befe10115511c2aa4ce922_1280097_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_17.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="199"
+		data-flex-basis="478px"
+	
+></p>
+<p>需要选中启用，显存小启用现存优化，然后开启预览，看下设置下面点击爆炸icon 预览是否正确</p>
+<p>然后最重要的是控制网络这里，需要上传一个图片到控制单元0，注意白底黑字就要选择预处理器第一个<code>反色处理</code>，黑底白字就可以选择最后一个<code>仅重采样</code>，然后点击一下预处理器和模型中间 爆炸的图片 查看预览 是否图片有正常的字显示</p>
+<p>这个图片可以自己在windows 电脑画图中画一个
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_19.png"
+	width="2394"
+	height="1435"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_19_huad34066360d721086d7426dab90780cf_262837_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_19_huad34066360d721086d7426dab90780cf_262837_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_19.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="166"
+		data-flex-basis="400px"
+	
+>
+大概流程新建图片，插入文字，调整字体和大小，裁剪，保存，图片中字体位置 代表了融入图片的大概的位置，尽量居中，控制留白位置来控制在融入图片的位置，我这里是基本占满图片的设计</p>
+<p>然后设置非常重要的三个参数 ，控制强度，控制介入开始时间和结束时间。这三个参数代表控制网络对图片影响<br>
+控制强度为 1.0 控制网络对生成图像的影响最大 ，字就最明显，控制强度为 0就不会有任何影响，所以这个参数应该在0.5到0.8之间，
+开始时间和结束时间就是在控制强度正常的情况下对于随机图片元素的效果的影响。控制介入时机越晚，控制网络的影响就越晚开始，生成的图像就越随机，控制结束时机越晚，控制网络的影响就越晚结束，生成的图像就越随机，相反就反之。</p>
+<p>这里大概三个参数分别差不多就在0.7，0.2，0.7这附近，可以根据自己的测试调整</p>
+<p>这里测试了几个字，字的笔画复杂度 和粗细 和控制网络参数有一定关系，需要自己反复调整：
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_20.png"
+	width="512"
+	height="1024"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_20_hu0bf1e68c9e91296f69e81bd4c1f4ee97_1179896_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_20_hu0bf1e68c9e91296f69e81bd4c1f4ee97_1179896_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_20.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="50"
+		data-flex-basis="120px"
+	
+></p>
+<h1 id="测试">测试
+</h1><p>除了字，还有网上特别火的图片背景融入的例子自己也测了一下，看看效果：
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_21.png"
+	width="3274"
+	height="1719"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_21_hu28a6153bf72489628270e7f035fed66b_1086502_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_21_hu28a6153bf72489628270e7f035fed66b_1086502_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_21.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="190"
+		data-flex-basis="457px"
+	
+>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_24.png"
+	width="512"
+	height="1024"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_24_hu78f77c05c85fcc7171b352f0c17e8f6e_1187747_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/img_24_hu78f77c05c85fcc7171b352f0c17e8f6e_1187747_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_24.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="50"
+		data-flex-basis="120px"
+	
+><br>
+<img src="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title.png"
+	width="1024"
+	height="512"
+	srcset="/my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title_hu5bbd3cf17cecd5bfba798574e4976910_801065_480x0_resize_box_3.png 480w, /my-blog.github.io/p/stable-diffusion-ui-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%9B%BE%E7%89%87%E8%9E%8D%E5%90%88%E5%85%89%E5%BD%B1%E5%AD%97%E9%94%99%E8%A7%89%E5%9B%BE%E5%9B%BE%E7%89%87%E5%88%B6%E4%BD%9C%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/title_hu5bbd3cf17cecd5bfba798574e4976910_801065_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="title.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="200"
+		data-flex-basis="480px"
+	
+><br>
+效果还不错，生成的十张图片可以挑选出1到3张非常完美的图片出来，因为有一定几率会出现眼睛，手指有问题的现象，找到有几种解决方案还没来得及尝试。</p>
+<p>Stable Diffusion 还有很多内容没有研究，实际上互联网上的真实有用案例教程还是很少的，需要自己去钻研，大模型时代的机遇和挑战已经来了。</p>
+<p>接下来会研究其他风格图像生成，lora模型，和API 调用方向~</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/my-blog.github.io/tags/stable-diffusion/">Stable Diffusion</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="koala9527/my-hugo-blog"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2025 我的小站
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/my-blog.github.io/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

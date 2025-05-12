@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Nas on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/nas/</link>
+        <description>Recent content in Nas on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 02 Feb 2023 21:20:24 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/nas/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>记录一次使用docker 安装Alist插件 挂载本地存储和网盘</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/</link>
+        <pubDate>Thu, 02 Feb 2023 21:20:24 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_14.png" alt="Featured image of post 记录一次使用docker 安装Alist插件 挂载本地存储和网盘" /&gt;&lt;p&gt;前篇文章记录了斐讯N1怎么安装frpc内网穿透，现在来继续折腾Alist插件,把本地存储和网盘集中到自己的搭建的Web服务中。&lt;/p&gt;
+&lt;p&gt;主要是看中了Alist颜值高和网盘挂载的功能。&lt;/p&gt;
+&lt;h1 id=&#34;使用docker-安装-alist&#34;&gt;使用Docker 安装 Alist
+&lt;/h1&gt;&lt;p&gt;N1盒子已经自带了Docker软件，接下来直接使用Docker安装Alist，注意映射的本地目录。&lt;/p&gt;
+&lt;p&gt;我自己想让Alist管理的本地文件夹是N1盒子插的一块硬盘特定的文件夹&lt;br&gt;
+文件目录为：/sharedfolders/N1/alist&lt;br&gt;
+官方的教程是把容器里面的alist运行配置映射到宿主机（alist容器内的配置文件路径：/opt/alist/data）&lt;br&gt;
+我再添加一个目录映射专门把宿主机的文件映射到Alist容器内部，让Alist管理&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run -d --restart&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;always -v /sharedfolders/N1/alist/config:/opt/alist/data -v /sharedfolders/N1/alist/data:/home -p 5244:5244 --name&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;alist&amp;#34;&lt;/span&gt; xhofe/alist:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后在命令行运行&lt;code&gt;docker exec -it alist ./alist -password&lt;/code&gt;查看初始密码：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img.png&#34;
+	width=&#34;723&#34;
+	height=&#34;159&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_hu773a691f27ca10dc601086f0a4182979_11863_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_hu773a691f27ca10dc601086f0a4182979_11863_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;454&#34;
+		data-flex-basis=&#34;1091px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;访问内网地址&lt;code&gt;192.168.2.122:5244&lt;/code&gt;进入alist的管理界面：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_1.png&#34;
+	width=&#34;1050&#34;
+	height=&#34;893&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_1_hu6a834248cd0ecff056c78e27a9f129ef_13225_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_1_hu6a834248cd0ecff056c78e27a9f129ef_13225_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;117&#34;
+		data-flex-basis=&#34;282px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;一进来就会提示没有挂载，此时不着急，点击下方登录，使用上面的密码登录，用户名是：&lt;code&gt;admin&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;登录进入改下密码，然后设置储存：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_2.png&#34;
+	width=&#34;847&#34;
+	height=&#34;641&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_2_hu35a8c3ec33122e7a807c03ab26f42c58_18397_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_2_hu35a8c3ec33122e7a807c03ab26f42c58_18397_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;132&#34;
+		data-flex-basis=&#34;317px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;添加本机存储：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_3.png&#34;
+	width=&#34;556&#34;
+	height=&#34;729&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_3_hub4fefe620d6561a584070095c29d2ca1_21180_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_3_hub4fefe620d6561a584070095c29d2ca1_21180_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;76&#34;
+		data-flex-basis=&#34;183px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;挂载/home目录 ，根文件夹路径也是/home：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_7.png&#34;
+	width=&#34;504&#34;
+	height=&#34;906&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_7_hu7d428690dd2c53555920550bf61a2cc2_25430_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_7_hu7d428690dd2c53555920550bf61a2cc2_25430_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_7.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;55&#34;
+		data-flex-basis=&#34;133px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;点击添加就可以了。再访问&lt;code&gt;192.168.2.122:5244&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;就看到挂载的本机存储了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_4.png&#34;
+	width=&#34;1312&#34;
+	height=&#34;316&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_4_hu39588b26bf8708e0803a6d97ac77055d_8524_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_4_hu39588b26bf8708e0803a6d97ac77055d_8524_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;415&#34;
+		data-flex-basis=&#34;996px&#34;
+	
+&gt;
+到现在基础功能就实现了&lt;/p&gt;
+&lt;h1 id=&#34;尝试挂载网盘&#34;&gt;尝试挂载网盘
+&lt;/h1&gt;&lt;p&gt;挂载天翼云盘尝试一下，相对比较简单&lt;/p&gt;
+&lt;p&gt;在管理-&amp;gt;储存-&amp;gt;添加：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_5.png&#34;
+	width=&#34;437&#34;
+	height=&#34;940&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_5_hue4ea531dc6307c86f7964da8831778ce_24926_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_5_hue4ea531dc6307c86f7964da8831778ce_24926_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;46&#34;
+		data-flex-basis=&#34;111px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;挂载路径就是在访问Alist的时候此时添加的储存的名字&lt;/p&gt;
+&lt;p&gt;用户名就是天翼云的账号也就是手机号。密码也就是天翼云盘的登录密码&lt;/p&gt;
+&lt;p&gt;根文件夹ID就是在访问web端的天翼云盘的文件夹ID, &lt;code&gt;-11&lt;/code&gt;就是网盘的根目录：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_6.png&#34;
+	width=&#34;1282&#34;
+	height=&#34;429&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_6_hu01df3ca97a5c7a28e76bd1cf04080d46_24653_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_6_hu01df3ca97a5c7a28e76bd1cf04080d46_24653_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_6.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;298&#34;
+		data-flex-basis=&#34;717px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;最后效果设置密码&#34;&gt;最后效果&amp;amp;设置密码
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_12.png&#34;
+	width=&#34;774&#34;
+	height=&#34;373&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_12_hud54f07470190012631a481317093c46f_13858_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_12_hud54f07470190012631a481317093c46f_13858_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_12.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;207&#34;
+		data-flex-basis=&#34;498px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_8.png&#34;
+	width=&#34;1258&#34;
+	height=&#34;345&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_8_hud01fad7b41e3916482e9791d3e17eabb_9344_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_8_hud01fad7b41e3916482e9791d3e17eabb_9344_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_8.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;364&#34;
+		data-flex-basis=&#34;875px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;接下来尝试可以给特定的文件夹添加密码&lt;/p&gt;
+&lt;p&gt;在 在管理-&amp;gt;元信息-&amp;gt;添加：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_9.png&#34;
+	width=&#34;607&#34;
+	height=&#34;494&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_9_hu8b8ce4491cd3756c4ab226b4a82f148a_15961_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_9_hu8b8ce4491cd3756c4ab226b4a82f148a_15961_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_9.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;设置目录和密码就可以了，推出登陆后访问这个文件夹就会提示输入密码：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_10.png&#34;
+	width=&#34;1214&#34;
+	height=&#34;309&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_10_hu7e2ef9d35aa9f172d238db9bec4b393b_10311_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_10_hu7e2ef9d35aa9f172d238db9bec4b393b_10311_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_10.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;392&#34;
+		data-flex-basis=&#34;942px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;输入密码后还可以展示刚刚设置的文件夹说明：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_11.png&#34;
+	width=&#34;767&#34;
+	height=&#34;274&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_11_hud317d033da32f56ea5fae2a125204d94_12002_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_11_hud317d033da32f56ea5fae2a125204d94_12002_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_11.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;279&#34;
+		data-flex-basis=&#34;671px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;后面我会把这这个Alist通过内网穿透使它能够在公网访问，然后尝试使用webdav挂载网盘到Windows，把网盘当作系统硬盘来使用&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

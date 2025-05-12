@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="为什么要写博客 2022年结束，写了一篇年终报告，回顾发现记录总结是一个非常重要的事情，在接下来的时间需要把这件事养成一个习惯，不断记录，思考，积累 进步。 选择Hugo Hugo 比较偏向后端，编译速度非常快，就这么简单。 简单记录一下过程 首要任务是选择一个简单好看的主题：hugo-theme-stack 这个主题最初是在V2EX 看到的，挺小清新的，符合现代审美。然后在Hugo的官方主题商店看到了它。 看起来主题的亮色模式有点太白了，有些文字看得不是很清楚，后面再想办法调整一下。 一开始看Hugo官方文档使用命令行新建一个Hugo项目再添加这个主题，因为有一些设置覆盖，一直没弄好，后面参考文档直接使用了这个主题的快速入门模板项目， 直接拉下来，调整配置直接运行起来了，目前使用项目自带的GitHub Action地配置搭配了一个二级域名部署在了GitHub Page上了。 接下来仔细说说自己做了那些事，改了哪些东西。因为没有参考任何的教程，查找地相关教程都比较笼统，没有针对这个主题的教程，所以下面的内容全都是自己折腾实验的。 改配置 快速启动模板的GitHub 地址： CaiJimmy/hugo-theme-stack-starter git clone https://github.com/CaiJimmy/hugo-theme-stack-starter 先把代码拉下来，所有的配置文件都在/config/_default 文件夹内，配置文件有很多，自己修改了其中个别几个，下面详细讲讲。 config.toml 博客的基本信息 标题，用户名，部署的域名，语言 1 2 3 4 5 6 7 8 9 10 11 baseurl = &#34;https://blog.tuwei.space&#34; languageCode = &#34;zh-Hans&#34; paginate = 5 title = &#34;koala9527的博客&#34; DefaultContentLanguage = &#34;zh-cn&#34; hasCJKLanguage = false # Change it to your Disqus shortname before using disqusShortname = &#34;koala9527&#34; menu.toml 博客菜单">
+<title>记录搭建Hugo 博客，使用stack主题快速启动部署</title>
+
+<link rel='canonical' href='https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/'>
+
+<link rel="stylesheet" href="/my-blog.github.io/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="记录搭建Hugo 博客，使用stack主题快速启动部署">
+<meta property='og:description' content="为什么要写博客 2022年结束，写了一篇年终报告，回顾发现记录总结是一个非常重要的事情，在接下来的时间需要把这件事养成一个习惯，不断记录，思考，积累 进步。 选择Hugo Hugo 比较偏向后端，编译速度非常快，就这么简单。 简单记录一下过程 首要任务是选择一个简单好看的主题：hugo-theme-stack 这个主题最初是在V2EX 看到的，挺小清新的，符合现代审美。然后在Hugo的官方主题商店看到了它。 看起来主题的亮色模式有点太白了，有些文字看得不是很清楚，后面再想办法调整一下。 一开始看Hugo官方文档使用命令行新建一个Hugo项目再添加这个主题，因为有一些设置覆盖，一直没弄好，后面参考文档直接使用了这个主题的快速入门模板项目， 直接拉下来，调整配置直接运行起来了，目前使用项目自带的GitHub Action地配置搭配了一个二级域名部署在了GitHub Page上了。 接下来仔细说说自己做了那些事，改了哪些东西。因为没有参考任何的教程，查找地相关教程都比较笼统，没有针对这个主题的教程，所以下面的内容全都是自己折腾实验的。 改配置 快速启动模板的GitHub 地址： CaiJimmy/hugo-theme-stack-starter git clone https://github.com/CaiJimmy/hugo-theme-stack-starter 先把代码拉下来，所有的配置文件都在/config/_default 文件夹内，配置文件有很多，自己修改了其中个别几个，下面详细讲讲。 config.toml 博客的基本信息 标题，用户名，部署的域名，语言 1 2 3 4 5 6 7 8 9 10 11 baseurl = &#34;https://blog.tuwei.space&#34; languageCode = &#34;zh-Hans&#34; paginate = 5 title = &#34;koala9527的博客&#34; DefaultContentLanguage = &#34;zh-cn&#34; hasCJKLanguage = false # Change it to your Disqus shortname before using disqusShortname = &#34;koala9527&#34; menu.toml 博客菜单">
+<meta property='og:url' content='https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/'>
+<meta property='og:site_name' content='我的小站'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='hugo' /><meta property='article:tag' content='Golang' /><meta property='article:published_time' content='2023-01-07T20:33:43&#43;08:00'/><meta property='article:modified_time' content='2023-01-07T20:33:43&#43;08:00'/><meta property='og:image' content='https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack.png' />
+<meta name="twitter:title" content="记录搭建Hugo 博客，使用stack主题快速启动部署">
+<meta name="twitter:description" content="为什么要写博客 2022年结束，写了一篇年终报告，回顾发现记录总结是一个非常重要的事情，在接下来的时间需要把这件事养成一个习惯，不断记录，思考，积累 进步。 选择Hugo Hugo 比较偏向后端，编译速度非常快，就这么简单。 简单记录一下过程 首要任务是选择一个简单好看的主题：hugo-theme-stack 这个主题最初是在V2EX 看到的，挺小清新的，符合现代审美。然后在Hugo的官方主题商店看到了它。 看起来主题的亮色模式有点太白了，有些文字看得不是很清楚，后面再想办法调整一下。 一开始看Hugo官方文档使用命令行新建一个Hugo项目再添加这个主题，因为有一些设置覆盖，一直没弄好，后面参考文档直接使用了这个主题的快速入门模板项目， 直接拉下来，调整配置直接运行起来了，目前使用项目自带的GitHub Action地配置搭配了一个二级域名部署在了GitHub Page上了。 接下来仔细说说自己做了那些事，改了哪些东西。因为没有参考任何的教程，查找地相关教程都比较笼统，没有针对这个主题的教程，所以下面的内容全都是自己折腾实验的。 改配置 快速启动模板的GitHub 地址： CaiJimmy/hugo-theme-stack-starter git clone https://github.com/CaiJimmy/hugo-theme-stack-starter 先把代码拉下来，所有的配置文件都在/config/_default 文件夹内，配置文件有很多，自己修改了其中个别几个，下面详细讲讲。 config.toml 博客的基本信息 标题，用户名，部署的域名，语言 1 2 3 4 5 6 7 8 9 10 11 baseurl = &#34;https://blog.tuwei.space&#34; languageCode = &#34;zh-Hans&#34; paginate = 5 title = &#34;koala9527的博客&#34; DefaultContentLanguage = &#34;zh-cn&#34; hasCJKLanguage = false # Change it to your Disqus shortname before using disqusShortname = &#34;koala9527&#34; menu.toml 博客菜单"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/my-blog.github.io/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/my-blog.github.io/img/avatar_huf0f10adf0b1409009c769d5188d1956a_595492_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/my-blog.github.io">我的小站</a></h1>
+            <h2 class="site-description">悟已往之不谏,知来者知可追</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1747041651549" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2804" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M729.329 373.95c-9.795-5.945-19.062-6.785-19.144-6.785l-1.065-0.05c-57.2-3.866-121.165-5.832-190.126-5.832l-13.988 0.005c-68.956 0-132.925 1.96-190.12 5.831l-1.066 0.052c-0.082 0-9.349 0.84-19.144 6.784-15.047 9.129-24.273 25.948-27.417 49.97-10.071 76.913-4.383 173.65 0.19 251.393 2.938 49.966 33.407 62.459 85.048 67.149 10.782 0.988 69.089 5.867 159.508 5.893v-0.005c90.42-0.02 148.726-4.905 159.514-5.888 51.64-4.69 82.11-17.183 85.043-67.15 4.577-77.741 10.26-174.479 0.19-251.391-3.15-24.028-12.376-40.848-27.423-49.977z m-390.99 172.718a23.65 23.65 0 0 1-31.687-10.845 23.68 23.68 0 0 1 10.844-31.687c2.038-1.004 50.693-24.725 110.541-43.065a23.68 23.68 0 1 1 13.88 45.292c-56.294 17.25-103.111 40.074-103.577 40.305z m268.898 35.886c-0.44 2.232-11.269 54.64-50.939 54.64-21.442 0-36.1-14.049-44.984-26.772-8.694 12.708-22.805 26.772-42.655 26.772-35.533 0-50.135-48.266-51.681-53.77a11.366 11.366 0 0 1 21.878-6.17c2.75 9.652 14.13 37.202 29.798 37.202 16.374 0 28.892-23.644 31.985-31.928a11.372 11.372 0 0 1 10.65-7.388h0.06a11.376 11.376 0 0 1 10.63 7.506c0.107 0.286 11.965 31.815 34.314 31.815 20.864 0 28.565-35.952 28.641-36.32a11.346 11.346 0 0 1 13.358-8.94 11.361 11.361 0 0 1 8.945 13.353z m110.116-46.736a23.68 23.68 0 0 1-31.683 10.844c-0.47-0.23-47.472-23.116-103.572-40.31a23.69 23.69 0 0 1-15.708-29.583 23.67 23.67 0 0 1 29.578-15.703c59.848 18.34 108.498 42.061 110.551 43.065a23.68 23.68 0 0 1 10.834 31.687z" p-id="2805"></path><path d="M849.92 51.2H174.08c-67.866 0-122.88 55.014-122.88 122.88v675.84c0 67.87 55.014 122.88 122.88 122.88h675.84c67.87 0 122.88-55.01 122.88-122.88V174.08c0-67.86-55.01-122.88-122.88-122.88z m-36.603 627.45c-2.626 44.58-21.821 78.634-55.516 98.49-25.682 15.134-54.175 19.486-81.137 21.938-32.455 2.95-92.718 6.098-164.664 6.119-71.941-0.02-132.209-3.164-164.664-6.119-26.962-2.452-55.455-6.804-81.132-21.939-33.695-19.855-52.89-53.903-55.51-98.483-4.706-80.133-10.574-179.855 0.194-262.108C221.542 335.165 280.99 311.572 311.5 310.38a2482.642 2482.642 0 0 1 81.423-4.086c-7.536-8.535-19.88-23.322-28.815-38.114-13.737-22.737 8.53-41.687 8.53-41.687s23.68-20.367 44.528 5.213c15.698 19.266 38.38 55.997 48.62 72.954l53.207-0.215c13.26 0 26.332 0.072 39.22 0.215 10.24-16.957 32.92-53.683 48.619-72.954 20.843-25.58 44.528-5.213 44.528-5.213s22.262 18.95 8.525 41.687c-8.934 14.792-21.279 29.579-28.815 38.114 28.36 0.978 55.562 2.34 81.423 4.08 30.515 1.198 89.958 24.791 100.613 106.174 10.778 82.248 4.915 181.97 0.21 262.103z" p-id="2806"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/alihehacker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 640 640"><path d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"/></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.zhihu.com/people/hacker-25-85-67'
+                        target="_blank"
+                        title="Zhihu"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1747041668264" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3961" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M656.90624 724.29056l47.42144-33.72544h52.68992V344.89856h-143.31904v346.7264h35.82976z" fill="#0066FF" p-id="3962"></path><path d="M849.92 51.2H174.08c-67.8656 0-122.88 55.0144-122.88 122.88v675.84c0 67.8656 55.0144 122.88 122.88 122.88h675.84c67.8656 0 122.88-55.0144 122.88-122.88V174.08c0-67.8656-55.0144-122.88-122.88-122.88zM495.66208 803.34848l-101.1712-157.05088 44.26752-31.616 67.45088 98.00704c-0.00512 0 23.17824 37.99552-10.5472 90.65984z m38.99392-276.10112v25.2928H408.19712C357.61152 876.06784 204.8 807.04512 204.8 807.04512c140.16512-109.86496 142.7968-254.50496 142.7968-254.50496H208.49152c0-57.9584 52.16256-56.91392 52.16256-56.91392h93.79328v-151.7568h-50.5856C284.89728 429.2352 204.8 425.02144 204.8 425.02144s32.67072-50.5856 54.79936-137.00096c22.12864-86.42048 89.5744-76.928 89.5744-76.928-20.0192 35.82976-29.50656 76.928-29.50656 76.928H485.12c40.04864 0 37.9392 25.2928 37.9392 25.2928v29.51168H411.35616v152.8064H503.04c33.72544 0 31.616 31.616 31.616 31.616zM819.2 747.49952h-102.22592l-88.51968 55.84896-8.42752-55.84896h-64.29184V288.01536H819.2v459.48416z" fill="#0066FF" p-id="3963"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/my-blog.github.io/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/my-blog.github.io/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>分类</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/my-blog.github.io/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/my-blog.github.io/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#改配置">改配置</a>
+      <ol>
+        <li><a href="#configtoml">config.toml</a></li>
+        <li><a href="#menutoml">menu.toml</a></li>
+        <li><a href="#paramstoml">params.toml</a></li>
+      </ol>
+    </li>
+    <li><a href="#部署">部署</a>
+      <ol>
+        <li><a href="#解析域名">解析域名</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/">
+                <img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack_hu2fcf86eed2264053012faaf0a9c52a98_99085_800x0_resize_box_3.png"
+                        srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack_hu2fcf86eed2264053012faaf0a9c52a98_99085_800x0_resize_box_3.png 800w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack_hu2fcf86eed2264053012faaf0a9c52a98_99085_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="441" 
+                        loading="lazy"
+                        alt="Featured image of post 记录搭建Hugo 博客，使用stack主题快速启动部署" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/my-blog.github.io/categories/%E6%9D%82%E6%8A%80%E6%B5%85%E5%B0%9D/" >
+                杂技浅尝
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/">记录搭建Hugo 博客，使用stack主题快速启动部署</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 07, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="为什么要写博客">为什么要写博客
+</h1><p>2022年结束，写了一篇年终报告，回顾发现记录总结是一个非常重要的事情，在接下来的时间需要把这件事养成一个习惯，不断记录，思考，积累 进步。</p>
+<h1 id="选择hugo">选择Hugo
+</h1><p>Hugo 比较偏向后端，编译速度非常快，就这么简单。</p>
+<h1 id="简单记录一下过程">简单记录一下过程
+</h1><p>首要任务是选择一个简单好看的主题：<a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack"  target="_blank" rel="noopener"
+    >hugo-theme-stack</a></p>
+<p><img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack.png"
+	width="1477"
+	height="814"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack_hu2fcf86eed2264053012faaf0a9c52a98_99085_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/stack_hu2fcf86eed2264053012faaf0a9c52a98_99085_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="181"
+		data-flex-basis="435px"
+	
+></p>
+<p>这个主题最初是在V2EX 看到的，挺小清新的，符合现代审美。然后在Hugo的官方主题商店看到了它。</p>
+<p><img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/store.png"
+	width="1899"
+	height="935"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/store_hudf71c8fd6c8668af6b27945855bcddab_364538_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/store_hudf71c8fd6c8668af6b27945855bcddab_364538_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="487px"
+	
+></p>
+<p>看起来主题的亮色模式有点太白了，有些文字看得不是很清楚，后面再想办法调整一下。</p>
+<p>一开始看Hugo官方文档使用命令行新建一个Hugo项目再添加这个主题，因为有一些设置覆盖，一直没弄好，后面参考文档直接使用了这个主题的快速入门模板项目，
+直接拉下来，调整配置直接运行起来了，目前使用项目自带的GitHub Action地配置搭配了一个二级域名部署在了GitHub Page上了。</p>
+<p>接下来仔细说说自己做了那些事，改了哪些东西。因为没有参考任何的教程，查找地相关教程都比较笼统，没有针对这个主题的教程，所以下面的内容全都是自己折腾实验的。</p>
+<h2 id="改配置">改配置
+</h2><p>快速启动模板的GitHub 地址：</p>
+<p><a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack-starter"  target="_blank" rel="noopener"
+    >CaiJimmy/hugo-theme-stack-starter</a></p>
+<p><code>git clone https://github.com/CaiJimmy/hugo-theme-stack-starter</code></p>
+<p>先把代码拉下来，所有的配置文件都在/config/_default 文件夹内，配置文件有很多，自己修改了其中个别几个，下面详细讲讲。</p>
+<h3 id="configtoml">config.toml
+</h3><p>博客的基本信息</p>
+<p>标题，用户名，部署的域名，语言</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="nx">baseurl</span> <span class="p">=</span> <span class="s2">&#34;https://blog.tuwei.space&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">languageCode</span> <span class="p">=</span> <span class="s2">&#34;zh-Hans&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">paginate</span> <span class="p">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl"><span class="nx">title</span> <span class="p">=</span> <span class="s2">&#34;koala9527的博客&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">DefaultContentLanguage</span> <span class="p">=</span> <span class="s2">&#34;zh-cn&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hasCJKLanguage</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># Change it to your Disqus shortname before using</span>
+</span></span><span class="line"><span class="cl"><span class="nx">disqusShortname</span> <span class="p">=</span> <span class="s2">&#34;koala9527&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="menutoml">menu.toml
+</h3><p>博客菜单</p>
+<p>删掉了Twitter联系方式，更改GitHub地址，没有什么拿得出手的，就留这个吧。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">social</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">identifier</span> <span class="p">=</span> <span class="s2">&#34;github&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">name</span> <span class="p">=</span> <span class="s2">&#34;GitHub&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">url</span> <span class="p">=</span> <span class="s2">&#34;https://github.com/koala9527&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">social</span><span class="p">.</span><span class="nx">params</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">icon</span> <span class="p">=</span> <span class="s2">&#34;brand-github&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="paramstoml">params.toml
+</h3><p>杂项，很多配置，没有仔细研究</p>
+<p>我只改了两项，个性签名和头像。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">sidebar</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">emoji</span> <span class="p">=</span> <span class="s2">&#34;🍥&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">subtitle</span> <span class="p">=</span> <span class="s2">&#34;悟已往之不谏,知来者知可追&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">sidebar</span><span class="p">.</span><span class="nx">avatar</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="nx">local</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="nx">src</span> <span class="p">=</span> <span class="s2">&#34;img/avatar.jpg&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里需要注意的是头像的文件位置，需要在项目根目录新建一个assets/img文件夹，把头像的图片文件放进去，官方文档是这么说的：
+<img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/ava_img.png"
+	width="1394"
+	height="437"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/ava_img_hu42c8a8495689e72ad38ddeb05ee592ba_51810_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/ava_img_hu42c8a8495689e72ad38ddeb05ee592ba_51810_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="官方文档"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="318"
+		data-flex-basis="765px"
+	
+></p>
+<h2 id="部署">部署
+</h2><p>先要在GitHub 新建一个公开的项目，我的自己项目地址：
+<a class="link" href="https://github.com/koala9527/my-hugo-blog"  target="_blank" rel="noopener"
+    >koala9527/my-hugo-blog</a></p>
+<p>此时需要注意推送的分支需要和快速启动模板内.github/deploy.yml文件的CI触发的分支一致。</p>
+<p>我一开始没看见注意使用的是main这个名字，项目中的出发分支名称是master无法触发自动部署。</p>
+<p><img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img.png"
+	width="1342"
+	height="695"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_hu458eb369470e246dd2cbf4aa6fcc4b8a_51451_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_hu458eb369470e246dd2cbf4aa6fcc4b8a_51451_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="193"
+		data-flex-basis="463px"
+	
+></p>
+<p>接着把本地修改的内容全部提交到刚刚新建的Github仓库，注意分支，Git仓库会触发Github Action自动新建一个gh-page的分支。</p>
+<h3 id="解析域名">解析域名
+</h3><p>点击项目的Settings-&gt;pages</p>
+<p>设置部署构建来源设置成来自分支</p>
+<p>分支名称为gh-pages<br>
+<img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_1.png"
+	width="1387"
+	height="785"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_1_hu70bb24ffaefe7ac2964550c31ab8cc0f_64777_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_1_hu70bb24ffaefe7ac2964550c31ab8cc0f_64777_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_1.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="176"
+		data-flex-basis="424px"
+	
+></p>
+<p>然后再设置一个自定义域名</p>
+<p><img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_2.png"
+	width="1419"
+	height="240"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_2_hudf54ff414defa1d0049c65812c19a9a5_12149_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_2_hudf54ff414defa1d0049c65812c19a9a5_12149_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_2.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="591"
+		data-flex-basis="1419px"
+	
+>
+设置域名过后需要在域名DNS服务商设置DNS解析。</p>
+<p>上面是是Git账号的域名解析，不确定是不是必须的，在账号设置下的page菜单中添加，添加过后会提示需要一个TXT类型域名解析用来 验证域名的所有权。
+<img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_3.png"
+	width="1350"
+	height="843"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_3_hub4fe5d051178aca2f120163e856e4bff_39098_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_3_hub4fe5d051178aca2f120163e856e4bff_39098_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_3.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>下面是项目的自定义域名解析，是一个二级域名，二级域名记录为blog，解析内容为koala9527.github.io ,记录类型为CNAME,koala9527为我自己的Github名称。
+<img src="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_4.png"
+	width="770"
+	height="279"
+	srcset="/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_4_hu3fea66b6428f3aadf388f653134fa541_15812_480x0_resize_box_3.png 480w, /my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E6%90%AD%E5%BB%BAhugo-%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8stack%E4%B8%BB%E9%A2%98%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E9%83%A8%E7%BD%B2/img_4_hu3fea66b6428f3aadf388f653134fa541_15812_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="img_4.png"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="275"
+		data-flex-basis="662px"
+	
+>
+到此为止，整个博客的从零开始到上线部署就完成了。</p>
+<h1 id="写在最后">写在最后
+</h1><p>GitHub的访问貌似有一点慢，后面考虑部署到CDN上面吧，静态页面博客部署，访问，迁移非常地方便快速，这些优点就非常明显！</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/my-blog.github.io/tags/hugo/">Hugo</a>
+        
+            <a href="/my-blog.github.io/tags/golang/">Golang</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/">
+        
+        
+            <div class="article-image">
+                <img src="/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/title.73aa5e94ea044234183af324c1ec5347_hu7f2c31cb17c6b91aa8599714a1cd3d05_95925_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 分享我搜集到的ChatGPT4.0的一些免费站点"
+                        
+                        data-hash="md5-c6pelOoEQjQYOvMkwexTRw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">分享我搜集到的ChatGPT4.0的一些免费站点</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/my-blog.github.io/chat.jpg" loading="lazy" data-key="" data-hash="/my-blog.github.io/chat.jpg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">被Sora抢尽了风头的Gemini怎么样? 今天分享一下如何搭建一个私人Gemini 网页应用，同样分享给大家玩一下</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">
+        
+        
+            <div class="article-image">
+                <img src="/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/chat.3783cdb40dd8178019439a87904a4e31_huebc724cc355f5f2295973454bd30997b_131368_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 说好的搭建一个ChatGPT3.5镜像站免费开发给大家使用，附带使用技巧"
+                        
+                        data-hash="md5-N4PNtA3YF4AZQ5qHkEpOMQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">说好的搭建一个ChatGPT3.5镜像站免费开发给大家使用，附带使用技巧</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/">
+        
+        
+            <div class="article-image">
+                <img src="/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/title.0d5fa299f8cebccb95adf10bd921ccdc_hu073597bf82840f8b6f778d00e82ff170_2384_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 导入程序员论坛帖子评论,尝试用扣子 coze AI Bot 开发平台 总结一下"
+                        
+                        data-hash="md5-DV&#43;imfjOvMuVrfEL2SHM3A==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">导入程序员论坛帖子评论,尝试用扣子 coze AI Bot 开发平台 总结一下</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+        
+        
+            <div class="article-image">
+                <img src="/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/title.bf53a69d69cc6d6b048fb944c6314b81_hu509e8fd1d5148edfe7bf43d416d577c3_38375_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 从搭建环境开始本地部署chatGLM2-6B大模型"
+                        
+                        data-hash="md5-v1OmnWnMbWsEj7lExjFLgQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从搭建环境开始本地部署chatGLM2-6B大模型</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="koala9527/my-hugo-blog"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2025 我的小站
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/my-blog.github.io/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

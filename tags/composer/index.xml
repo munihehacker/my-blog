@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Composer on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/composer/</link>
+        <description>Recent content in Composer on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Mon, 30 Jan 2023 11:55:51 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/composer/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>制作自己的composer包，搭建satis私有仓库</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/</link>
+        <pubDate>Mon, 30 Jan 2023 11:55:51 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-title.jpg" alt="Featured image of post 制作自己的composer包，搭建satis私有仓库" /&gt;&lt;p&gt;composer相当于PHP 包管理器,在日常工作中有很多可以复用的代码都可以制作私有composer包来进行分发，统一管理，特别是在公司内部一些新项目初始化需要使用一些公共的方法就不需要重复复制了，可以减少很多心智负担，使用composer命令就能下载项目的依赖包。&lt;/p&gt;
+&lt;h1 id=&#34;前提&#34;&gt;前提
+&lt;/h1&gt;&lt;p&gt;安装composer &lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-version.png&#34;
+	width=&#34;379&#34;
+	height=&#34;58&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-version_hufdab7137f5cc0ff18fc1152456ab020f_2032_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-version_hufdab7137f5cc0ff18fc1152456ab020f_2032_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;653&#34;
+		data-flex-basis=&#34;1568px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;安装Git&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/git-v.png&#34;
+	width=&#34;241&#34;
+	height=&#34;54&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/git-v_hub173a339e8ba13037a8c748952fba212_1674_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/git-v_hub173a339e8ba13037a8c748952fba212_1674_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;446&#34;
+		data-flex-basis=&#34;1071px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;公网IP机器，域名解析，Docker&lt;/p&gt;
+&lt;h1 id=&#34;制作composer包&#34;&gt;制作composer包
+&lt;/h1&gt;&lt;p&gt;先找到一个空目录，执行composer 初始化命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;composer init 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后出现一连串的询问：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;1.This command will guide you through creating your composer.json config.`
+Package name (&lt;!-- raw HTML omitted --&gt;/&lt;!-- raw HTML omitted --&gt;) :&lt;/p&gt;
+&lt;p&gt;填写自己的包名,我填写的是：koala9527/composer-build&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2.Description []:&lt;/p&gt;
+&lt;p&gt;需要填写这个包的描述信息，我填写的是：just test&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;3.Author [**** &lt;a class=&#34;link&#34; href=&#34;mailto:koala9217@qq.com&#34; &gt;koala9217@qq.com&lt;/a&gt;, n to skip]:&lt;/p&gt;
+&lt;p&gt;提示填写作者信息，可以直接跳过输入n&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;4.Minimum Stability []:&lt;/p&gt;
+&lt;p&gt;提示填写最小稳定版本，可输入内容为：stable, RC, beta, alpha, dev，稳定性依次从左到右从大到小，越左边越稳定bug越少，自己测试的包就输入：dev&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;5.Package Type (e.g. library, project, metapackage, composer-plugin)[]: library&lt;/p&gt;
+&lt;p&gt;提示填写项目类型&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;library: 这是默认类型，它会简单地将文件复制到 vendor 目录。
+project: 这表示当前包是一个项目，而不是一个库。
+metapackage: 当一个空的包，包含依赖并且需要触发依赖的安装，这将不会对系统写入额外的文件。因此这种安装类型并不需要一个 dist 或 source。
+composer-plugin: 一个安装类型为 composer-plugin 的包，它有一个自定义安装类型，可以为其它包提供一个 installler。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这里就是填的默认类型&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;6.License[]:
+提示填写开源许可证
+参考下图：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/License.png&#34;
+	width=&#34;1000&#34;
+	height=&#34;346&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/License_hu8e8f22298f4a737c8d177088a1866641_99153_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/License_hu8e8f22298f4a737c8d177088a1866641_99153_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;289&#34;
+		data-flex-basis=&#34;693px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;填写一个最宽松的&lt;code&gt;MIT&lt;/code&gt;许可&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;7.Would you like to define your dependencies (require) interactively [yes]？&lt;/p&gt;
+&lt;p&gt;提示是否需要设置依赖环境或者其他包，输入yes&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;8.Search for a package：&lt;/p&gt;
+&lt;p&gt;提示搜索哪个依赖?依赖PHP,输入php&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;9.Enter the version constraint to require (or leave blank to use the latest version)：&lt;/p&gt;
+&lt;p&gt;需要哪个版本？注意最好是精确输入自己电脑环境一样的PHP版本，我这里是7.4.30，不然会出现以下报错：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-init-error.png&#34;
+	width=&#34;983&#34;
+	height=&#34;537&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-init-error_huff8ac06cde2af27c756344b300ea7788_24993_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-init-error_huff8ac06cde2af27c756344b300ea7788_24993_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;439px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;10.重复询问7和8的问题，直接回车跳过&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;11.Add PSR-4 autoload mapping? laps namespace &amp;ldquo;Koala9527\Composerbuild&amp;quot;to the entered       relative path. [src/, n to skip]:&lt;/p&gt;
+&lt;p&gt;是否添加PSR-4自动加载映射，将命名空间 “Koala9527\Composerbuild “映射到输入的相对路径， 这里输入了n 跳过，在后面composer.json自己增加autolaod的配置&lt;/p&gt;
+&lt;p&gt;接下来就会预览这个composer包composer.json的预览内容,下面会再次询问是否确认生成&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;11.Do you confirm generation[yes]?&lt;/p&gt;
+&lt;p&gt;确认生成 yes&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start=&#34;12&#34;&gt;
+&lt;li&gt;Would you like to install dependencies now [yes]?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;是否先择安装依赖，输入yes ,没有其他依赖会直接完成&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最后整个过程截图：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-init.png&#34;
+	width=&#34;1081&#34;
+	height=&#34;761&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-init_hu11b2617eeea72a2299c9213b7ac469cf_35365_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-init_hu11b2617eeea72a2299c9213b7ac469cf_35365_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;142&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;生成的文件目录结构：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;composer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;build&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;composer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;json&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;composer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;lock&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;lock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;json&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vendor&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;autoload&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;composer&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;autoload_classmap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;autoload_namespaces&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;autoload_psr4&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;autoload_real&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;autoload_static&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ClassLoader&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;json&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;installed&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InstalledVersions&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LICENSE&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;o&#34;&gt;|--&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;platform_check&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;此时这个composer包没有任何内容，我们需要给他添加一个测试的功能代码&lt;/p&gt;
+&lt;p&gt;新建功能代码之前需要在composer.json添加pst-4自动加载配置，在项目根目录composer.json添加以下代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;autoload&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;psr-4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;Test&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\\&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;src/&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后在项目根目录新建src 目录，在src目录下Test.php文件，文件内容为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;lt;?php
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;namespace Test;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;class Test
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    public function index()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        echo &amp;#39;composer包测试成功&amp;#39;;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后执行&lt;code&gt; composer dump-autoload&lt;/code&gt;命令 自动加载类映射 生成配置，具体配置内容在vendor/composer/autoload_psr4.php 文件中&lt;/p&gt;
+&lt;p&gt;最后在根目录下新建一个index.php文件测试，内容为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;require&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;vendor/autoload.php&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;use&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Test&lt;/span&gt;\&lt;span class=&#34;n&#34;&gt;Test&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Test&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Test&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Test&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;index&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;使用PHP 命令运行这个index.php 文件：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/run.png&#34;
+	width=&#34;544&#34;
+	height=&#34;60&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/run_hucb6572996b2af1555d6db55b0719ae6b_4170_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/run_hucb6572996b2af1555d6db55b0719ae6b_4170_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;906&#34;
+		data-flex-basis=&#34;2176px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;测试成功！&lt;/p&gt;
+&lt;h1 id=&#34;上传github&#34;&gt;上传GitHub
+&lt;/h1&gt;&lt;p&gt;项目需要公开，首先新建一个Git仓库
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/git-init.png&#34;
+	width=&#34;1497&#34;
+	height=&#34;530&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/git-init_huccad3e42d8b0a16bdbdd35360c14f57a_48461_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/git-init_huccad3e42d8b0a16bdbdd35360c14f57a_48461_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;282&#34;
+		data-flex-basis=&#34;677px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;把刚刚制作的composer 项目全部代码上传&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/name-tree.png&#34;
+	width=&#34;688&#34;
+	height=&#34;486&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/name-tree_hu8e9980611b362068f9d73122b1d80e4a_20198_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/name-tree_hu8e9980611b362068f9d73122b1d80e4a_20198_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;339px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;依次执行以下Git命令就上传成功了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git add .
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git commit -m &amp;#39;first commit&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git branch -M main
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git remote add origin git@github.com:koala9527/composer-test.git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git push -u origin main
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;搭建satis仓库&#34;&gt;搭建satis仓库
+&lt;/h1&gt;&lt;p&gt;satis是Composer 官方提供的建立私有源的工具，比较简单，原理就是把Git仓库里的composer 包拉取下来制作成静态文件，然后需要自己通过Nginx镜像容器部署形成一个简单的UI界面，进行composer包的分发下载的服务&lt;/p&gt;
+&lt;p&gt;这里只做一个最简单的尝试，没有权限验证的配置&lt;/p&gt;
+&lt;p&gt;首先是需要一个公网的机器&lt;/p&gt;
+&lt;p&gt;选定一个空白文件夹新建一个satis.json配置文件。内容如下(/home/satis/build/satis.json)：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;name&amp;#34;: &amp;#34;koala/composer-test&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;homepage&amp;#34;: &amp;#34;http://satis.tuwei.space&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;repositories&amp;#34;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        {&amp;#34;type&amp;#34;: &amp;#34;vcs&amp;#34;, &amp;#34;url&amp;#34;: &amp;#34;https://github.com/koala9527/composer-test&amp;#34; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ],
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;require-all&amp;#34;: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注意：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;json配置文件中name字段必须是在composer包创建时的vendor/package的内容，否则无法初始化&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;homepage 是satis仓库的访问域名地址，也就是自己私有源的地址&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;repositories就是配置自己的GitHub项目地址，这里可以配置成一个列表，包含多个composer包。vcs的意思是版本控制系统&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;require-all 拉取全部包&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;使用composer/satis 镜像拉取GitHub内容打包静态文件和UI界面：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run --rm -it -v /home/satis/build:/build  -v /home/satis/composer:/composer  composer/satis
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;主要参数是&lt;code&gt;--rm&lt;/code&gt; ，容器只运行一次，退出时删除。&lt;/p&gt;
+&lt;p&gt;在宿主机/home/satis/build目录下会生成output 文件夹，此时把这个文件通过Nginx容器运行起来，然后通过域名解析，satis私有仓库就搭建完成了
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/output.png&#34;
+	width=&#34;375&#34;
+	height=&#34;40&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/output_hu3374799b080a3402a017e72703347a7e_2855_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/output_hu3374799b080a3402a017e72703347a7e_2855_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;937&#34;
+		data-flex-basis=&#34;2250px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;通过Nginx镜像运行静态UI界面&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run -itd --name=nginx_satis -p 8881:80 -v /home/satis/build/output:/usr/share/nginx/html nginx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;域名解析到宿主机8881端口，这里通过自己服务中的宝塔反向代理解析，现在访问域名：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;satis.tuwei.space&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/web-ui.png&#34;
+	width=&#34;1365&#34;
+	height=&#34;591&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/web-ui_hu4ea0f599194ef49af2b13c42209a2f72_36715_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/web-ui_hu4ea0f599194ef49af2b13c42209a2f72_36715_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;230&#34;
+		data-flex-basis=&#34;554px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;测试&#34;&gt;测试
+&lt;/h1&gt;&lt;p&gt;拿一个不重要的Hyperf项目测试，项目根目录下composer.json文件添加私有源配置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;#34;repositories&amp;#34;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;type&amp;#34;: &amp;#34;composer&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;url&amp;#34;: &amp;#34;http://satis.tuwei.space&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;还可以更换全局的composer 源来拉取这个私有composer包：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;composer config -g repo.packagist composer http://satis.tuwei.space
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;自己的私有仓库是http协议，需要取消安全检查，不然在composer require 命令会报错：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;composer config -g secure-http false
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;使用&lt;code&gt;composer require&lt;/code&gt; 拉取私有包：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;composer require koala/composer-test
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-require.png&#34;
+	width=&#34;758&#34;
+	height=&#34;422&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-require_huc1f1854868d6a408b0069954e8859b3e_59547_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%B6%E4%BD%9C%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85%E6%90%AD%E5%BB%BAsatis%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/composer-require_huc1f1854868d6a408b0069954e8859b3e_59547_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;参考教程&#34;&gt;参考教程
+&lt;/h1&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://hub.docker.com/r/composer/satis&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://hub.docker.com/r/composer/satis&lt;/a&gt;&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/542952527&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://zhuanlan.zhihu.com/p/542952527&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

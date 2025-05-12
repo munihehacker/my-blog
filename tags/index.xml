@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Tags on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/</link>
+        <description>Recent content in Tags on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 29 Feb 2024 22:08:00 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>AIGC</title>
+        <link>https://munihehacker/my-blog.github.io/tags/aigc/</link>
+        <pubDate>Thu, 29 Feb 2024 22:08:00 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/aigc/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ChatGPT</title>
+        <link>https://munihehacker/my-blog.github.io/tags/chatgpt/</link>
+        <pubDate>Thu, 29 Feb 2024 22:08:00 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/chatgpt/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Gemini</title>
+        <link>https://munihehacker/my-blog.github.io/tags/gemini/</link>
+        <pubDate>Thu, 29 Feb 2024 00:20:46 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/gemini/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Coze</title>
+        <link>https://munihehacker/my-blog.github.io/tags/coze/</link>
+        <pubDate>Thu, 22 Feb 2024 10:24:57 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/coze/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Stable Diffusion</title>
+        <link>https://munihehacker/my-blog.github.io/tags/stable-diffusion/</link>
+        <pubDate>Sat, 09 Dec 2023 13:19:05 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/stable-diffusion/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Python</title>
+        <link>https://munihehacker/my-blog.github.io/tags/python/</link>
+        <pubDate>Thu, 23 Nov 2023 22:18:48 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/python/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>数据处理</title>
+        <link>https://munihehacker/my-blog.github.io/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/</link>
+        <pubDate>Sat, 18 Nov 2023 22:53:50 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Nuxt</title>
+        <link>https://munihehacker/my-blog.github.io/tags/nuxt/</link>
+        <pubDate>Fri, 03 Nov 2023 23:15:12 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/nuxt/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Vue</title>
+        <link>https://munihehacker/my-blog.github.io/tags/vue/</link>
+        <pubDate>Fri, 03 Nov 2023 23:15:12 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/vue/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Docker</title>
+        <link>https://munihehacker/my-blog.github.io/tags/docker/</link>
+        <pubDate>Mon, 04 Sep 2023 22:50:54 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/docker/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>TypeScript</title>
+        <link>https://munihehacker/my-blog.github.io/tags/typescript/</link>
+        <pubDate>Wed, 05 Jul 2023 21:57:05 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/typescript/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>学习</title>
+        <link>https://munihehacker/my-blog.github.io/tags/%E5%AD%A6%E4%B9%A0/</link>
+        <pubDate>Sun, 02 Jul 2023 14:13:08 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/%E5%AD%A6%E4%B9%A0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Uniapp</title>
+        <link>https://munihehacker/my-blog.github.io/tags/uniapp/</link>
+        <pubDate>Thu, 29 Jun 2023 11:43:52 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/uniapp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>小程序</title>
+        <link>https://munihehacker/my-blog.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</link>
+        <pubDate>Thu, 29 Jun 2023 11:43:52 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Kubernetes</title>
+        <link>https://munihehacker/my-blog.github.io/tags/kubernetes/</link>
+        <pubDate>Wed, 21 Jun 2023 11:09:58 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/kubernetes/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>读书</title>
+        <link>https://munihehacker/my-blog.github.io/tags/%E8%AF%BB%E4%B9%A6/</link>
+        <pubDate>Thu, 18 May 2023 10:35:13 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/%E8%AF%BB%E4%B9%A6/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>效率</title>
+        <link>https://munihehacker/my-blog.github.io/tags/%E6%95%88%E7%8E%87/</link>
+        <pubDate>Fri, 03 Feb 2023 21:33:13 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/%E6%95%88%E7%8E%87/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Nas</title>
+        <link>https://munihehacker/my-blog.github.io/tags/nas/</link>
+        <pubDate>Thu, 02 Feb 2023 21:20:24 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/nas/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Frp</title>
+        <link>https://munihehacker/my-blog.github.io/tags/frp/</link>
+        <pubDate>Wed, 01 Feb 2023 21:02:54 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/frp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Composer</title>
+        <link>https://munihehacker/my-blog.github.io/tags/composer/</link>
+        <pubDate>Mon, 30 Jan 2023 11:55:51 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/composer/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Git</title>
+        <link>https://munihehacker/my-blog.github.io/tags/git/</link>
+        <pubDate>Mon, 30 Jan 2023 11:55:51 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/git/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>PHP</title>
+        <link>https://munihehacker/my-blog.github.io/tags/php/</link>
+        <pubDate>Mon, 30 Jan 2023 11:55:51 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/php/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Golang</title>
+        <link>https://munihehacker/my-blog.github.io/tags/golang/</link>
+        <pubDate>Sat, 07 Jan 2023 20:33:43 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/golang/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Hugo</title>
+        <link>https://munihehacker/my-blog.github.io/tags/hugo/</link>
+        <pubDate>Sat, 07 Jan 2023 20:33:43 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/tags/hugo/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

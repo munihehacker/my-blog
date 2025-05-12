@@ -1,0 +1,1236 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Python on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/python/</link>
+        <description>Recent content in Python on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 23 Nov 2023 22:18:48 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>从搭建环境开始本地部署chatGLM2-6B大模型</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/</link>
+        <pubDate>Thu, 23 Nov 2023 22:18:48 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/title.png" alt="Featured image of post 从搭建环境开始本地部署chatGLM2-6B大模型" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;自己日常工作中几乎天天都在使用ChatGPT，觉得这些工具很大程度提升了工作效率，节约了很多时间，很牛的生产力工具，十分期待它将来演化的路程。&lt;/p&gt;
+&lt;p&gt;自己也了解过很多的相关的知识，最近想着最近的AIGC大模型这么火，怎么不自己部署试一下试试呢？想着后面能自己做微调训练出更有意思更有价值的东西出来。&lt;/p&gt;
+&lt;p&gt;所以把自己的主力PC 做了一个双系统，然后挑一个开源大模型本地部署
+首先挑一个能运行的开源模型，选中了ChatGLM2-6B  模型 ，由清华大学开源的中英双语对话模型 。部署门槛比较低，性能也错。&lt;/p&gt;
+&lt;p&gt;项目地址：https://github.com/THUDM/ChatGLM2-6B&lt;/p&gt;
+&lt;p&gt;硬件环境：&lt;br&gt;
+CPU：i7-9700F&lt;br&gt;
+内存：DDR4 32G&lt;br&gt;
+显卡：2070S 8G&lt;/p&gt;
+&lt;p&gt;软件环境（新装）：&lt;br&gt;
+Ubuntu 22.04 TLS&lt;/p&gt;
+&lt;h1 id=&#34;开始&#34;&gt;开始
+&lt;/h1&gt;&lt;h2 id=&#34;安装环境&#34;&gt;安装环境
+&lt;/h2&gt;&lt;p&gt;简要说明要安装哪些东西&lt;br&gt;
+主要分为三大块：
+1.英伟达显卡驱动，Linux系统默认不会安装相关显卡驱动，需要自己安装。&lt;br&gt;
+2.CUDA（Compute Unified Device Architecture） ，是NVIDIA公司开发的一组编程语言扩展、库和工具，让开发者能够编写内核函数，可以在GPU上并行计算。&lt;br&gt;
+3.CuDNN（CUDA Deep Neural Network library），是NVIDIA公司开发的深度学习开发者提供的加速库，帮助开发者更快实现深度神经网络训练推理过程。&lt;/p&gt;
+&lt;p&gt;先看下自己的显卡到底有没有驱动：&lt;code&gt;nvidia-smi&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_1.png&#34;
+	width=&#34;871&#34;
+	height=&#34;304&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_1_hu4443bad77f579ec63ec44baa86ba0d33_33560_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_1_hu4443bad77f579ec63ec44baa86ba0d33_33560_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;286&#34;
+		data-flex-basis=&#34;687px&#34;
+	
+&gt;
+报错就是没有的，刚装的系统当然没有&lt;/p&gt;
+&lt;p&gt;再看下有没有cuda 驱动：&lt;code&gt;nvcc -V&lt;/code&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_2.png&#34;
+	width=&#34;555&#34;
+	height=&#34;106&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_2_hu611bafe94df4300fb3774c09ff58e68b_7852_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_2_hu611bafe94df4300fb3774c09ff58e68b_7852_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;523&#34;
+		data-flex-basis=&#34;1256px&#34;
+	
+&gt;&lt;br&gt;
+也是没有安装相关驱动，当然也没有&lt;/p&gt;
+&lt;p&gt;那么开始安装&lt;/p&gt;
+&lt;h3 id=&#34;nvidia驱动&#34;&gt;NVIDIA驱动
+&lt;/h3&gt;&lt;p&gt;先更新一下软件源：
+&lt;code&gt;sudo apt-get update&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;查看显卡硬件支持的驱动类型：&lt;code&gt;ubuntu-drivers devices&lt;/code&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img.png&#34;
+	width=&#34;744&#34;
+	height=&#34;392&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_huf547f9e8a3dda5d2a35d342581290c3a_27856_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_huf547f9e8a3dda5d2a35d342581290c3a_27856_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;189&#34;
+		data-flex-basis=&#34;455px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;安装一个最推荐的驱动：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_5.png&#34;
+	width=&#34;794&#34;
+	height=&#34;394&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_5_hu44d388a7b1fa4282adc13046603e8829_29510_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_5_hu44d388a7b1fa4282adc13046603e8829_29510_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;201&#34;
+		data-flex-basis=&#34;483px&#34;
+	
+&gt;
+可以自动安装推荐版本：
+&lt;code&gt;sudo ubuntu-drivers autoinstall&lt;/code&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_6.png&#34;
+	width=&#34;2257&#34;
+	height=&#34;958&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_6_hu4fe671607e4cf26db80675c8f5511457_292436_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_6_hu4fe671607e4cf26db80675c8f5511457_292436_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_6.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;235&#34;
+		data-flex-basis=&#34;565px&#34;
+	
+&gt;
+报错了。
+修改DNS:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo vim /etc/systemd/resolved.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_7.png&#34;
+	width=&#34;1270&#34;
+	height=&#34;625&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_7_hud684de578faf732e505ecf58b9b15fb8_31798_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_7_hud684de578faf732e505ecf58b9b15fb8_31798_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_7.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;203&#34;
+		data-flex-basis=&#34;487px&#34;
+	
+&gt;
+重启服务：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;systemctl restart systemd-resolved 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;systemctl enable systemd-resolved
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;又出现报错：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_8.png&#34;
+	width=&#34;2307&#34;
+	height=&#34;365&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_8_hu0ff46c0866bc11d8e7c8f83dfb48be38_67990_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_8_hu0ff46c0866bc11d8e7c8f83dfb48be38_67990_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_8.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;632&#34;
+		data-flex-basis=&#34;1516px&#34;
+	
+&gt;
+按照推荐&lt;code&gt;apt-get update &lt;/code&gt; 试一下再安装
+可以了，安装成功：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_9.png&#34;
+	width=&#34;1179&#34;
+	height=&#34;916&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_9_hud557756deac38d2de5c701221a488922_94295_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_9_hud557756deac38d2de5c701221a488922_94295_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_9.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;128&#34;
+		data-flex-basis=&#34;308px&#34;
+	
+&gt;
+重启（  sudo reboot）之后再查看驱动：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_10.png&#34;
+	width=&#34;1106&#34;
+	height=&#34;516&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_10_huee05226075035bf5783390255f178315_29131_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_10_huee05226075035bf5783390255f178315_29131_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_10.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;214&#34;
+		data-flex-basis=&#34;514px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;成功了，提示CUDA Version: 12.2 表示这个显卡最高可以支持CUDA12.2版本&lt;/p&gt;
+&lt;h3 id=&#34;cuda&#34;&gt;CUDA
+&lt;/h3&gt;&lt;p&gt;先安装CUDA Toolkit
+下载地址：https://developer.nvidia.com/cuda-toolkit-archive&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_12.png&#34;
+	width=&#34;1843&#34;
+	height=&#34;1539&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_12_huc984e82a7f940f0d37b5a11a2b7116a3_245399_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_12_huc984e82a7f940f0d37b5a11a2b7116a3_245399_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_12.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;119&#34;
+		data-flex-basis=&#34;287px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_20.png&#34;
+	width=&#34;2437&#34;
+	height=&#34;1596&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_20_hu17f8838a7c517789437b758af6e8b804_135008_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_20_hu17f8838a7c517789437b758af6e8b804_135008_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_20.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;152&#34;
+		data-flex-basis=&#34;366px&#34;
+	
+&gt;
+根据官网提示在线安装试试：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda_12.2.0_535.54.03_linux.run
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo sh cuda_12.2.0_535.54.03_linux.run
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_21.png&#34;
+	width=&#34;3568&#34;
+	height=&#34;436&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_21_hu3dfd2ff4b430e73a6eb7bc2fc5cc030c_62911_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_21_hu3dfd2ff4b430e73a6eb7bc2fc5cc030c_62911_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_21.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;818&#34;
+		data-flex-basis=&#34;1964px&#34;
+	
+&gt;
+Continue
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_22.png&#34;
+	width=&#34;972&#34;
+	height=&#34;700&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_22_hu1af503fc89ba3e779cc76d467bc39d31_12264_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_22_hu1af503fc89ba3e779cc76d467bc39d31_12264_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_22.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;333px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;提示报错： Failed to verify gcc version. See log at /var/log/cuda-installer.log for details.&lt;/p&gt;
+&lt;p&gt;先加忽略试试看：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo sh cuda_12.2.0_535.54.03_linux.run --override
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;输入：accept
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_23.png&#34;
+	width=&#34;1012&#34;
+	height=&#34;658&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_23_hu62b1fa82ded504f57c77b48d895d1709_30391_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_23_hu62b1fa82ded504f57c77b48d895d1709_30391_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_23.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;153&#34;
+		data-flex-basis=&#34;369px&#34;
+	
+&gt;
+安装 CUDA相关的就行，选择Install 回车
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_24.png&#34;
+	width=&#34;912&#34;
+	height=&#34;606&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_24_hueb5af1575b068167f28ff4cfe42c26b1_15998_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_24_hueb5af1575b068167f28ff4cfe42c26b1_15998_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_24.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;150&#34;
+		data-flex-basis=&#34;361px&#34;
+	
+&gt;
+安装完成：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_25.png&#34;
+	width=&#34;1879&#34;
+	height=&#34;466&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_25_hu6656df48ed31bb6500eb1785a819f81c_38980_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_25_hu6656df48ed31bb6500eb1785a819f81c_38980_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_25.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;403&#34;
+		data-flex-basis=&#34;967px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;还没完，需要根据提示 添加环境变量&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;===========&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;Summary&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;===========&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Driver:   Not Selected
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Toolkit:  Installed in /usr/local/cuda-12.2/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Please make sure that
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; -   PATH includes /usr/local/cuda-12.2/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; -   LD_LIBRARY_PATH includes /usr/local/cuda-12.2/lib64, or, add /usr/local/cuda-12.2/lib64 to /etc/ld.so.conf and run ldconfig as root
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;To uninstall the CUDA Toolkit, run cuda-uninstaller in /usr/local/cuda-12.2/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;***WARNING: Incomplete installation! This installation did not install the CUDA Driver. A driver of version at least 535.00 is required &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; CUDA 12.2 functionality to work.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;To install the driver using this installer, run the following command, replacing &amp;lt;CudaInstaller&amp;gt; with the name of this run file:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    sudo &amp;lt;CudaInstaller&amp;gt;.run --silent --driver
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Logfile is /var/log/cuda-installer.log
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;文件末尾添加以下几行：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_26.png&#34;
+	width=&#34;894&#34;
+	height=&#34;82&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_26_huea73ad8b8d69a33b83fcdf58eb43960e_6308_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_26_huea73ad8b8d69a33b83fcdf58eb43960e_6308_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_26.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1090&#34;
+		data-flex-basis=&#34;2616px&#34;
+	
+&gt;
+退保保存 使环境变量生效：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最后验证一下：&lt;code&gt;nvcc -V&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_27.png&#34;
+	width=&#34;529&#34;
+	height=&#34;178&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_27_hu28b39935701d811712d5608e99932736_13451_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_27_hu28b39935701d811712d5608e99932736_13451_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_27.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;297&#34;
+		data-flex-basis=&#34;713px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;cudnn&#34;&gt;cuDNN
+&lt;/h3&gt;&lt;p&gt;接下来安装cuDNN
+项目的pytorch 版本是&amp;gt;2.0
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_11.png&#34;
+	width=&#34;1330&#34;
+	height=&#34;1024&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_11_hub4a454f8aafb56e545382fb06a5d716a_75233_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_11_hub4a454f8aafb56e545382fb06a5d716a_75233_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_11.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;311px&#34;
+	
+&gt;
+进官网看看cudnn 和cuda的版本对应关系：&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://developer.nvidia.com/rdp/cudnn-archive#a-collapse742-10&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://developer.nvidia.com/rdp/cudnn-archive#a-collapse742-10&lt;/a&gt;&lt;br&gt;
+CUDA 12.2 对应的是一下几个版本的cudnn&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_13.png&#34;
+	width=&#34;1945&#34;
+	height=&#34;1349&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_13_hu76d23cf355e2a2691db6e14434725488_120643_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_13_hu76d23cf355e2a2691db6e14434725488_120643_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_13.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;144&#34;
+		data-flex-basis=&#34;346px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;cudnn 官方下载地址：https://developer.nvidia.com/rdp/cudnn-archive&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_16.png&#34;
+	width=&#34;2295&#34;
+	height=&#34;1549&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_16_huafb4fe4053c3549235397bb0585cdedb_167359_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_16_huafb4fe4053c3549235397bb0585cdedb_167359_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_16.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里下载需要验证NVIDIA 的账号权限，我这里是win11 用SSH链接用ftp 传了上去
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_18.png&#34;
+	width=&#34;750&#34;
+	height=&#34;100&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_18_hu8bb7161b9b990bf7776fff02d73661a1_5757_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_18_hu8bb7161b9b990bf7776fff02d73661a1_5757_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_18.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;750&#34;
+		data-flex-basis=&#34;1800px&#34;
+	
+&gt;
+直接安装：&lt;code&gt;sudo dpkg -i  cudnn-local-repo-ubuntu2204-8.9.5.30_1.0-1_amd64.deb &lt;/code&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_19.png&#34;
+	width=&#34;1378&#34;
+	height=&#34;267&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_19_hua31952ecc73434cf513f5af3c6d2d051_31204_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_19_hua31952ecc73434cf513f5af3c6d2d051_31204_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_19.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;516&#34;
+		data-flex-basis=&#34;1238px&#34;
+	
+&gt;
+安装示例复制软件源的key:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp /var/cudnn-local-repo-ubuntu2204-8.9.5.30/cudnn-local-FB167084-keyring.gpg /usr/share/keyrings/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;更新软件源：
+sudo apt-get update
+接下来还要安装运行时库，开发者库，代码示例：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_28.png&#34;
+	width=&#34;2656&#34;
+	height=&#34;1581&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_28_hub4eee184eeea2fab3b21a12830700bd4_208866_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_28_hub4eee184eeea2fab3b21a12830700bd4_208866_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_28.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;403px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里需要指定具体的CUDA版本和cuDNN版本，上面的CUDA和cuDNN版本分别为：12.2.0 和 8.9.5.30
+所以：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install &lt;span class=&#34;nv&#34;&gt;libcudnn8&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;8.9.5.30-1+cuda12.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install libcudnn8-dev&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;8.9.5.30-1+cuda12.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install libcudnn8-samples&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;8.9.5.30-1+cuda12.2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行完成验证安装：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp -r /usr/src/cudnn_samples_v8/ &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;/cudnn_samples_v8/mnistCUDNN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;make clean &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./mnistCUDNN
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;make 命令时 提示 找不到命令 “make” 那么就安装 &lt;code&gt;apt install make&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后又报错：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf *o
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf mnistCUDNN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;CUDA_VERSION is &lt;span class=&#34;m&#34;&gt;12020&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Linking agains &lt;span class=&#34;nv&#34;&gt;cublasLt&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;CUDA VERSION: &lt;span class=&#34;m&#34;&gt;12020&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;TARGET ARCH: x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;HOST_ARCH: x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;TARGET OS: linux
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SMS: &lt;span class=&#34;m&#34;&gt;50&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;53&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;60&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;61&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;62&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;70&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;72&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;75&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;80&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;86&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;87&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;90&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;g++: No such file or directory
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nvcc fatal   : Failed to preprocess host compiler properties.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt;&amp;gt;&amp;gt; WARNING - FreeImage is not &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt; up correctly. Please ensure FreeImage is &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt; up correctly. &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;@&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; /usr/local/cuda/bin/nvcc -I/usr/local/cuda/include -I/usr/local/cuda/include -IFreeImage/include -ccbin g++ -m64 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_50,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_50 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_53,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_53 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_60,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_60 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_61,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_61 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_62,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_62 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_70,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_70 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_72,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_72 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_75,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_75 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_80,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_80 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_86,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_86 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_87,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_87 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_90,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_90 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_90,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_90 -o fp16_dev.o -c fp16_dev.cu
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;@&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; g++ -I/usr/local/cuda/include -I/usr/local/cuda/include -IFreeImage/include -o fp16_emu.o -c fp16_emu.cpp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;@&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; g++ -I/usr/local/cuda/include -I/usr/local/cuda/include -IFreeImage/include -o mnistCUDNN.o -c mnistCUDNN.cpp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;@&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; /usr/local/cuda/bin/nvcc -ccbin g++ -m64 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_50,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_50 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_53,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_53 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_60,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_60 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_61,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_61 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_62,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_62 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_70,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_70 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_72,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_72 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_75,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_75 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_80,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_80 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_86,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_86 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_87,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_87 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_90,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sm_90 -gencode &lt;span class=&#34;nv&#34;&gt;arch&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_90,code&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;compute_90 -o mnistCUDNN fp16_dev.o fp16_emu.o mnistCUDNN.o -I/usr/local/cuda/include -I/usr/local/cuda/include -IFreeImage/include -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64 -lcublasLt -LFreeImage/lib/linux/x86_64 -LFreeImage/lib/linux -lcudart -lcublas -lcudnn -lfreeimage -lstdc++ -lm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;继续安装相关的软件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install libfreeimage3 libfreeimage-dev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;还是继续一样报错，显然没有安装g++编译库，想找到具体问题，结果在NVIDIA论坛找到的解决方案：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install g++ freeglut3-dev web3-meta-mask-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最后成功了！！！
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_29.png&#34;
+	width=&#34;1119&#34;
+	height=&#34;940&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_29_huab1e640e39a24413c2840d437e45d59f_94873_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_29_huab1e640e39a24413c2840d437e45d59f_94873_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_29.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;119&#34;
+		data-flex-basis=&#34;285px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;部署&#34;&gt;部署
+&lt;/h1&gt;&lt;h2 id=&#34;下载项目&#34;&gt;下载项目
+&lt;/h2&gt;&lt;p&gt;官方Git项目地址：&lt;code&gt;https://github.com/THUDM/ChatGLM2-6B&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/THUDM/ChatGLM2-6B
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ChatGLM2-6B
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;还需要提前安装一些软件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apt install  python3-pip git curl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里就不使用conda了直接安装相关依赖&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装Git lfs(Large File Storage)
+Git 的扩展，实现大文件的版本管理支持
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_34.png&#34;
+	width=&#34;2346&#34;
+	height=&#34;1477&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_34_hud53099eaab6ce6625eecbb3cca32e255_172352_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_34_hud53099eaab6ce6625eecbb3cca32e255_172352_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_34.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;158&#34;
+		data-flex-basis=&#34;381px&#34;
+	
+&gt;
+通过项目根目录下的&lt;code&gt;.gitattributes&lt;/code&gt;文件指定哪些文件用专门的LFS文件服务器里，和Git仓库存储位置分开。&lt;/p&gt;
+&lt;p&gt;git lfs 官方指南：https://github.com/git-lfs/git-lfs/blob/main/INSTALLING.md&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo bash
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install git-lfs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;切换一个文件夹执行Clone大模型相关的模型：&lt;code&gt;git clone https://huggingface.co/THUDM/chatglm2-6b&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_30.png&#34;
+	width=&#34;1005&#34;
+	height=&#34;214&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_30_hu6d5e6fcb3aa7138558a3d58029274ec2_19352_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_30_hu6d5e6fcb3aa7138558a3d58029274ec2_19352_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_30.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;469&#34;
+		data-flex-basis=&#34;1127px&#34;
+	
+&gt;
+卡了很久，没有进度显示，看看源代码有多大：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_31.png&#34;
+	width=&#34;2388&#34;
+	height=&#34;1846&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_31_hu45f24f10f133326b21bcacc9ebaeba39_315278_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_31_hu45f24f10f133326b21bcacc9ebaeba39_315278_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_31.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_33.png&#34;
+	width=&#34;1050&#34;
+	height=&#34;240&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_33_hubf222f7365ef672af3c6acf1408eff0d_21793_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_33_hubf222f7365ef672af3c6acf1408eff0d_21793_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_33.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;437&#34;
+		data-flex-basis=&#34;1050px&#34;
+	
+&gt;
+看下载速度带宽占用：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install nethogs
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nethogs -d &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_32.png&#34;
+	width=&#34;3610&#34;
+	height=&#34;250&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_32_hu94acca554d4b76818ffe019164e3e977_16549_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_32_hu94acca554d4b76818ffe019164e3e977_16549_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_32.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1444&#34;
+		data-flex-basis=&#34;3465px&#34;
+	
+&gt;
+每秒两三M左右，13G左右，理论上差不多十分钟，实际上不止
+下载完成后：&lt;code&gt;cd chatglm2-6b&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;命令行测试&#34;&gt;命令行测试
+&lt;/h2&gt;&lt;p&gt;试一下命令行启动：
+&lt;code&gt;python3&lt;/code&gt; 进入交互式命令行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;transformers&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoTokenizer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoModel&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;tokenizer&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoTokenizer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;from_pretrained&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;THUDM/chatglm2-6b-int4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trust_remote_code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;model&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoModel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;from_pretrained&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;THUDM/chatglm2-6b-int4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trust_remote_code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;device&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;cuda&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;response&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;history&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;model&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tokenizer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;你好&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;history&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;response&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;实际上&lt;code&gt;AutoModel.from_pretrained&lt;/code&gt; 加载模型加载了很久
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_35.png&#34;
+	width=&#34;2328&#34;
+	height=&#34;670&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_35_hu8565afde1a7389121606415573c97b64_104215_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_35_hu8565afde1a7389121606415573c97b64_104215_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_35.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;347&#34;
+		data-flex-basis=&#34;833px&#34;
+	
+&gt;
+然后出现了报错：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;. Make sure to double-check they &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt; not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pytorch_model.bin: 100%&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; 3.92G/3.92G &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;18:36&amp;lt;00:00, 3.51MB/s&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Traceback &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;most recent call last&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;stdin&amp;gt;&amp;#34;&lt;/span&gt;, line 1, in &amp;lt;module&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py&amp;#34;&lt;/span&gt;, line 479, in from_pretrained
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; model_class.from_pretrained&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py&amp;#34;&lt;/span&gt;, line 2675, in from_pretrained
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nv&#34;&gt;model&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; cls&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;config, *model_args, **model_kwargs&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/root/.cache/huggingface/modules/transformers_modules/THUDM/chatglm2-6b-int4/66ecaf1db3a5085714e133357ea4824b69698743/modeling_chatglm.py&amp;#34;&lt;/span&gt;, line 856, in __init__
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    self.transformer &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; ChatGLMModel&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;config, &lt;span class=&#34;nv&#34;&gt;empty_init&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;empty_init, &lt;span class=&#34;nv&#34;&gt;device&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;device&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/root/.cache/huggingface/modules/transformers_modules/THUDM/chatglm2-6b-int4/66ecaf1db3a5085714e133357ea4824b69698743/modeling_chatglm.py&amp;#34;&lt;/span&gt;, line 756, in __init__
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    self.encoder &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; init_method&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;GLMTransformer, config, **init_kwargs&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/nn/utils/init.py&amp;#34;&lt;/span&gt;, line 52, in skip_init
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; module_cls&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;*args, **kwargs&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;.to_empty&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;device&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;final_device&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py&amp;#34;&lt;/span&gt;, line 1039, in to_empty
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; self._apply&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;lambda t: torch.empty_like&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;t, &lt;span class=&#34;nv&#34;&gt;device&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;device&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;nv&#34;&gt;recurse&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;recurse&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py&amp;#34;&lt;/span&gt;, line 810, in _apply
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    module._apply&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;fn&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py&amp;#34;&lt;/span&gt;, line 810, in _apply
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    module._apply&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;fn&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py&amp;#34;&lt;/span&gt;, line 810, in _apply
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    module._apply&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;fn&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Previous line repeated &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; more time&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py&amp;#34;&lt;/span&gt;, line 833, in _apply
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nv&#34;&gt;param_applied&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fn&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;param&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py&amp;#34;&lt;/span&gt;, line 1039, in &amp;lt;lambda&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; self._apply&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;lambda t: torch.empty_like&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;t, &lt;span class=&#34;nv&#34;&gt;device&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;device&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;, &lt;span class=&#34;nv&#34;&gt;recurse&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;recurse&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/lib/python3.10/dist-packages/torch/_refs/__init__.py&amp;#34;&lt;/span&gt;, line 4681, in empty_like
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; torch.empty_permuted&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 108.00 MiB. GPU &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; has a total capacty of 7.75 GiB of which 93.25 MiB is free. Including non-PyTorch memory, this process has 6.98 GiB memory in use. Of the allocated memory 6.87 GiB is allocated by PyTorch, and 1.58 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting max_split_size_mb to avoid fragmentation.  See documentation &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; Memory Management and PYTORCH_CUDA_ALLOC_CONF
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;根据issue调整量化命令，我还以为直接改量化模型名称就行：&lt;/p&gt;
+&lt;p&gt;把&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;model = AutoModel.from_pretrained(&amp;#34;THUDM/chatglm2-6b-int4&amp;#34;, trust_remote_code=True, device=&amp;#39;cuda&amp;#39;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;调整成：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;model = AutoModel.from_pretrained(&amp;#34;THUDM/chatglm2-6b-int4&amp;#34;, trust_remote_code=True).quantize(4).cuda()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;解释是:&lt;code&gt;如果在 from_pretrained 里传入 device=&#39;cuda&#39;，会把量化前的模型构建在 GPU上。&lt;/code&gt; ,显卡只有8G 跑不了。&lt;/p&gt;
+&lt;p&gt;所以现在就可以了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_36.png&#34;
+	width=&#34;1329&#34;
+	height=&#34;154&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_36_hu44e64bfe7eb19006f4e234d8556105fd_15191_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_36_hu44e64bfe7eb19006f4e234d8556105fd_15191_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_36.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;862&#34;
+		data-flex-basis=&#34;2071px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_37.png&#34;
+	width=&#34;1563&#34;
+	height=&#34;822&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_37_huc51cd965d08565051ba1ab05f3cf254a_106334_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_37_huc51cd965d08565051ba1ab05f3cf254a_106334_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_37.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;456px&#34;
+	
+&gt;
+问了两个问题，显存涨了300多M:
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_38.png&#34;
+	width=&#34;1035&#34;
+	height=&#34;538&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_38_hud0455aee8974bb8f2d60d2c4f77f1215_27698_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_38_hud0455aee8974bb8f2d60d2c4f77f1215_27698_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_38.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;461px&#34;
+	
+&gt;
+平均一个问题涨了100M显存占用,回答内容还不错，比我想象中要聪明一点点
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_39.png&#34;
+	width=&#34;1893&#34;
+	height=&#34;783&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_39_hua731797e822cc077e9e8c011c502e344_191679_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_39_hua731797e822cc077e9e8c011c502e344_191679_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_39.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;241&#34;
+		data-flex-basis=&#34;580px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;web测试&#34;&gt;WEB测试
+&lt;/h2&gt;&lt;p&gt;找到官方的项目地址：https://github.com/THUDM/ChatGLM2-6B&lt;/p&gt;
+&lt;p&gt;因为我是从Hugging Face 上下载的没有web测试的代码文件&lt;/p&gt;
+&lt;p&gt;找到web_demo2.py 根据自己的显卡显存调整一下量化等级代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@st.cache_resource&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_model&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;tokenizer&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoTokenizer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;from_pretrained&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;THUDM/chatglm2-6b-int4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trust_remote_code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;model&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoModel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;from_pretrained&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;THUDM/chatglm2-6b-int4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trust_remote_code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;quantize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cuda&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# 多显卡支持，使用下面两行代替上面一行，将num_gpus改为你实际的显卡数量&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# from utils import load_model_on_gpus&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# model = load_model_on_gpus(&amp;#34;THUDM/chatglm2-6b&amp;#34;, num_gpus=2)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;model&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;model&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;eval&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tokenizer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;运行命令并访问：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;streamlit run web.py
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_40.png&#34;
+	width=&#34;843&#34;
+	height=&#34;202&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_40_hubc240723e4cfdb553ae26fbaeb6c50d7_11683_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_40_hubc240723e4cfdb553ae26fbaeb6c50d7_11683_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_40.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;417&#34;
+		data-flex-basis=&#34;1001px&#34;
+	
+&gt;&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_41.png&#34;
+	width=&#34;3826&#34;
+	height=&#34;1860&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_41_huecf58d91f5bfde6c738313bb5e9b069d_215084_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/img_41_huecf58d91f5bfde6c738313bb5e9b069d_215084_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_41.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;205&#34;
+		data-flex-basis=&#34;493px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;大模型的生成结果的文件流 可以通过&lt;code&gt;streamlit&lt;/code&gt;流式传输 ，不用跟命令行一样等待全部结果生成出来返回，体验非常棒~&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/show.gif&#34;
+	width=&#34;3185&#34;
+	height=&#34;1699&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/show_hud044b66fa4cec6b1bb4c7e7e7dfce9fc_1896557_480x0_resize_box_1.gif 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E4%BB%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%BC%80%E5%A7%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2chatglm2-6b%E5%A4%A7%E6%A8%A1%E5%9E%8B/show_hud044b66fa4cec6b1bb4c7e7e7dfce9fc_1896557_1024x0_resize_box_1.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;show.gif&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;449px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;总结&#34;&gt;总结
+&lt;/h1&gt;&lt;p&gt;整个环境搭建流程还算比较顺利，没有卡很久 ，然后大模型问答的结果内容比我想象中要好很多，感觉比ChatGPT3.5只差了一点点 ，主要是回复得非常快，这是在第三方的在线部署的模型是体验不到的，后面可以尝试找些数据做微调训练了~&lt;/p&gt;
+&lt;p&gt;敬请期待~&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>安装Jupyter Notebook</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/</link>
+        <pubDate>Sun, 02 Jul 2023 14:13:08 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/title2.jpg" alt="Featured image of post 安装Jupyter Notebook" /&gt;&lt;p&gt;查看哪些docker镜像：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@koala9527:/home/jijiwaiwai/my-project/jupyter-notebook# sudo docker search jupyter
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                                 DESCRIPTION                                      STARS     OFFICIAL   AUTOMATED
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/scipy-notebook               Scientific Jupyter Notebook Python Stack fro…   &lt;span class=&#34;m&#34;&gt;406&lt;/span&gt;                  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/tensorflow-notebook          Scientific Jupyter Notebook Python Stack w/ …   &lt;span class=&#34;m&#34;&gt;345&lt;/span&gt;                  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/all-spark-notebook           Python, Scala, R and Spark Jupyter Notebook …   &lt;span class=&#34;m&#34;&gt;417&lt;/span&gt;                  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/pyspark-notebook             Python and Spark Jupyter Notebook Stack from…   &lt;span class=&#34;m&#34;&gt;277&lt;/span&gt;                  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/datascience-notebook         Data Science Jupyter Notebook Python Stack f…   &lt;span class=&#34;m&#34;&gt;1027&lt;/span&gt;                 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/singleuser                single-user docker images &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; use with Jupyt…   &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;                   &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;OK&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/jupyterhub                JupyterHub: multi-user Jupyter notebook serv…   &lt;span class=&#34;m&#34;&gt;326&lt;/span&gt;                  &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;OK&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/minimal-notebook             Minimal Jupyter Notebook Python Stack from h…   &lt;span class=&#34;m&#34;&gt;183&lt;/span&gt;                  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/base-notebook                Base image &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; Jupyter Notebook stacks from …   &lt;span class=&#34;m&#34;&gt;203&lt;/span&gt;                  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-hub                                                                    &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt;                   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-network-tools                                                          &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;                    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/configurable-http-proxy   node-http-proxy + REST API                       &lt;span class=&#34;m&#34;&gt;6&lt;/span&gt;                    &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;OK&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-singleuser-sample                                                      &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;                   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/nbviewer                     Jupyter Notebook Viewer                          &lt;span class=&#34;m&#34;&gt;32&lt;/span&gt;                   &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;OK&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/r-notebook                   R Jupyter Notebook Stack from https://github…   &lt;span class=&#34;m&#34;&gt;54&lt;/span&gt;                   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-image-awaiter                                                          &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;                    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/repo2docker                  Turn git repositories into Jupyter enabled D…   &lt;span class=&#34;m&#34;&gt;21&lt;/span&gt;                   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-secret-sync                                                            &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;                    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/jupyterhub-onbuild        onbuild version of JupyterHub images             &lt;span class=&#34;m&#34;&gt;6&lt;/span&gt;                    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bitnami/jupyter-base-notebook                                                         &lt;span class=&#34;m&#34;&gt;39&lt;/span&gt;                   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyter/demo                         &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;DEPRECATED&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; Demo of the IPython/Jupyter Not…   &lt;span class=&#34;m&#34;&gt;16&lt;/span&gt;                   
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-image-cleaner                                                          &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;                    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-binderhub                                                              &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;                    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;jupyterhub/k8s-pre-puller                                                             &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;参考官网： &lt;a class=&#34;link&#34; href=&#34;https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html&lt;/a&gt; 可以看到各个镜像的简要介绍&lt;/p&gt;
+&lt;p&gt;我选择了第一个： 包含来自科研科学类的Python生态系统的热门软件包
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img.png&#34;
+	width=&#34;1399&#34;
+	height=&#34;918&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_hu41b47653a947278cc973eb134d50d77f_105120_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_hu41b47653a947278cc973eb134d50d77f_105120_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;152&#34;
+		data-flex-basis=&#34;365px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;编写docker-compose.yml.后期维护有记录：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;3.3&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;scipy-notebook&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;jupyter/scipy-notebook:latest&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;container_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;jupyter-notebook&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;tty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;restart&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;always&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;m&#34;&gt;8899&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;8888&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;volumes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;${PWD}/.aws:/home/jovyan/.aws&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;${PWD}/work:/home/jovyan/work&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;environment&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;REPOS=/home/jovyan/work/git&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;JUPYTER_TOKEN=********&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;JUPYTER_ENABLE_LAB=yes&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;NB_UID=1000&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;#$(id -u)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;NB_GID=1000&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;#(id -g)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注意要 UID  NB_GID 需要设置一下，属于linux 的用户组管理，会影响 Jupyter 服务器进程以及在容器内创建或挂载文件时的权限和所有权。&lt;br&gt;
+我这里设置的我安装系统后创建的第一个用户，通过&lt;code&gt;id&lt;/code&gt;查看，不建议用root 用户，貌似会启动不起来。&lt;br&gt;
+如果不设置就会报错：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_1.png&#34;
+	width=&#34;623&#34;
+	height=&#34;86&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_1_hud8d02c82b8cd5921f8ec38089324489b_6071_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_1_hud8d02c82b8cd5921f8ec38089324489b_6071_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;724&#34;
+		data-flex-basis=&#34;1738px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;启动命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker-compose -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;容器运行起来后宿主机的 &lt;code&gt;${PWD}/work&lt;/code&gt; 目录需要设置用户权限，我的这个目录是root 用户权限创建的其他用户不用进行创建文件的操作，需要使用&lt;code&gt;chmod 777&lt;/code&gt; 是其他用户组有读写权限：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@koala9527:/home/*****/my-project/jupyter-notebook# ls -l
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;总计 &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-rw-r--r-- &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root  &lt;span class=&#34;m&#34;&gt;471&lt;/span&gt;  7月  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; 16:06 docker-compose.yml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt;  7月  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; 15:25 work
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@koala9527:/home/*****/my-project/jupyter-notebook# chmod &lt;span class=&#34;m&#34;&gt;777&lt;/span&gt; work/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@koala9527:/home/*****/my-project/jupyter-notebook# ls -l
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;总计 &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-rw-r--r-- &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root  &lt;span class=&#34;m&#34;&gt;471&lt;/span&gt;  7月  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; 16:06 docker-compose.yml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;drwxrwxrwx &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt;  7月  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; 15:25 work
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;通过内网访问:
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_2.png&#34;
+	width=&#34;1426&#34;
+	height=&#34;997&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_2_hu000593f6f1bb8d23f02b88dc61ef18da_48674_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_2_hu000593f6f1bb8d23f02b88dc61ef18da_48674_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;143&#34;
+		data-flex-basis=&#34;343px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;验证使用&#34;&gt;验证使用：
+&lt;/h2&gt;&lt;p&gt;新建一个Notebook项目尝试运行：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_3.png&#34;
+	width=&#34;935&#34;
+	height=&#34;283&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_3_hud49a6608bb1a42ae3b84ab829acea071_13745_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AE%89%E8%A3%85jupyter-notebook/img_3_hud49a6608bb1a42ae3b84ab829acea071_13745_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;330&#34;
+		data-flex-basis=&#34;792px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

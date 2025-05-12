@@ -1,0 +1,976 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Docker on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/docker/</link>
+        <description>Recent content in Docker on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Mon, 04 Sep 2023 22:50:54 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>记录一次ChatGPT私有ChatGPT网页应用搭建教程</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Mon, 04 Sep 2023 22:50:54 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/title.jpeg" alt="Featured image of post 记录一次ChatGPT私有ChatGPT网页应用搭建教程" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;ChatGPT 是目前最火热的生成式人工智能工具，由OpenAI公司研发发布，我现在每天都在用它&lt;/p&gt;
+&lt;p&gt;上篇文章讲了如何使用ChatGPT的使用技巧还给大家免费分享我自己搭建的ChatGPT网页应用《分享一下ChatGPT相关使用技巧》，有空的同学可以点击文章标题链接可以看一下。&lt;/p&gt;
+&lt;p&gt;今天就来简单分享一下怎么安装它的镜像站。&lt;/p&gt;
+&lt;p&gt;普通人可以直接使用我的搭建的私有ChatGPT网页应用，有兴趣的同学可以跟着我的教程来学着搭建一下。（有一定的门槛）&lt;/p&gt;
+&lt;h1 id=&#34;必要条件&#34;&gt;必要条件
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;拥有一个可以访问ChatGPT 官网的和GitHub的网络环境，ChatGPT 官网地址：https://openai.com/&lt;/li&gt;
+&lt;li&gt;购买一个ChatGPT的Key，推荐一个购买地址（0.6元人名币5刀余额的API KEY，不想买自己要用想办法用其他国家的手机号注册）：https://gpt888.shop/ (发卡网站不稳定有一定时效性)&lt;/li&gt;
+&lt;li&gt;一台可以使用Docker的机器，最好有个域名，可以公网访问更佳~&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;镜私有chatgpt网页应用推荐&#34;&gt;镜私有ChatGPT网页应用推荐
+&lt;/h1&gt;&lt;p&gt;下面两个开源的私有ChatGPT网页应用自己都有实践搭建过，并且市面上大多数公开分享项目都来自于这两个项目。&lt;/p&gt;
+&lt;p&gt;1.https://github.com/Yidadaa/ChatGPT-Next-Web&lt;/p&gt;
+&lt;p&gt;前端比较好看，交互体验非常好，感觉体验比官网还好，而且自带提示词，自带prompt提示词仓库，点击就可以使用，功能比较强大，最新版已支持Google 的 Gemini AI机器人。&lt;/p&gt;
+&lt;p&gt;最早主分支在2023年3月7日首次提交，截止到目前24年2月28日为止已有62.3k star。&lt;/p&gt;
+&lt;p&gt;效果：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_3.png&#34;
+	width=&#34;1600&#34;
+	height=&#34;868&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_3_huae8e5b0189b3eee532dd7ce6a00521bc_239651_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_3_huae8e5b0189b3eee532dd7ce6a00521bc_239651_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;184&#34;
+		data-flex-basis=&#34;442px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2.https://github.com/Chanzhaoyu/chatgpt-web&lt;/p&gt;
+&lt;p&gt;页面比较简单，实用，便捷快捷。自己一直在用，出的时候比较早。
+最早主分支在2023年2月9日首次提，交截止到目前24年2月28日为止已有29.6k star。&lt;/p&gt;
+&lt;p&gt;效果：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img.png&#34;
+	width=&#34;2012&#34;
+	height=&#34;1480&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_hu93e1ea7614b795e0e423a28910244908_179198_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_hu93e1ea7614b795e0e423a28910244908_179198_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;326px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;搭建教程&#34;&gt;搭建教程
+&lt;/h1&gt;&lt;p&gt;搭建非常简单，知道会使用docker,使用docker-compose容器编排工具一键搭建，以第二个镜像站为例新建一个docker-compose.yaml文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;3&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;container_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;chatgpt-web&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;chenzhaoyu94/chatgpt-web&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 总是使用latest,更新时重新pull该tag镜像即可&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;restart&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;always&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;m&#34;&gt;3002&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;3002&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;environment&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 二选一&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;OPENAI_API_KEY&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;sk-*************************** &lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 购买的key&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 反向代理，可选&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;#API_REVERSE_PROXY: https://gpt.pawan.krd/backend-api/conversation # 网络环境不支持访问OpenAI 的时候可以使用第三方的网络代理或者自建代理&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 超时，单位毫秒，可选&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;TIMEOUT_MS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;m&#34;&gt;120000&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后执行命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker-compose up -d 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;命令执行完毕后服务器就会自动拉取&lt;code&gt;chenzhaoyu94/chatgpt-web&lt;/code&gt;镜像，然后在本地启动一个服务，宿主机端口为3002
+我这里是用内网机器部署的，内网访问：&lt;code&gt;http://192.168.2.129:3002&lt;/code&gt;（第一次访问加载比较慢）:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_2.png&#34;
+	width=&#34;3549&#34;
+	height=&#34;1883&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_2_hu251a2dbe08a467f0e75c059e6d314696_64650_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_2_hu251a2dbe08a467f0e75c059e6d314696_64650_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;188&#34;
+		data-flex-basis=&#34;452px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以直接访问了&lt;/p&gt;
+&lt;h1 id=&#34;搭建完毕&#34;&gt;搭建完毕
+&lt;/h1&gt;&lt;p&gt;搭建非常简单，基础，主要难点在于网络环境的搭建，需要正常访问OpenAI，还有一个合理便宜的Key的购买渠道。然后后期怎么使用域名解析这个服务能随时随地访问。这里就不做详细介绍了，每个人的情况不一样。&lt;/p&gt;
+&lt;p&gt;我自己对这个chatgpt-web项目做了一点修改，需要提示验证码密码的时候我加了一个我自己的微信公共号二维码，替换了原项目中的Icon，然后更改了一下提示，提示需要回复关键字获取ChatGPT网页应用和密码，如果有需要可以私聊我，我会把修改过后的源码无偿提供给大家。&lt;/p&gt;
+&lt;p&gt;感谢大家看到这里，下篇会研究一下Google公司最近推出的Gemma模型 ，看看它跟ChatGPT有多大差别， 之前用过他们的borad，这个也是跟ChatGPT一样，现在已经开发免费使用，效果也非常不错，只是没有ChatGPT名气大。&lt;/p&gt;
+&lt;p&gt;OpenAI 公司的视频生成大模型Sora现在已开放对外申请，感兴趣也可以访问我的历史文章git：《OpenAI Sora已开放对外申请，大家可以申请了。》申请一下&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>记录一次安装开源企业级镜像仓库管理软件：Harbor</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/</link>
+        <pubDate>Tue, 27 Jun 2023 21:34:09 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/title.png" alt="Featured image of post 记录一次安装开源企业级镜像仓库管理软件：Harbor" /&gt;&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;一直在用阿里云的免费的容器镜像服务来存放自己打包好的容器镜像，虽然很好用，但是总觉得这些大厂免费的服务最后总是要收费，想搭建一个自己得私有镜像仓库。&lt;/p&gt;
+&lt;p&gt;自己以前搭建过 nexus 仓库，但是使用的很少，感觉跟jenkins 一样，用java写的，界面很古老，不是专业的docker镜像仓库。&lt;/p&gt;
+&lt;p&gt;前段时间把自己的树莓派都卖了，入手了一个N5101，今天在这个机器上安装 大名鼎鼎的开源的企业级镜像仓库Harbor。&lt;/p&gt;
+&lt;h2 id=&#34;harbor-简介&#34;&gt;Harbor 简介
+&lt;/h2&gt;&lt;p&gt;Harbor英文单词意思是港湾，港湾一般是停放货物，就会联想到集装箱（container）, 码头工人（Docker）。&lt;/p&gt;
+&lt;p&gt;容器（container）是Docker镜像的运行实例 ，Docker 是一个让 Container 标准话的方案 /工具。&lt;/p&gt;
+&lt;p&gt;Harbor 是一个专业的存储Docker镜像的企业级服务软件。Harbor是由VMware公司开源的企业级的Docker Registry管理项目，有非常丰富专业的功能，例如：
+多租户内容签名和验证，安全性与漏洞分析，审计日志记录，身份集成和基于角色的访问控制，镜像复制分发，自动清理，Webhook等等。&lt;/p&gt;
+&lt;h2 id=&#34;安装&#34;&gt;安装
+&lt;/h2&gt;&lt;p&gt;Harbor安装也非常得简单，自己是因为在内网部署的，有一些关于内网穿透的配置，可能和大部分的人的安装流程可能有些差别&lt;/p&gt;
+&lt;h3 id=&#34;下载离线安装脚本配置文件&#34;&gt;下载离线安装脚本配置文件
+&lt;/h3&gt;&lt;p&gt;访问官方GitHub地址：https://github.com/goharbor/harbor
+找到并下载下载最新的发行版本：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img.png&#34;
+	width=&#34;1506&#34;
+	height=&#34;1064&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_hu3796c0c4f17958c4a054b5671d5b1b9c_99764_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_hu3796c0c4f17958c4a054b5671d5b1b9c_99764_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;339px&#34;
+	
+&gt;
+我选择的是离线安装版本，自己的系统ubuntu，找一个专门存放Harbor的配置安装脚本的文件夹再新建两个文件夹，一个存放安装的映射的数据，一个存放配置安装文件:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir data
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir harbor
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后下载解压安装包：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://github.com/goharbor/harbor/releases/download/v2.8.2/harbor-online-installer-v2.8.2.tgz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tar zxvf harbor-online-installer-v2.8.2.tgz ./habor/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;初始化配置文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp harbor.yml.tmpl  harbor.yml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;修改配置文件&#34;&gt;修改配置文件：
+&lt;/h3&gt;&lt;p&gt;重点来，一共需要修改6个地方
+修改配置文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim  harbor.yml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Configuration file of Harbor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# The IP address or hostname to access admin UI and registry service.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 修改第一处 不重要，下面external_url设置的会覆盖这里&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;hostname&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;harbor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;****&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# http related config&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# port for http, default is 80. If https enabled, this port will redirect to https port&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# 修改第二处 ，服务暴露穿透的端口，和现有服务冲突了，我就随便修了一个 &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;port&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;82&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# https related config&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 修改第三处 ，关闭自带SSL的 服务&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;#https:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# https port for harbor, default is 443&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;#  port: 443&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The path of cert and key files for nginx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;#  certificate: /your/certificate/path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;#  private_key: /your/private/key/path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# # Uncomment following will enable tls communication between all harbor components&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;#internal_tls:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;#   # set enabled to true means internal tls is enabled&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;#   enabled: false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;#   # put your cert and key files on dir&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;#   dir: /etc/harbor/tls/internal&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Uncomment external_url if you want to enable external proxy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# And when it enabled the hostname will no longer used&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 修改第四处 ，非常重要。运行起来之后拉去镜像的地址都是使用这个地址。可以用HTTPS，在穿透之后，最外层的入口必须使用HTTPS服务&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;external_url&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;://&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;harbor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;****&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# The initial password of Harbor admin&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# It only works in first time to install harbor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Remember Change the admin password from UI after launching Harbor.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 修改第五处 设置运行起来后的默认密码，因为服务会暴露在公网，所有安全非常重要 &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;harbor_admin_password&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;*********&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Harbor DB configuration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;database&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The password for the root user of Harbor DB. Change this before any production use.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;root123&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The maximum number of connections in the idle connection pool. If it &amp;lt;=0, no idle connections are retained.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;max_idle_conns&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The maximum number of open connections to the database. If it &amp;lt;= 0, then there is no limit on the number of open connections.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# Note: the default number of connections is 1024 for postgres of harbor.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;max_open_conns&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;900&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The maximum amount of time a connection may be reused. Expired connections may be closed lazily before reuse. If it &amp;lt;= 0, connections are not closed due to a connection&amp;#39;s age.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The value is a duration string. A duration string is a possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as &amp;#34;300ms&amp;#34;, &amp;#34;-1.5h&amp;#34; or &amp;#34;2h45m&amp;#34;. Valid time units are &amp;#34;ns&amp;#34;, &amp;#34;us&amp;#34; (or &amp;#34;µs&amp;#34;), &amp;#34;ms&amp;#34;, &amp;#34;s&amp;#34;, &amp;#34;m&amp;#34;, &amp;#34;h&amp;#34;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;conn_max_lifetime&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;m&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The maximum amount of time a connection may be idle. Expired connections may be closed lazily before reuse. If it &amp;lt;= 0, connections are not closed due to a connection&amp;#39;s idle time.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;c&#34;&gt;# The value is a duration string. A duration string is a possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as &amp;#34;300ms&amp;#34;, &amp;#34;-1.5h&amp;#34; or &amp;#34;2h45m&amp;#34;. Valid time units are &amp;#34;ns&amp;#34;, &amp;#34;us&amp;#34; (or &amp;#34;µs&amp;#34;), &amp;#34;ms&amp;#34;, &amp;#34;s&amp;#34;, &amp;#34;m&amp;#34;, &amp;#34;h&amp;#34;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;conn_max_idle_time&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# The default data volume&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 修改第六处，harbor 数据存放的地方，需要一个空余空间很大的文件夹，自行决定 &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;data_volume&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;/***/****&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;安装完成后的配置&#34;&gt;安装完成后的配置
+&lt;/h3&gt;&lt;p&gt;运行在解压的目录下的install.sh脚本&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./install.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_1.png&#34;
+	width=&#34;1013&#34;
+	height=&#34;832&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_1_hu5b52b35baae8271d63848096391b3091_48393_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_1_hu5b52b35baae8271d63848096391b3091_48393_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;121&#34;
+		data-flex-basis=&#34;292px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;会启动9个容器
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_2.png&#34;
+	width=&#34;1506&#34;
+	height=&#34;288&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_2_hu0fd193fc1ea87641f9329eb26788d815_24404_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_2_hu0fd193fc1ea87641f9329eb26788d815_24404_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;522&#34;
+		data-flex-basis=&#34;1255px&#34;
+	
+&gt;
+此时内网访问已经可以了：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_3.png&#34;
+	width=&#34;800&#34;
+	height=&#34;705&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_3_hu037d77d266b9eaad0f7c9f646e5b6956_17625_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_3_hu037d77d266b9eaad0f7c9f646e5b6956_17625_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;113&#34;
+		data-flex-basis=&#34;272px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;配置内网穿透frp，这里frp 的安装自己也在掘金也有介绍，这里就略过了
+在frpc.ini 新加一个配置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;n5105-harbor&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;local_port&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;82&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;local_ip&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 127.0.0.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;remote_port&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;37151&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;重启frp&lt;/p&gt;
+&lt;p&gt;然后在外网的机器上，新建一个域名解析：harbor.&lt;strong&gt;&lt;strong&gt;.&lt;/strong&gt;&lt;/strong&gt; ,反向代理到这个frp的远程端口&lt;code&gt;remote_port&lt;/code&gt;:
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_4.png&#34;
+	width=&#34;770&#34;
+	height=&#34;678&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_4_hu16e141922a14478fc54aee6d91af56a2_49969_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_4_hu16e141922a14478fc54aee6d91af56a2_49969_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;113&#34;
+		data-flex-basis=&#34;272px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后再修改一个反向代理配置才能推送镜像成功,注释掉&lt;code&gt;proxy_set_header Host $host;&lt;/code&gt;：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_12.png&#34;
+	width=&#34;727&#34;
+	height=&#34;667&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_12_hu79cc6793f72dd9a3c1492f9d62cafe28_49078_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_12_hu79cc6793f72dd9a3c1492f9d62cafe28_49078_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_12.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;108&#34;
+		data-flex-basis=&#34;261px&#34;
+	
+&gt;
+proxy_set_header作用是用于设置传递给后端服务器的HTTP头信息，可能因为harbor 自身没有启动SSL的支持，但是有反向代理的带有SSL的支持会有问题，如果注释掉这个反向代理的Nginx 配置推送镜像会报错&lt;code&gt;unknown blob&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;结束&#34;&gt;结束
+&lt;/h2&gt;&lt;p&gt;验证最基础的推拉镜像是否正常
+最先需要用账号（admin）和密码在命令行登录获得这个私有镜像仓库的推送权限：&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_11.png&#34;
+	width=&#34;499&#34;
+	height=&#34;74&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_11_hu8e5e45a7961abb6329da90f841f645d2_2726_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_11_hu8e5e45a7961abb6329da90f841f645d2_2726_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_11.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;674&#34;
+		data-flex-basis=&#34;1618px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后使用设置的密码登录harbor，新建一个公开项目：&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_6.png&#34;
+	width=&#34;1763&#34;
+	height=&#34;786&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_6_hu5f088a16358a4fa546ff79526e7d8cd1_38853_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_6_hu5f088a16358a4fa546ff79526e7d8cd1_38853_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_6.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;224&#34;
+		data-flex-basis=&#34;538px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;进入项目，找到推送命令，然后在本地找一个简单镜像重新打包&lt;br&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_8.png&#34;
+	width=&#34;1896&#34;
+	height=&#34;516&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_8_hu69ba2e0823b0527a8afc8f5bb40045aa_43215_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_8_hu69ba2e0823b0527a8afc8f5bb40045aa_43215_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_8.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;367&#34;
+		data-flex-basis=&#34;881px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;自己找了一个本地的consul镜像，重新打tag ，推送镜像，命令如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker tag  consul:latest harbor.****.****/test/consul:latest
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker push harbor.tuwei.space/test/consul:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;推送成功：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_9.png&#34;
+	width=&#34;837&#34;
+	height=&#34;241&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_9_hu5dba86a0f96ab66d862a604b1abce633_11616_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_9_hu5dba86a0f96ab66d862a604b1abce633_11616_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_9.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;347&#34;
+		data-flex-basis=&#34;833px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后在其他的机器上直接执行拉取命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull harbor.****.****/test/consul:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_10.png&#34;
+	width=&#34;803&#34;
+	height=&#34;167&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_10_hueff904ba9d3cb2c393f386b8288ff185_13735_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%AE%89%E8%A3%85%E5%BC%80%E6%BA%90%E4%BC%81%E4%B8%9A%E7%BA%A7%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6harbor/img_10_hueff904ba9d3cb2c393f386b8288ff185_13735_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_10.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;480&#34;
+		data-flex-basis=&#34;1154px&#34;
+	
+&gt;
+到此完结，最简单的安装验证，Harbor 还是比较占用系统资源的，现在小主机很火，很多人都在弄ALL IN ONE，HomeLab。使用内网穿透部署这种镜像管理的工具性价比还是比较高的。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Kplayer 24小时BiliBili直播推流 docker部署教程</title>
+        <link>https://munihehacker/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Thu, 02 Mar 2023 20:54:10 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/2023-3-2-1677761236933.png" alt="Featured image of post Kplayer 24小时BiliBili直播推流 docker部署教程" /&gt;&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;看到张大妈网站有一个非常火的文章，分享如何使用docker 部署一个24小时直播推流的服务薅羊毛，正好有闲置的服务器，然后每天收益大概有1元钱，于是就想试一下。&lt;/p&gt;
+&lt;h2 id=&#34;项目介绍&#34;&gt;项目介绍
+&lt;/h2&gt;&lt;p&gt;项目地址：&lt;a class=&#34;link&#34; href=&#34;https://github.com/bytelang/kplayer-go&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;bytelang/kplayer-go&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;项目介绍看图
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img.png&#34;
+	width=&#34;886&#34;
+	height=&#34;767&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_hu5e4fcc949d2f3a829177780f809df23e_50697_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_hu5e4fcc949d2f3a829177780f809df23e_50697_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;115&#34;
+		data-flex-basis=&#34;277px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;部署&#34;&gt;部署
+&lt;/h2&gt;&lt;p&gt;第一步准备docker 镜像&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull bytelang/kplayer:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;准备配置文件路径映射&#34;&gt;准备配置文件路径映射
+&lt;/h2&gt;&lt;p&gt;准备工作，准备三个文件/文件夹映射&lt;br&gt;
+1.配置文件映射&lt;br&gt;
+2.播放资源的文件夹映射&lt;br&gt;
+3.缓存目录的映射&lt;/p&gt;
+&lt;p&gt;我的服务器是Linux Centos系统，服务器叫宿主机。&lt;br&gt;
+宿主机文件地址是需要自己自定义的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;宿主机播放资源文件地址(放了一些抖音视频)：/home/***/mp4&lt;/li&gt;
+&lt;li&gt;宿主机配置文件（稍后再说）：/home/***/kplayer/config.json&lt;/li&gt;
+&lt;li&gt;宿主机直播编码缓存文件地址 ：/home/***/kplayer/cache&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;容器映射的文件目录是固定的&lt;br&gt;
+宿主机播放资源文件地址是根据config.json内容配置文件来定义的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;容器播放资源文件地址：/video&lt;/li&gt;
+&lt;li&gt;宿主机配置文件（必须固定的地址）：/kplayer/config.json&lt;/li&gt;
+&lt;li&gt;容器播放资源文件地址（必须固定的地址）：/kplayer/cache&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;获取bilibili-直播推流地址&#34;&gt;获取BiliBili 直播推流地址
+&lt;/h2&gt;&lt;p&gt;1.首页直播：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_1.png&#34;
+	width=&#34;1076&#34;
+	height=&#34;169&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_1_hu1409b81e6cd502045fdd2511a394ebc9_184652_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_1_hu1409b81e6cd502045fdd2511a394ebc9_184652_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;636&#34;
+		data-flex-basis=&#34;1528px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2.网页右侧开播设置：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_2.png&#34;
+	width=&#34;372&#34;
+	height=&#34;736&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_2_hua5d68031bef4da2c54dca2fadefd4efe_377606_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_2_hua5d68031bef4da2c54dca2fadefd4efe_377606_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;50&#34;
+		data-flex-basis=&#34;121px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;3.选择分类，点击开播，前提是需要身份证和姓名实名认证：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_3.png&#34;
+	width=&#34;1227&#34;
+	height=&#34;823&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_3_huaec79a58912ecc4caba5c3caf16ff351_87991_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_3_huaec79a58912ecc4caba5c3caf16ff351_87991_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;149&#34;
+		data-flex-basis=&#34;357px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;4.得到直播推流地址：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_4.png&#34;
+	width=&#34;797&#34;
+	height=&#34;374&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_4_hu422655f704384936add689f4709b2c8f_14665_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_4_hu422655f704384936add689f4709b2c8f_14665_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;213&#34;
+		data-flex-basis=&#34;511px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;服务器地址&lt;/code&gt; 拼接上 &lt;code&gt;串流密钥&lt;/code&gt;   就是推流的地址：
+&lt;code&gt;rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_******_******&amp;amp;key=**************&amp;amp;schedule=rtmp&amp;amp;pflag=1&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;configjson配置文件内容&#34;&gt;config.json配置文件内容
+&lt;/h2&gt;&lt;p&gt;在宿主机/home/***/kplayer/config.json内容如下（把上面获取的推流地址替换到下面的配置文件中） ：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;resource&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;lists&amp;#34;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &amp;#34;/video/&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        ],
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;extensions&amp;#34;: [&amp;#34;mp4&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;output&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &amp;#34;lists&amp;#34;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &amp;#34;path&amp;#34;: &amp;#34;rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_******_******&amp;amp;key=**************&amp;amp;schedule=rtmp&amp;amp;pflag=1&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        ],
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;#34;reconnect_internal&amp;#34;: 5
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    },
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;#34;play&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &amp;#34;fill_strategy&amp;#34;: &amp;#34;ratio&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &amp;#34;skip_invalid_resource&amp;#34;: true,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &amp;#34;cache_on&amp;#34;: true,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &amp;#34;play_model&amp;#34;: &amp;#34;random&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注意 &lt;code&gt;[&#39;resource&#39;][&#39;lists&#39;]&lt;/code&gt; 的配置内容就是 容器内的播放资源文件地址&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;quot;cache_on&amp;quot;:true&lt;/code&gt; 就是启用推流编码缓存，会生成缓存，命中缓存节约CPU资源&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;quot;play_model&amp;quot;: &amp;quot;random&amp;quot;&lt;/code&gt; 就是在播放列表中随机播放&lt;/p&gt;
+&lt;h2 id=&#34;启动运行&#34;&gt;启动运行
+&lt;/h2&gt;&lt;p&gt;使用docker 运行容器 加上上面的文件目录映射就可以了：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run  -td --name&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;kplayer -v /home/***/mp4:/video -v  /home/***/kplayer/config.json:/kplayer/config.json -v /home/***/kplayer/cache:/kplayer/cache  --restart&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;always  bytelang/kplayer:latest  
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;使用&lt;code&gt;docker logs kplayer&lt;/code&gt;查看日志，看到下面的日志就表示成功了：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_5.png&#34;
+	width=&#34;965&#34;
+	height=&#34;233&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_5_hu5e6460b4af65fd932334b2d0719049d6_30334_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/kplayer-24%E5%B0%8F%E6%97%B6bilibili%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81-docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/img_5_hu5e6460b4af65fd932334b2d0719049d6_30334_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;414&#34;
+		data-flex-basis=&#34;993px&#34;
+	
+&gt;
+访问直播地址也正常直播了。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>记录一次使用docker 安装Alist插件 挂载本地存储和网盘</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/</link>
+        <pubDate>Thu, 02 Feb 2023 21:20:24 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_14.png" alt="Featured image of post 记录一次使用docker 安装Alist插件 挂载本地存储和网盘" /&gt;&lt;p&gt;前篇文章记录了斐讯N1怎么安装frpc内网穿透，现在来继续折腾Alist插件,把本地存储和网盘集中到自己的搭建的Web服务中。&lt;/p&gt;
+&lt;p&gt;主要是看中了Alist颜值高和网盘挂载的功能。&lt;/p&gt;
+&lt;h1 id=&#34;使用docker-安装-alist&#34;&gt;使用Docker 安装 Alist
+&lt;/h1&gt;&lt;p&gt;N1盒子已经自带了Docker软件，接下来直接使用Docker安装Alist，注意映射的本地目录。&lt;/p&gt;
+&lt;p&gt;我自己想让Alist管理的本地文件夹是N1盒子插的一块硬盘特定的文件夹&lt;br&gt;
+文件目录为：/sharedfolders/N1/alist&lt;br&gt;
+官方的教程是把容器里面的alist运行配置映射到宿主机（alist容器内的配置文件路径：/opt/alist/data）&lt;br&gt;
+我再添加一个目录映射专门把宿主机的文件映射到Alist容器内部，让Alist管理&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run -d --restart&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;always -v /sharedfolders/N1/alist/config:/opt/alist/data -v /sharedfolders/N1/alist/data:/home -p 5244:5244 --name&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;alist&amp;#34;&lt;/span&gt; xhofe/alist:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后在命令行运行&lt;code&gt;docker exec -it alist ./alist -password&lt;/code&gt;查看初始密码：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img.png&#34;
+	width=&#34;723&#34;
+	height=&#34;159&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_hu773a691f27ca10dc601086f0a4182979_11863_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_hu773a691f27ca10dc601086f0a4182979_11863_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;454&#34;
+		data-flex-basis=&#34;1091px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;访问内网地址&lt;code&gt;192.168.2.122:5244&lt;/code&gt;进入alist的管理界面：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_1.png&#34;
+	width=&#34;1050&#34;
+	height=&#34;893&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_1_hu6a834248cd0ecff056c78e27a9f129ef_13225_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_1_hu6a834248cd0ecff056c78e27a9f129ef_13225_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;117&#34;
+		data-flex-basis=&#34;282px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;一进来就会提示没有挂载，此时不着急，点击下方登录，使用上面的密码登录，用户名是：&lt;code&gt;admin&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;登录进入改下密码，然后设置储存：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_2.png&#34;
+	width=&#34;847&#34;
+	height=&#34;641&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_2_hu35a8c3ec33122e7a807c03ab26f42c58_18397_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_2_hu35a8c3ec33122e7a807c03ab26f42c58_18397_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;132&#34;
+		data-flex-basis=&#34;317px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;添加本机存储：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_3.png&#34;
+	width=&#34;556&#34;
+	height=&#34;729&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_3_hub4fefe620d6561a584070095c29d2ca1_21180_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_3_hub4fefe620d6561a584070095c29d2ca1_21180_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;76&#34;
+		data-flex-basis=&#34;183px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;挂载/home目录 ，根文件夹路径也是/home：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_7.png&#34;
+	width=&#34;504&#34;
+	height=&#34;906&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_7_hu7d428690dd2c53555920550bf61a2cc2_25430_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_7_hu7d428690dd2c53555920550bf61a2cc2_25430_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_7.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;55&#34;
+		data-flex-basis=&#34;133px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;点击添加就可以了。再访问&lt;code&gt;192.168.2.122:5244&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;就看到挂载的本机存储了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_4.png&#34;
+	width=&#34;1312&#34;
+	height=&#34;316&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_4_hu39588b26bf8708e0803a6d97ac77055d_8524_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_4_hu39588b26bf8708e0803a6d97ac77055d_8524_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;415&#34;
+		data-flex-basis=&#34;996px&#34;
+	
+&gt;
+到现在基础功能就实现了&lt;/p&gt;
+&lt;h1 id=&#34;尝试挂载网盘&#34;&gt;尝试挂载网盘
+&lt;/h1&gt;&lt;p&gt;挂载天翼云盘尝试一下，相对比较简单&lt;/p&gt;
+&lt;p&gt;在管理-&amp;gt;储存-&amp;gt;添加：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_5.png&#34;
+	width=&#34;437&#34;
+	height=&#34;940&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_5_hue4ea531dc6307c86f7964da8831778ce_24926_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_5_hue4ea531dc6307c86f7964da8831778ce_24926_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;46&#34;
+		data-flex-basis=&#34;111px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;挂载路径就是在访问Alist的时候此时添加的储存的名字&lt;/p&gt;
+&lt;p&gt;用户名就是天翼云的账号也就是手机号。密码也就是天翼云盘的登录密码&lt;/p&gt;
+&lt;p&gt;根文件夹ID就是在访问web端的天翼云盘的文件夹ID, &lt;code&gt;-11&lt;/code&gt;就是网盘的根目录：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_6.png&#34;
+	width=&#34;1282&#34;
+	height=&#34;429&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_6_hu01df3ca97a5c7a28e76bd1cf04080d46_24653_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_6_hu01df3ca97a5c7a28e76bd1cf04080d46_24653_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_6.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;298&#34;
+		data-flex-basis=&#34;717px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;最后效果设置密码&#34;&gt;最后效果&amp;amp;设置密码
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_12.png&#34;
+	width=&#34;774&#34;
+	height=&#34;373&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_12_hud54f07470190012631a481317093c46f_13858_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_12_hud54f07470190012631a481317093c46f_13858_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_12.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;207&#34;
+		data-flex-basis=&#34;498px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_8.png&#34;
+	width=&#34;1258&#34;
+	height=&#34;345&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_8_hud01fad7b41e3916482e9791d3e17eabb_9344_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_8_hud01fad7b41e3916482e9791d3e17eabb_9344_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_8.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;364&#34;
+		data-flex-basis=&#34;875px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;接下来尝试可以给特定的文件夹添加密码&lt;/p&gt;
+&lt;p&gt;在 在管理-&amp;gt;元信息-&amp;gt;添加：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_9.png&#34;
+	width=&#34;607&#34;
+	height=&#34;494&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_9_hu8b8ce4491cd3756c4ab226b4a82f148a_15961_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_9_hu8b8ce4491cd3756c4ab226b4a82f148a_15961_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_9.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;设置目录和密码就可以了，推出登陆后访问这个文件夹就会提示输入密码：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_10.png&#34;
+	width=&#34;1214&#34;
+	height=&#34;309&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_10_hu7e2ef9d35aa9f172d238db9bec4b393b_10311_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_10_hu7e2ef9d35aa9f172d238db9bec4b393b_10311_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_10.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;392&#34;
+		data-flex-basis=&#34;942px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;输入密码后还可以展示刚刚设置的文件夹说明：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_11.png&#34;
+	width=&#34;767&#34;
+	height=&#34;274&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_11_hud317d033da32f56ea5fae2a125204d94_12002_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8docker-%E5%AE%89%E8%A3%85alist%E6%8F%92%E4%BB%B6-%E6%8C%82%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E7%BD%91%E7%9B%98/img_11_hud317d033da32f56ea5fae2a125204d94_12002_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_11.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;279&#34;
+		data-flex-basis=&#34;671px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;后面我会把这这个Alist通过内网穿透使它能够在公网访问，然后尝试使用webdav挂载网盘到Windows，把网盘当作系统硬盘来使用&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

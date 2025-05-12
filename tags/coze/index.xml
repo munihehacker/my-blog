@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Coze on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/coze/</link>
+        <description>Recent content in Coze on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 22 Feb 2024 10:24:57 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/coze/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>导入程序员论坛帖子评论,尝试用扣子 coze AI Bot 开发平台 总结一下</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/</link>
+        <pubDate>Thu, 22 Feb 2024 10:24:57 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/title.png" alt="Featured image of post 导入程序员论坛帖子评论,尝试用扣子 coze AI Bot 开发平台 总结一下" /&gt;&lt;p&gt;扣子（coze.cn） 国内版已经正式上线，过去了不到一个月的时间今天来用它尝试一下做一个AI机器人。&lt;/p&gt;
+&lt;h1 id=&#34;数据来源整理&#34;&gt;数据来源整理
+&lt;/h1&gt;&lt;p&gt;当然是著名的V站了，找到了一个公开的爬虫项目，看到一些数据&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/oldshensheep/v2ex_scrapy&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/oldshensheep/v2ex_scrapy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;项目网站并下载releases:
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img.png&#34;
+	width=&#34;3097&#34;
+	height=&#34;1804&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_hu6346c94c0052494fafb7b52414c8d85a_245161_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_hu6346c94c0052494fafb7b52414c8d85a_245161_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;171&#34;
+		data-flex-basis=&#34;412px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下载解压：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_1.png&#34;
+	width=&#34;1093&#34;
+	height=&#34;187&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_1_hu23beb8f1617bb926ce21c640a09b3d29_8896_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_1_hu23beb8f1617bb926ce21c640a09b3d29_8896_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;584&#34;
+		data-flex-basis=&#34;1402px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;使用Navicate 链接查看一下（无密码）：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_2.png&#34;
+	width=&#34;823&#34;
+	height=&#34;1033&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_2_hu7cc1ae98637703bc9df1e5dd663907f2_25236_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_2_hu7cc1ae98637703bc9df1e5dd663907f2_25236_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;79&#34;
+		data-flex-basis=&#34;191px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;评论表才是重要的内容
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_3.png&#34;
+	width=&#34;1173&#34;
+	height=&#34;309&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_3_hu6dde637819e8659eb122eeb02ede17d5_9752_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_3_hu6dde637819e8659eb122eeb02ede17d5_9752_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;379&#34;
+		data-flex-basis=&#34;911px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;提前看了coze上传知识库的文件大小不能超过20M&lt;br&gt;
+几番测试 需要筛选thank_count&amp;gt;4的内容导出的有17.4M，65193条记录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;4&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;coze操作&#34;&gt;coze操作
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_4.png&#34;
+	width=&#34;2160&#34;
+	height=&#34;1138&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_4_huf3255024b0622330251f0cc44a6e6ca0_425942_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_4_huf3255024b0622330251f0cc44a6e6ca0_425942_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;189&#34;
+		data-flex-basis=&#34;455px&#34;
+	
+&gt;
+注册coze，创建Bot
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_5.png&#34;
+	width=&#34;3700&#34;
+	height=&#34;1635&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_5_hu13ecc416113ad5c30dc54bfaf310c3e9_597460_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_5_hu13ecc416113ad5c30dc54bfaf310c3e9_597460_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;226&#34;
+		data-flex-basis=&#34;543px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;添加知识库
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_6.png&#34;
+	width=&#34;3784&#34;
+	height=&#34;1038&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_6_hu90f7da33f226e0218c183f5791a5c92c_83268_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_6_hu90f7da33f226e0218c183f5791a5c92c_83268_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_6.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;364&#34;
+		data-flex-basis=&#34;874px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;创建知识库
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_7.png&#34;
+	width=&#34;1693&#34;
+	height=&#34;1291&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_7_hu80c44e599027efaeac2d93ebec1b1762_38615_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_7_hu80c44e599027efaeac2d93ebec1b1762_38615_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_7.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_13.png&#34;
+	width=&#34;850&#34;
+	height=&#34;759&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_13_hu77ce4cc99b8b3c8e517d5ee8b0849706_26392_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_13_hu77ce4cc99b8b3c8e517d5ee8b0849706_26392_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_13.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;111&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;新增文档
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_9.png&#34;
+	width=&#34;3441&#34;
+	height=&#34;1554&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_9_hud72881224847c06158e29ed8b9b8d6f9_80835_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_9_hud72881224847c06158e29ed8b9b8d6f9_80835_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_9.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;221&#34;
+		data-flex-basis=&#34;531px&#34;
+	
+&gt;
+（现在回头来看是可以上传10个文件的，每个文件不超过20m），先简单试一下吧
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_10.png&#34;
+	width=&#34;934&#34;
+	height=&#34;250&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_10_hud17b23a6d309f59db72c2b23e9c9358a_7248_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_10_hud17b23a6d309f59db72c2b23e9c9358a_7248_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_10.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;373&#34;
+		data-flex-basis=&#34;896px&#34;
+	
+&gt;
+上传之后等待自动处理完毕
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_11.png&#34;
+	width=&#34;3504&#34;
+	height=&#34;739&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_11_hued86e38dbbcb30fec0c1720eb7b442f8_29629_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_11_hued86e38dbbcb30fec0c1720eb7b442f8_29629_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_11.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;474&#34;
+		data-flex-basis=&#34;1137px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;报错了，分段过多
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_8.png&#34;
+	width=&#34;568&#34;
+	height=&#34;193&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_8_hu18d508279f7aea784afab9fd793a87ab_8569_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_8_hu18d508279f7aea784afab9fd793a87ab_8569_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_8.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;294&#34;
+		data-flex-basis=&#34;706px&#34;
+	
+&gt;
+我才是一行一条数据有6w行，一个分段超过1w就不行，想了一下字符过短的语义可能分析不出来，查询的时候限制一下字符长度，thank_count调小一点，然后再分多个查询查询出多个文件看看
+调整成10个查询条件如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 10000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 20000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 30000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 40000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 50000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 60000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 70000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 80000;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;SELECT content FROM &amp;#34;main&amp;#34;.&amp;#34;comment&amp;#34; WHERE &amp;#34;thank_count&amp;#34; &amp;gt; &amp;#39;1&amp;#39; and LENGTH(content)&amp;gt;60 LIMIT 10000 OFFSET 90000;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;查询出的内容分成10分全部自动分段
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_14.png&#34;
+	width=&#34;3292&#34;
+	height=&#34;1447&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_14_huea70a9a9435d8ca692dff5db694d3cb0_76816_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_14_huea70a9a9435d8ca692dff5db694d3cb0_76816_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_14.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;227&#34;
+		data-flex-basis=&#34;546px&#34;
+	
+&gt;
+内部报错，尝试自动自定义分段
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_15.png&#34;
+	width=&#34;585&#34;
+	height=&#34;162&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_15_hu929e40da95f3a00da8dadea7a40e986d_6292_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_15_hu929e40da95f3a00da8dadea7a40e986d_6292_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_15.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;361&#34;
+		data-flex-basis=&#34;866px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_17.png&#34;
+	width=&#34;3283&#34;
+	height=&#34;849&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_17_hua965c10b84d76f6491a02309d8b22446_42896_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_17_hua965c10b84d76f6491a02309d8b22446_42896_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_17.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;386&#34;
+		data-flex-basis=&#34;928px&#34;
+	
+&gt;
+然后全部启用
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_18.png&#34;
+	width=&#34;3501&#34;
+	height=&#34;1552&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_18_hu3be39d4fd387f30dc44addf128666f5f_102635_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_18_hu3be39d4fd387f30dc44addf128666f5f_102635_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_18.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;225&#34;
+		data-flex-basis=&#34;541px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;回到创建的机器人这里，点开机器人添加知识库
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_19.png&#34;
+	width=&#34;3355&#34;
+	height=&#34;1020&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_19_hu07943599ed7fb4f8b374ea1cb7bdaae2_68530_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_19_hu07943599ed7fb4f8b374ea1cb7bdaae2_68530_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_19.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;328&#34;
+		data-flex-basis=&#34;789px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_20.png&#34;
+	width=&#34;1704&#34;
+	height=&#34;496&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_20_hub30feee3af2cf3c54b1416282b4d028b_33875_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_20_hub30feee3af2cf3c54b1416282b4d028b_33875_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_20.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;343&#34;
+		data-flex-basis=&#34;824px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;设置一下人设与回复逻辑：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;gh&#34;&gt;# 角色
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;gh&#34;&gt;&lt;/span&gt;你是一个功能强大的评论总结搜索助手，主要的功能就是根据知识库可以满足各种常见的问题。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最后发布
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_22.png&#34;
+	width=&#34;2629&#34;
+	height=&#34;1221&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_22_huc0be100e309b52d41cf28d7491828db9_84570_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_22_huc0be100e309b52d41cf28d7491828db9_84570_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_22.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;215&#34;
+		data-flex-basis=&#34;516px&#34;
+	
+&gt;
+再次发布到商店
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_23.png&#34;
+	width=&#34;2610&#34;
+	height=&#34;1237&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_23_hud8c61c8c43f19a8950eb445b76d16cd3_85426_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_23_hud8c61c8c43f19a8950eb445b76d16cd3_85426_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_23.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;210&#34;
+		data-flex-basis=&#34;506px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;测试&#34;&gt;测试
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_24.png&#34;
+	width=&#34;3486&#34;
+	height=&#34;1893&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_24_hu5e9b7c549f85e725b93e780b760f8850_332792_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_24_hu5e9b7c549f85e725b93e780b760f8850_332792_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_24.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;184&#34;
+		data-flex-basis=&#34;441px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_25.png&#34;
+	width=&#34;1102&#34;
+	height=&#34;754&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_25_huf517ee785d36d6b8294d167aba71ec36_134867_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%AF%BC%E5%85%A5%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AE%BA%E5%9D%9B%E5%B8%96%E5%AD%90%E8%AF%84%E8%AE%BA%E5%B0%9D%E8%AF%95%E7%94%A8%E6%89%A3%E5%AD%90-coze-ai-bot-%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B/img_25_huf517ee785d36d6b8294d167aba71ec36_134867_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_25.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;350px&#34;
+	
+&gt;
+感觉效果不是很好，&lt;/p&gt;
+&lt;p&gt;尝试过导入到国外版的coze机器人里面，可以通过聊天可以直接问到一些详细具体的语料信息。&lt;/p&gt;
+&lt;p&gt;国内外机器人都上线了 大家可以自己来试一下或者有什么意见给到我呢？
+国内版 ：BotID: 7339025335163387942 &lt;a class=&#34;link&#34; href=&#34;https://doubao.com/bot/rd0rttVE&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://doubao.com/bot/rd0rttVE&lt;/a&gt;
+国外版：https://ciciai.com/bot/sygGSrXY&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

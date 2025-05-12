@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ChatGPT on 我的小站</title>
+        <link>https://munihehacker/my-blog.github.io/tags/chatgpt/</link>
+        <description>Recent content in ChatGPT on 我的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Thu, 29 Feb 2024 22:08:00 +0800</lastBuildDate><atom:link href="https://munihehacker/my-blog.github.io/tags/chatgpt/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>分享我搜集到的ChatGPT4.0的一些免费站点</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/</link>
+        <pubDate>Thu, 29 Feb 2024 22:08:00 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/title.png" alt="Featured image of post 分享我搜集到的ChatGPT4.0的一些免费站点" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;前面几篇分享了一下怎么搭建私有的ChatGPT网页应用，后台收到了很多同学的私信，相信已经在使用了，今天继续分享我找到的公益ChatGPT4.0模型网页应用。&lt;/p&gt;
+&lt;p&gt;用了很久的ChatGPT3.5模型，作为日常工作我觉得已经够用了，我个人觉得比国内的文心一言、通义千问以及讯飞星火大模型都更好用。&lt;/p&gt;
+&lt;p&gt;个人觉得ChatGPT3.5比更强大的只有ChatGPT4.0了， ChatGPT4.0早在2023年3月15就推出来了，ChatGPT4.0 比ChatGPT3.5能更准确地理解用户输入，并生成更合理、连贯的回应，能够更好地理解上下文信息，准确捕捉用户的意图，因此产生的回答更符合语境，让用户能够更轻松地获取准确、有意义的信息。&lt;/p&gt;
+&lt;p&gt;我自己搭建的ChatGPT3.5私有ChatGPT网页应用已经分享给很多人使用了，好多人都在问我想要合租ChatGPT4，想体验最强的‘科技’。&lt;/p&gt;
+&lt;p&gt;目前常规手段使用ChatGPT4.0 就是通过OpenAI 官网进行付费订阅，但是对于普通来说价格来说价格还是挺贵的，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img.png&#34;
+	width=&#34;1345&#34;
+	height=&#34;915&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_hub9d1efa71e2f901f3d516c45e35b9243_86862_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_hub9d1efa71e2f901f3d516c45e35b9243_86862_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;
+20美元一个月，按照当前美元的汇率，一个月需要140+元人民币，个人觉得辅助工作还是没必要充值的。那怎么最低成本用到这个ChatGPT4.0&lt;/p&gt;
+&lt;h1 id=&#34;分享&#34;&gt;分享
+&lt;/h1&gt;&lt;p&gt;我发现了很多跟我一样ChatGPT3.5做免费站点的，我在想肯定也有人做ChatGPT4.0的免费站点的，最终花了一些时间发现在这个网站里面有很多分享：&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://linux.do/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://linux.do/&lt;/a&gt;
+首页 热门 菜单选项里面有很多介绍帖子
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_1.png&#34;
+	width=&#34;2755&#34;
+	height=&#34;1836&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_1_hu5d028b7df111236b6826f81db40ca243_369690_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_1_hu5d028b7df111236b6826f81db40ca243_369690_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;150&#34;
+		data-flex-basis=&#34;360px&#34;
+	
+&gt;
+这个网站无需登录就可以访问帖子详情，我找到一个综合测评类型的帖子，找出来几个我自己常用比较稳定的网站 粘贴到这里（看到贴子升级到1级 就能看到一个精华神贴的类别，就会发现更多分享类似网站的帖子。）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_2.png&#34;
+	width=&#34;1843&#34;
+	height=&#34;1599&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_2_hu770fc28cb9328779a1128e8f7f38fe52_382630_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_2_hu770fc28cb9328779a1128e8f7f38fe52_382630_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;115&#34;
+		data-flex-basis=&#34;276px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://sharedchat.cn/shared.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://sharedchat.cn/shared.html&lt;/a&gt; （热度最高，人比较多，访问比较慢，稳定性还行，高度模仿官网，可以上传图片，excel等资源）&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://free01.xyz/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://free01.xyz/&lt;/a&gt; (实时更新的分流站点，部署位置节点比较远，访问比较慢)
+&lt;a class=&#34;link&#34; href=&#34;https://chat.gking.me&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://chat.gking.me&lt;/a&gt; （界面不怎么好看，使用人比较少，访问比较慢，需要自己切换4.0）&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://w10.xjai.cc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://w10.xjai.cc&lt;/a&gt; （推荐，速度很快，默认就是 gpt4, 额度有限，可能会临时切回3.5）&lt;/p&gt;
+&lt;p&gt;区分ChatGPT是3.0还是4.0 最简单的方法就是 问它 “鲁迅和周树人是一个人吗？” ChatGPT4.0会说是。ChatGPT3.5会说不是。 还有一些弱智吧的问题，ChatGPT4.0 大多数就不会落入人类的“陷阱”。
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_3.png&#34;
+	width=&#34;2182&#34;
+	height=&#34;318&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_3_hu6fa8823e41ade1b242c7eef8d9d85d31_33238_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_3_hu6fa8823e41ade1b242c7eef8d9d85d31_33238_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;686&#34;
+		data-flex-basis=&#34;1646px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_5.png&#34;
+	width=&#34;1999&#34;
+	height=&#34;318&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_5_hu9ffe7e907aa52aaa43256508dbec3ebf_36254_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_5_hu9ffe7e907aa52aaa43256508dbec3ebf_36254_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;628&#34;
+		data-flex-basis=&#34;1508px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;最后&#34;&gt;最后
+&lt;/h1&gt;&lt;p&gt;我分享的一些免费使用ChatGPT4.0免费站使用人数都比较大，可能都不怎么稳定。&lt;/p&gt;
+&lt;p&gt;写这篇文章的时候发现GitHub上面的 Coze Discord Proxy 这个项目可以利用 Coze 的机器人 API无成本搭建私有的ChatGPT4.0 网页应用，后面我想自己搭建，到时候我也会分享出来给大家使用 ，请继续关注我哦~。
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_4.png&#34;
+	width=&#34;1543&#34;
+	height=&#34;1089&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_4_hua9140ecb5ec63b00efae9b8a2863140a_167079_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E5%88%86%E4%BA%AB%E6%88%91%E6%90%9C%E9%9B%86%E5%88%B0%E7%9A%84chatgpt4.0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%8D%E8%B4%B9%E7%AB%99%E7%82%B9/img_4_hua9140ecb5ec63b00efae9b8a2863140a_167079_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;往期热点：
+《OpenAI Sora已开放对外申请，大家可以申请了。 》
+《大模型这么火，今天手把手教大家从搭建环境开始实现本地部署ChatGLM2 6B 大模型》
+《分享一下ChatGPT相关使用技巧 》
+《如何搭建一个私人 ChatGPT 网页应用》&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>被Sora抢尽了风头的Gemini怎么样? 今天分享一下如何搭建一个私人Gemini 网页应用，同样分享给大家玩一下</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/</link>
+        <pubDate>Thu, 29 Feb 2024 00:20:46 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/chat.jpg" alt="Featured image of post 被Sora抢尽了风头的Gemini怎么样? 今天分享一下如何搭建一个私人Gemini 网页应用，同样分享给大家玩一下" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;Google 公司自己的大语言模型Bard 在2024年2月8号更名为 Gemini，但是Gemini 1.5 发布的时候被 OpenAI 的 Sora 抢尽了风头，堪称 AI 界的「汪峰」，听说Gemini有超长上下文的能力，支持 100 万token 的上下文，这里我还没测试，有兴趣的同学可以测试一下&lt;/p&gt;
+&lt;p&gt;关于Gemini我就不过多介绍了，还是希望有兴趣以及有能力访问的人亲自可以直接访问试试更好（注意Gemini和OpenAI有一样的网络限制）：&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://gemini.google.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://gemini.google.com/&lt;/a&gt;
+直接访问的使用的模型比API接口使用的模型更加聪明 还能理解图片，这可是需要付费的ChatGPT4的能力
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_5.png&#34;
+	width=&#34;1168&#34;
+	height=&#34;1183&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_5_huf814a9f40d51bad7a0b007807438e160_117973_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_5_huf814a9f40d51bad7a0b007807438e160_117973_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;98&#34;
+		data-flex-basis=&#34;236px&#34;
+	
+&gt;
+附带Gemini的更新日志地址，详细的介绍了这个模型的特点：&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://gemini.google.com/updates&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://gemini.google.com/updates&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;搭建&#34;&gt;搭建
+&lt;/h1&gt;&lt;p&gt;话不多说开始搭建&lt;/p&gt;
+&lt;h2 id=&#34;获取api-key&#34;&gt;获取API Key
+&lt;/h2&gt;&lt;p&gt;两个月前谷歌向所有用户都免费开放了Gemini PRO大模型的API，只要你有一个谷歌账号就可以免费获取Gemini Pro大模型的API， 获取Key地址：
+&lt;a class=&#34;link&#34; href=&#34;https://aistudio.google.com/app/apikey&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://aistudio.google.com/app/apikey&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_4.png&#34;
+	width=&#34;2652&#34;
+	height=&#34;1237&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_4_hu063e5c385669c2a9131564061d6f441c_133015_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_4_hu063e5c385669c2a9131564061d6f441c_133015_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;214&#34;
+		data-flex-basis=&#34;514px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;heading&#34;&gt;
+&lt;/h2&gt;&lt;p&gt;私人 Gemini 网页应用采用 上篇文章说的 ChatGPT-Next-Web 这个项目，这个项目比搭建ChatGPT那个更复杂，需要增加一个.env文件&lt;/p&gt;
+&lt;p&gt;第一步找到 &lt;a class=&#34;link&#34; href=&#34;https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/&lt;/a&gt; 这个项目下的docker-compose.yml 文件稍作，修改为一下内容：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;3.9&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;chatgpt-next-web&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;container_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;chatgpt-next-web&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;yidadaa/chatgpt-next-web&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;m&#34;&gt;3000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;3000&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;environment&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;OPENAI_API_KEY=$OPENAI_API_KEY&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;GOOGLE_API_KEY=$GOOGLE_API_KEY&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;CODE=$CODE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;BASE_URL=$BASE_URL&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;OPENAI_ORG_ID=$OPENAI_ORG_ID&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;HIDE_USER_API_KEY=$HIDE_USER_API_KEY&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;DISABLE_GPT4=$DISABLE_GPT4&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;ENABLE_BALANCE_QUERY=$ENABLE_BALANCE_QUERY&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;DISABLE_FAST_LINK=$DISABLE_FAST_LINK&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;OPENAI_SB=$OPENAI_SB&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;主要是做了一个精简，我这里不需要网络代理&lt;/p&gt;
+&lt;p&gt;然后在项目根目录下新建一个.env文件内容如下，也是参考ChatGPT-Next-Web 官方项目根目录下的.env.template文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Your openai api key. (required)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;OPENAI_API_KEY=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Access passsword, separated by comma. (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 设置自己想要的密码，防止滥用
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;CODE=***
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# You can start service behind a proxy
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PROXY_URL=http://localhost:7890
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: Empty
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Googel Gemini Pro API key, set if you want to use Google Gemini Pro API.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 需要填写自己的Key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;GOOGLE_API_KEY=A************************F8Y 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: https://generativelanguage.googleapis.com/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Googel Gemini Pro API url without pathname, set if you want to customize Google Gemini Pro API url.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;GOOGLE_URL=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Override openai api request base url. (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: https://api.openai.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Examples: http://your-openai-proxy.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BASE_URL=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Specify OpenAI organization ID.(optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: Empty
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;OPENAI_ORG_ID=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: Empty
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# If you do not want users to use GPT-4, set this value to 1.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;DISABLE_GPT4=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: Empty
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# If you do not want users to input their own API key, set this value to 1.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;HIDE_USER_API_KEY=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: Empty
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# If you do want users to query balance, set this value to 1.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ENABLE_BALANCE_QUERY=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# (optional)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Default: Empty
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# If you want to disable parse settings from url, set this value to 1.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;DISABLE_FAST_LINK=
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;只需要修改两个地方，我用中文做了提示，现在就是docker-compose 命令启动就好：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker-compose up -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;现在就可以在内网访问了,端口是3000，我这里的访问地址是：http://192.168.2.118:3000/
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img.png&#34;
+	width=&#34;2484&#34;
+	height=&#34;643&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_huad79158b2a6aca6106e0bc87ef335892_53978_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_huad79158b2a6aca6106e0bc87ef335892_53978_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;386&#34;
+		data-flex-basis=&#34;927px&#34;
+	
+&gt;
+提示需要密码就是我在.env文件设置的密码：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_1.png&#34;
+	width=&#34;604&#34;
+	height=&#34;993&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_1_hu84380f28d39c9b0659e1676400fba197_25697_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_1_hu84380f28d39c9b0659e1676400fba197_25697_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;60&#34;
+		data-flex-basis=&#34;145px&#34;
+	
+&gt;
+点击确认过后还需要手动选择模型，因为我这里就只填了Gemini的API Key，没有填OpenAI的Key，所以现在只能使用一个模型：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_2.png&#34;
+	width=&#34;1771&#34;
+	height=&#34;1638&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_2_hud66964899f326720945f2827c5c2adee_119284_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_2_hud66964899f326720945f2827c5c2adee_119284_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;108&#34;
+		data-flex-basis=&#34;259px&#34;
+	
+&gt;
+现在就可以愉快地玩耍了：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_3.png&#34;
+	width=&#34;1834&#34;
+	height=&#34;784&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_3_huf4ac2441cbf4888c39946241d02fa4bb_56403_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%A2%ABsora%E6%8A%A2%E5%B0%BD%E4%BA%86%E9%A3%8E%E5%A4%B4%E7%9A%84gemini%E6%80%8E%E4%B9%88%E6%A0%B7-%E4%BB%8A%E5%A4%A9%E5%88%86%E4%BA%AB%E4%B8%80%E4%B8%8B%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BAgemini-%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E5%90%8C%E6%A0%B7%E5%88%86%E4%BA%AB%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%8E%A9%E4%B8%80%E4%B8%8B/img_3_huf4ac2441cbf4888c39946241d02fa4bb_56403_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;233&#34;
+		data-flex-basis=&#34;561px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;对比总结&#34;&gt;对比&amp;amp;总结
+&lt;/h1&gt;&lt;p&gt;1.Gemini的相应速度比ChatGPT的要慢一些
+2.Gemini的知识正确程度要比ChatGPT3.5要强一些，比ChatGPT4要弱一些，Gemini能分得清楚周树人和鲁迅是一个人，ChatGPT3.5不行
+3.Gemini的代码生成能力要比ChatGPT3.5要弱些，会使用大量的英文解释，而且没有注意边界条件，我试了一下让他们生成一个斐波那契数列的Python代码观测得出的结论。
+个人观点仅供参考&lt;/p&gt;
+&lt;p&gt;最后我搭建的gemini的私有工具站点同样为了防止滥用也需要跟上篇文章一样回复关键字 gemini 来获得
+上篇文章地址：《如何搭建一个私人 ChatGPT 网页应用》&lt;/p&gt;
+&lt;p&gt;感谢大家看到最后，下次想分享一下ChatGPT4的一些白嫖站点，相信大家肯定很感兴趣，希望大家多多点赞，给个再看分享给更多的人，这是我更新的动力。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>说好的搭建一个ChatGPT3.5镜像站免费开发给大家使用，附带使用技巧</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+        <pubDate>Mon, 26 Feb 2024 13:37:10 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/chat.jpg" alt="Featured image of post 说好的搭建一个ChatGPT3.5镜像站免费开发给大家使用，附带使用技巧" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;ChatGPT 是一个由 OpenAI 开发的大型语言模型聊天机器人，它可以生成文本、翻译语言、编写不同类型的创意内容，并以信息丰富的方式回答您的问题。&lt;/p&gt;
+&lt;p&gt;在日常工作中也会遇到它，帮我写邮件，写前端页面，查询一些常用的代码函数功能解释，生成代码等等，非常好用，很有效地提高了我们的工作效率&lt;/p&gt;
+&lt;p&gt;很久之前在blog 写过一个ChatGPT的教程给同事参考，有兴趣的同学们可以自己看看：https://blog.tuwei.space/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E9%95%9C%E5%83%8F%E7%AB%99%E6%90%AD%E5%BB%BA/&lt;/p&gt;
+&lt;p&gt;自己也部署了一个镜像站免费给一些同事朋友们用了，评价都非常不错。之前在文章 《OpenAI ChatGPT 4 悄悄免费开放了》 中也说过将会免费给大家用这个ChatGPT&lt;/p&gt;
+&lt;p&gt;所以今天就想免费分享给更多的人用一下（也同时给自己的公众号涨点人气，只在自己公众号发这篇文章，嘿嘿）访问地址为：&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://password.tuwei.space/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://password.tuwei.space/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;为了防止滥用 设置了一个密码 ，需要扫码关注 我的微信公众号 AIGC挖掘机（pythontest） 聊天窗口回复关键字 chatgpt 才可以用&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_1.png&#34;
+	width=&#34;1080&#34;
+	height=&#34;2281&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_1_hudd90855ed5dc8b20cea901f21371ee31_615305_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_1_hudd90855ed5dc8b20cea901f21371ee31_615305_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_1.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;47&#34;
+		data-flex-basis=&#34;113px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img.png&#34;
+	width=&#34;943&#34;
+	height=&#34;1225&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_hu1417347ada691110acf047145cf68bcc_297366_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_hu1417347ada691110acf047145cf68bcc_297366_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;76&#34;
+		data-flex-basis=&#34;184px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;使用技巧&#34;&gt;使用技巧
+&lt;/h1&gt;&lt;p&gt;使用ChatGPT需要有一点点使用技巧，这里可以分享一下我自己学到的小窍门，对于专业问题最好是通过搜索引擎或者prompt 市场找到相应的prompt提示词，这里举一个例子 ，例如最开始很火的小红书体生成器，需要找到一个最有效的prompt提示词喂给AI，它才会有效果更好的回复&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_3.png&#34;
+	width=&#34;2826&#34;
+	height=&#34;1839&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_3_hu11ab1e2634d6f4447d8e1db478419f41_90459_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_3_hu11ab1e2634d6f4447d8e1db478419f41_90459_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;153&#34;
+		data-flex-basis=&#34;368px&#34;
+	
+&gt;
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_2.png&#34;
+	width=&#34;2028&#34;
+	height=&#34;805&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_2_hu1a2fd483213d2bb0ce51fe96a147bffa_125183_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_2_hu1a2fd483213d2bb0ce51fe96a147bffa_125183_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;251&#34;
+		data-flex-basis=&#34;604px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;如果不填写这个prompt 提示词 它将是这样的回复&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_4.png&#34;
+	width=&#34;2026&#34;
+	height=&#34;648&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_4_huefed2027bef0af927aaa556107e77b63_79669_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_4_huefed2027bef0af927aaa556107e77b63_79669_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_4.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;312&#34;
+		data-flex-basis=&#34;750px&#34;
+	
+&gt;
+效果非常明显，差距很大，这个工具镜像站也有自带的prompt 提示词库，可以下载下来搜索拿几个尝试一下。
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_5.png&#34;
+	width=&#34;2683&#34;
+	height=&#34;1758&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_5_hu26965d5d277e6713da1ee732dff849e7_168536_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AF%B4%E5%A5%BD%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAchatgpt3.5%E9%95%9C%E5%83%8F%E7%AB%99%E5%85%8D%E8%B4%B9%E5%BC%80%E5%8F%91%E7%BB%99%E5%A4%A7%E5%AE%B6%E4%BD%BF%E7%94%A8%E9%99%84%E5%B8%A6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/img_5_hu26965d5d277e6713da1ee732dff849e7_168536_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_5.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;152&#34;
+		data-flex-basis=&#34;366px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;其他说明&#34;&gt;其他说明
+&lt;/h1&gt;&lt;p&gt;1.自己的站点使用的ChatGPT3.5的API Key，官方目前没有接口直接监控这个API Key余额的接口 &lt;br&gt;
+2.ChatGPT API Key也有一定的速率限制（每分钟限制三次请求） &lt;br&gt;
+3.国内网络无法直接访问&lt;/p&gt;
+&lt;p&gt;所以有任何报错提示麻烦各位同学及时从公众号发送消息联系我会第一时间处理并回复，看后面使用情况会优化这些问题。&lt;/p&gt;
+&lt;p&gt;最后感谢看到最后，搭建网站不容易，大家觉得有用的话可以点个在看/赞或者分享给身边的好友。&lt;/p&gt;
+&lt;p&gt;大家有什么其他想了解的也欢迎私信我，后面会继续分享AIGC相关，有关于我们普通人息息相关同时也能看得懂git的内容，敬请期待。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>记录一次ChatGPT私有ChatGPT网页应用搭建教程</title>
+        <link>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Mon, 04 Sep 2023 22:50:54 +0800</pubDate>
+        
+        <guid>https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;img src="https://munihehacker/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/title.jpeg" alt="Featured image of post 记录一次ChatGPT私有ChatGPT网页应用搭建教程" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;ChatGPT 是目前最火热的生成式人工智能工具，由OpenAI公司研发发布，我现在每天都在用它&lt;/p&gt;
+&lt;p&gt;上篇文章讲了如何使用ChatGPT的使用技巧还给大家免费分享我自己搭建的ChatGPT网页应用《分享一下ChatGPT相关使用技巧》，有空的同学可以点击文章标题链接可以看一下。&lt;/p&gt;
+&lt;p&gt;今天就来简单分享一下怎么安装它的镜像站。&lt;/p&gt;
+&lt;p&gt;普通人可以直接使用我的搭建的私有ChatGPT网页应用，有兴趣的同学可以跟着我的教程来学着搭建一下。（有一定的门槛）&lt;/p&gt;
+&lt;h1 id=&#34;必要条件&#34;&gt;必要条件
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;拥有一个可以访问ChatGPT 官网的和GitHub的网络环境，ChatGPT 官网地址：https://openai.com/&lt;/li&gt;
+&lt;li&gt;购买一个ChatGPT的Key，推荐一个购买地址（0.6元人名币5刀余额的API KEY，不想买自己要用想办法用其他国家的手机号注册）：https://gpt888.shop/ (发卡网站不稳定有一定时效性)&lt;/li&gt;
+&lt;li&gt;一台可以使用Docker的机器，最好有个域名，可以公网访问更佳~&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;镜私有chatgpt网页应用推荐&#34;&gt;镜私有ChatGPT网页应用推荐
+&lt;/h1&gt;&lt;p&gt;下面两个开源的私有ChatGPT网页应用自己都有实践搭建过，并且市面上大多数公开分享项目都来自于这两个项目。&lt;/p&gt;
+&lt;p&gt;1.https://github.com/Yidadaa/ChatGPT-Next-Web&lt;/p&gt;
+&lt;p&gt;前端比较好看，交互体验非常好，感觉体验比官网还好，而且自带提示词，自带prompt提示词仓库，点击就可以使用，功能比较强大，最新版已支持Google 的 Gemini AI机器人。&lt;/p&gt;
+&lt;p&gt;最早主分支在2023年3月7日首次提交，截止到目前24年2月28日为止已有62.3k star。&lt;/p&gt;
+&lt;p&gt;效果：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_3.png&#34;
+	width=&#34;1600&#34;
+	height=&#34;868&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_3_huae8e5b0189b3eee532dd7ce6a00521bc_239651_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_3_huae8e5b0189b3eee532dd7ce6a00521bc_239651_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_3.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;184&#34;
+		data-flex-basis=&#34;442px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2.https://github.com/Chanzhaoyu/chatgpt-web&lt;/p&gt;
+&lt;p&gt;页面比较简单，实用，便捷快捷。自己一直在用，出的时候比较早。
+最早主分支在2023年2月9日首次提，交截止到目前24年2月28日为止已有29.6k star。&lt;/p&gt;
+&lt;p&gt;效果：
+&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img.png&#34;
+	width=&#34;2012&#34;
+	height=&#34;1480&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_hu93e1ea7614b795e0e423a28910244908_179198_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_hu93e1ea7614b795e0e423a28910244908_179198_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;326px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;搭建教程&#34;&gt;搭建教程
+&lt;/h1&gt;&lt;p&gt;搭建非常简单，知道会使用docker,使用docker-compose容器编排工具一键搭建，以第二个镜像站为例新建一个docker-compose.yaml文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;3&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;container_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;chatgpt-web&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;chenzhaoyu94/chatgpt-web&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 总是使用latest,更新时重新pull该tag镜像即可&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;restart&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;always&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;m&#34;&gt;3002&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;3002&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;environment&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 二选一&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;OPENAI_API_KEY&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;sk-*************************** &lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 购买的key&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 反向代理，可选&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;#API_REVERSE_PROXY: https://gpt.pawan.krd/backend-api/conversation # 网络环境不支持访问OpenAI 的时候可以使用第三方的网络代理或者自建代理&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 超时，单位毫秒，可选&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;TIMEOUT_MS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;m&#34;&gt;120000&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后执行命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker-compose up -d 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;命令执行完毕后服务器就会自动拉取&lt;code&gt;chenzhaoyu94/chatgpt-web&lt;/code&gt;镜像，然后在本地启动一个服务，宿主机端口为3002
+我这里是用内网机器部署的，内网访问：&lt;code&gt;http://192.168.2.129:3002&lt;/code&gt;（第一次访问加载比较慢）:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_2.png&#34;
+	width=&#34;3549&#34;
+	height=&#34;1883&#34;
+	srcset=&#34;https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_2_hu251a2dbe08a467f0e75c059e6d314696_64650_480x0_resize_box_3.png 480w, https://munihehacker/my-blog.github.io/my-blog.github.io/p/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1chatgpt%E7%A7%81%E6%9C%89chatgpt%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/img_2_hu251a2dbe08a467f0e75c059e6d314696_64650_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;img_2.png&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;188&#34;
+		data-flex-basis=&#34;452px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以直接访问了&lt;/p&gt;
+&lt;h1 id=&#34;搭建完毕&#34;&gt;搭建完毕
+&lt;/h1&gt;&lt;p&gt;搭建非常简单，基础，主要难点在于网络环境的搭建，需要正常访问OpenAI，还有一个合理便宜的Key的购买渠道。然后后期怎么使用域名解析这个服务能随时随地访问。这里就不做详细介绍了，每个人的情况不一样。&lt;/p&gt;
+&lt;p&gt;我自己对这个chatgpt-web项目做了一点修改，需要提示验证码密码的时候我加了一个我自己的微信公共号二维码，替换了原项目中的Icon，然后更改了一下提示，提示需要回复关键字获取ChatGPT网页应用和密码，如果有需要可以私聊我，我会把修改过后的源码无偿提供给大家。&lt;/p&gt;
+&lt;p&gt;感谢大家看到这里，下篇会研究一下Google公司最近推出的Gemma模型 ，看看它跟ChatGPT有多大差别， 之前用过他们的borad，这个也是跟ChatGPT一样，现在已经开发免费使用，效果也非常不错，只是没有ChatGPT名气大。&lt;/p&gt;
+&lt;p&gt;OpenAI 公司的视频生成大模型Sora现在已开放对外申请，感兴趣也可以访问我的历史文章git：《OpenAI Sora已开放对外申请，大家可以申请了。》申请一下&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
